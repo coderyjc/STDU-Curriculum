@@ -8,6 +8,7 @@ struct ListNode {
 
 
 //2.1
+
 void mergeIncrease1(ListNode* headA, ListNode* headB) {
     ListNode* pA = headA;
     ListNode* pB = headB->next;
@@ -67,7 +68,26 @@ void intersection(ListNode* headA, ListNode* headB) {
         }
     }
     pa->next = NULL;
-    printList(pa);
+}
+
+
+
+//2.4
+
+void differentSet(ListNode* headA, ListNode* headB) {
+    ListNode* pA = headA;
+    ListNode* pB = headB->next;
+    while (pA->next && pB) {
+        if (pA->next->val > pB->val) {
+            pB = pB->next;
+        } else if (pA->next->val < pB->val) {
+            pA = pA->next;
+        } else {
+            ListNode* t = pA->next;
+            pA->next = pA->next->next;
+            delete t;
+        }
+    }
 }
 
 
@@ -129,6 +149,42 @@ ListNode* reverseInplace(ListNode* head) {
     }
     return cur;
 }
+
+
+//2.8
+void rangeDelete(ListNode* head, int mink, int maxk) {
+    ListNode* p = head;
+    while (p->next) {
+        if (p->next->val >= mink && p->next->val < maxk) {
+            ListNode* t = p->next;
+            p->next = p->next->next;
+            delete t;
+        } else p = p->next;
+    }
+}
+
+
+//2.9
+
+class LoopL{
+public:
+    LoopL* next;
+    LoopL* pre;
+    int data;
+};
+
+void change(loopL p) {
+    loopL t = p->pre;
+    p->next->pre = t;
+    t->pre->next = p;
+    p->pre = t->pre;
+    t->next = p->next;
+    p->next = t;
+    t->pre = p;
+    return OK;
+}
+
+
 
 //2.10
 ListNode* deleteSame(ListNode* head, int val) {
