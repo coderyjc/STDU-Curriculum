@@ -88,6 +88,36 @@ void mystack() {
 }
 
 
+//2.4
+
+void rePolish() {
+	string temp;
+	stack<int> s;
+	int t1 = 0, t2 = 0;
+	while (cin >> temp) {
+		if (temp[0] == '$') {
+			cout << s.top() << endl;
+			return;
+		}
+		if (isdigit(temp[0])) {
+			stringstream ss(temp);
+			int t; 
+			ss >> t;
+			s.push(t);
+		} else {
+				t1 = s.top(); s.pop();
+				t2 = s.top(); s.pop();
+			switch (temp[0]) {
+				case '+':s.push(t1 + t2); break;
+				case '-':s.push(t1 - t2); break;
+				case '*':s.push(t1 * t2); break;
+				case '/':s.push(t1 / t2); break;
+			}
+		}
+	}
+}
+
+
 //2.5.1
 
 /*
