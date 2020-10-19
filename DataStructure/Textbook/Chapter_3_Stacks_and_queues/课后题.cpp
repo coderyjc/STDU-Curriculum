@@ -40,6 +40,77 @@ public:
 };
 
 
+//2.1
+
+/*
+* 左栈为 0 ， 右栈为 1
+*/
+
+#include"Header.h"
+
+
+typedef int SElemType;
+
+#define MAXSIZE 10
+
+typedef struct {
+	int top[2], bot[2]; //ptr
+	SElemType* V; //data
+	int m; //MaxSize
+}DblStack;
+
+Status init(DblStack& s) {
+	//初始化双栈
+	s.m = MAXSIZE; //MaxSize = 100
+	s.V = new SElemType[s.m];
+	if (!s.V) return ERROR;
+	s.bot[0] = s.top[0] = 0;
+	s.bot[1] = s.top[1] = MAXSIZE - 1;
+	return OK;
+}
+
+bool empty1(DblStack s) {
+	//左栈为空
+	return s.bot[0] == s.top[0];
+}
+
+bool empty2(DblStack s) {
+	//右栈为空
+	return s.bot[1] == s.top[1];
+}
+
+bool full(DblStack s) {
+	//栈满
+	return s.top[0] == s.top[1];
+}
+
+Status push1(DblStack& s, SElemType e) {
+	//进入左栈
+	if (full(s)) return OVERFLOW;
+	else s.V[s.top[0]++] = e;
+}
+
+Status push2(DblStack& s, SElemType e){
+	//进入右栈
+	if (full(s)) return OVERFLOW;
+	else s.V[s.top[1]--] = e;
+}
+
+Status pop1(DblStack& s, SElemType& e) {
+	//左栈出栈
+	if (empty1(s)) return ERROR;
+	e = s.V[s.top[0]--];
+	return OK;
+}
+
+Status pop2(DblStack& s, SElemType& e) {
+	//右栈出栈
+	if (empty2(s)) return ERROR;
+	e = s.V[s.top[1]++];
+	return OK;
+}
+
+
 
 
 //2.2
