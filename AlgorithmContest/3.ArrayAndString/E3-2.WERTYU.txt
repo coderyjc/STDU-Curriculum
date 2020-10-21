@@ -1,0 +1,17 @@
+#include<iostream>
+
+using namespace std;
+
+int main() {
+
+	string str = "`1234567890-=QWERTYUIOP[]\\ASDFGHJKL;'ZXCVBNM,./";
+
+	char ch;
+
+	while ((ch = getchar()) != EOF) {
+		if (str.find(ch) != -1)
+			cout << str[str.find(ch) - 1];
+		else cout << " ";
+	}
+	return 0;
+}

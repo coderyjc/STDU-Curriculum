@@ -1,0 +1,22 @@
+#include<iostream>
+using namespace std;
+int main() {
+	string a = "A   3  HIL JM O   2TUVWXY51SE Z  8 ";
+	int flag_p, flag_m;
+	string str;
+	do {
+		cin >> str;
+		flag_p = 1, flag_m = 1;
+		int i = 0, j = str.length() - 1;
+		for (int i = 0; i < str.length() / 2; i++, j--) {
+			if (flag_p && str[i] != str[j]) flag_p = 0;
+			if (flag_m && (isalpha(str[i]) && str[i] != a[str[j] - 'A'] || isdigit(str[i]) && str[i] != a[str[j] + 25 - '0'])) flag_m = 0;
+		}
+		if (flag_p && flag_m) cout << str << "is a mirrored palindrome." << endl;
+		else if (flag_p) cout << str << " -- is a regular palindrome." << endl;
+		else if (flag_m) cout << str << " -- is a mirrored string." << endl;
+		else cout << str << " -- is not a palindrome." << endl;
+		cout << endl;
+	} while (true);
+	return 0;
+}
