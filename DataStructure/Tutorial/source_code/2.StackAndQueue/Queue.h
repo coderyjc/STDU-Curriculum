@@ -1,3 +1,7 @@
+#pragma once
+#include<iostream>
+using namespace std;
+
 #define NodePosi(T) QNode<T>*
 
 template<class T>
@@ -8,7 +12,7 @@ public:
 
 public:
 
-	QNode() {}
+	QNode() {	}
 
 	QNode(T data, NodePosi(T) next = nullptr) {
 		this->data = data;
@@ -22,19 +26,23 @@ public:
 
 	MyQueue() {
 		header = new QNode<T>();
+		this->_size = 0;
+		cout << "Q Constructor" << endl; //---------------debug
 	}
 
-	void push(T data); //å…¥é˜Ÿ - å°¾æ’
-	
-	void pop(); //å‡ºé˜Ÿ - å¤´åˆ 
+	void push(T data); //Èë¶Ó - Î²²å
 
-	bool empty(); //æ— é¦–å…ƒèŠ‚ç‚¹
+	void pop(); //³ö¶Ó - Í·É¾
 
-	T front(); //é¦–å…ƒèŠ‚ç‚¹
+	bool empty(); //ÎÞÊ×Ôª½Úµã
 
-	void destory(); //é”€æ¯é˜Ÿåˆ—
+	T front(); //Ê×Ôª½Úµã
 
-	void clear(); //æ¸…ç©ºé˜Ÿåˆ—
+	int size(); //»ñÈ¡ÔªËØµÄ¸öÊý
+
+	void destory(); //Ïú»Ù¶ÓÁÐ
+
+	void clear(); //Çå¿Õ¶ÓÁÐ
 
 	void travser() {
 		NodePosi(T) t = header->next;
@@ -43,12 +51,10 @@ public:
 			t = t->next;
 		}
 	}
-
 private:
-
 	NodePosi(T) header;
+	int _size;
 };
-
 
 template<class T>
 void MyQueue<T>::push(T data) {
@@ -57,6 +63,7 @@ void MyQueue<T>::push(T data) {
 	NodePosi(T) p = new QNode<T>(data, nullptr);
 	if (!p) exit(0);
 	t->next = p;
+	this->_size++;
 }
 
 template<class T>
@@ -68,6 +75,7 @@ void MyQueue<T>::pop() {
 		NodePosi(T) t = header->next;
 		header->next = header->next->next;
 		delete t;
+		this->_size;
 	}
 }
 
@@ -81,8 +89,13 @@ T MyQueue<T>::front() {
 	if (empty()) {
 		cout << "Empty List" << endl;
 		exit(0);
-	} 
-	return header->next->data;	
+	}
+	return header->next->data;
+}
+
+template<class T>
+int MyQueue<T>::size() {
+	return this->_size;
 }
 
 template<class T>
