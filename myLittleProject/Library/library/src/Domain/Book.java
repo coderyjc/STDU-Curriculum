@@ -3,22 +3,25 @@ package Domain;
 import java.util.Objects;
 
 public class Book {
-    private Integer bookId; // int 10
+    private String bookISBN; // int 10
     private String bookName; // varchar 20
     private Double bookPrice; // double 4, 2
-    private int author; // int 10
+    private String author; // int 10
     private int stock; // int 2
     private String description; // varchar 200
     private int lent; // int  2
 
-    public Book(String bookName, int bookId, Double bookPrice, int author, int stock, String description, int lent) {
+    public Book(String name){
+        this.bookName = name;
+    }
+
+    public Book(String bookName, String bookISBN, Double bookPrice, String author, int stock, String description) {
         this.bookName = bookName;
-        this.bookId = bookId;
+        this.bookISBN = bookISBN;
         this.bookPrice = bookPrice;
         this.author = author;
         this.stock = stock;
         this.description = description;
-        this.lent = lent;
     }
 
     public String getBookName() {
@@ -29,12 +32,12 @@ public class Book {
         this.bookName = bookName;
     }
 
-    public int getBookId() {
-        return bookId;
+    public String getBookISBN() {
+        return bookISBN;
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setBookISBN(String bookISBN) {
+        this.bookISBN = bookISBN;
     }
 
     public Double getBookPrice() {
@@ -45,11 +48,11 @@ public class Book {
         this.bookPrice = bookPrice;
     }
 
-    public int getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(int author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 
@@ -76,7 +79,7 @@ public class Book {
 
         Book book = (Book) o;
 
-        return Objects.equals(bookId, book.bookId);
+        return Objects.equals(bookISBN, book.bookISBN);
     }
 
     public int getLent() {
@@ -89,6 +92,6 @@ public class Book {
 
     @Override
     public int hashCode() {
-        return bookId != null ? bookId.hashCode() : 0;
+        return bookISBN != null ? bookISBN.hashCode() : 0;
     }
 }

@@ -94,6 +94,7 @@
       <workItem from="1604970981936" duration="4381000" />
       <workItem from="1604994082846" duration="21274000" />
       <workItem from="1605073088563" duration="1581000" />
+      <workItem from="1605078197743" duration="13545000" />
     </task>
     <servers />
   </component>
@@ -109,26 +110,30 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1604931353980" />
-    <state x="574" y="88" key="#com.intellij.ide.util.MemberChooser" timestamp="1605007958631">
+    <state x="574" y="88" key="#com.intellij.ide.util.MemberChooser" timestamp="1605079069012">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="574" y="88" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1605007958631" />
-    <state width="1493" height="164" key="GridCell.Tab.0.bottom" timestamp="1605074670176">
+    <state x="574" y="88" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1605079069012" />
+    <state x="98" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1605080926441">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="164" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605074670176" />
-    <state width="1493" height="164" key="GridCell.Tab.0.center" timestamp="1605074670175">
+    <state x="98" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1605080926441" />
+    <state width="1493" height="116" key="GridCell.Tab.0.bottom" timestamp="1605099661742">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="164" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1605074670175" />
-    <state width="1493" height="164" key="GridCell.Tab.0.left" timestamp="1605074670175">
+    <state width="1493" height="116" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605099661742" />
+    <state width="1493" height="116" key="GridCell.Tab.0.center" timestamp="1605099661741">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="164" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1605074670175" />
-    <state width="1493" height="164" key="GridCell.Tab.0.right" timestamp="1605074670175">
+    <state width="1493" height="116" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1605099661741" />
+    <state width="1493" height="116" key="GridCell.Tab.0.left" timestamp="1605099661741">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="164" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1605074670175" />
+    <state width="1493" height="116" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1605099661741" />
+    <state width="1493" height="116" key="GridCell.Tab.0.right" timestamp="1605099661742">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="116" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1605099661742" />
     <state x="562" y="322" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604923091164">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -141,10 +146,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605074320331" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1605016385918">
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1605082708672">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1605016385918" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1605082708672" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

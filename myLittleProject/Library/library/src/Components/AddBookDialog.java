@@ -1,5 +1,7 @@
 package Components;
 
+import Domain.Book;
+import Utils.DBUtils.DMLUtils;
 import Utils.RealPath;
 import Utils.ScreenUtils;
 
@@ -13,7 +15,7 @@ import java.io.IOException;
 public class AddBookDialog extends JDialog {
 
     final int WIDTH = 500;
-    final int HEIGHT = 750;
+    final int HEIGHT = 650;
 
     public AddBookDialog(JFrame jf, String title, boolean isModel, ActionListenerCallBack listener) {
         super(jf, title, isModel);
@@ -28,6 +30,14 @@ public class AddBookDialog extends JDialog {
 
         // 垂直的箱子，存放label和textField
         Box vBox = Box.createVerticalBox();
+
+        // ISBN
+        Box iBox = Box.createHorizontalBox();
+        JLabel iLabel = new JLabel("I S B N");
+        JTextField iField = new JTextField(15);
+        iBox.add(iLabel);
+        iBox.add(Box.createHorizontalStrut(20));
+        iBox.add(iField);
 
         // 书籍名称
         Box nBox = Box.createHorizontalBox();
@@ -67,11 +77,11 @@ public class AddBookDialog extends JDialog {
         //简介
         Box dBox = Box.createHorizontalBox();
         JLabel dLabel = new JLabel("书籍简介");
-        JTextField dFiled = new JTextField(15);
+        JTextField dField = new JTextField(15);
 
         dBox.add(dLabel);
         dBox.add(Box.createHorizontalStrut(20));
-        dBox.add(dFiled);
+        dBox.add(dField);
 
         //按钮
         Box bBox = Box.createHorizontalBox();
@@ -87,6 +97,29 @@ public class AddBookDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                if(nField.getText().equals("") || pField.getText().equals("") || iField.getText().equals("")
+                        || aField.getText().equals("") || sField.getText().equals("") || dField.getText().equals("")){
+                    JOptionPane.showMessageDialog(jf, "请把表格填完整！");
+                    return;
+                }
+                int result = DMLUtils.addBook(new Book(nField.getText().trim(),
+                        iField.getText().trim(),
+                        Double.parseDouble(pField.getText().trim()),
+                        aField.getText().trim(),
+                        Integer.parseInt(sField.getText().trim()),
+                        dField.getText().trim()));
+
+                if (result == 1 || result == 0) {
+                    JOptionPane.showMessageDialog(jf, "添加成功,重新登录后刷新图书列表");
+                    nField.setText("");
+                    iField.setText("");
+                    pField.setText("");
+                    aField.setText("");
+                    sField.setText("");
+                    dField.setText("");
+                }else if(result == -1)
+                    JOptionPane.showMessageDialog(jf, "ISBN和书籍名称不对应");
+                else JOptionPane.showMessageDialog(jf, "添加失败");
             }
         });
 
@@ -98,7 +131,10 @@ public class AddBookDialog extends JDialog {
             }
         });
 
+
         vBox.add(Box.createVerticalStrut(100));
+        vBox.add(iBox);
+        vBox.add(Box.createVerticalStrut(30));
         vBox.add(nBox);
         vBox.add(Box.createVerticalStrut(30));
         vBox.add(aBox);

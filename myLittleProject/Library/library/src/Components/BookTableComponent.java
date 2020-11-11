@@ -3,7 +3,6 @@ package Components;
 import Utils.DBUtils.DBUtil;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,12 +10,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Vector;
 
 public class BookTableComponent extends Box {
 
-    final int WIDTH = 800;
+    final int WIDTH = 1000;
     final int HEIGHT = 750;
 
     JFrame jf;
@@ -62,7 +60,12 @@ public class BookTableComponent extends Box {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // 修改图书信息
+                new UpdateBookDialog(jf, "修改图书", true, new ActionListenerCallBack() {
+                    @Override
+                    public void hasDone(Object obj) {
 
+                    }
+                }).setVisible(true);
             }
         });
 
@@ -80,10 +83,15 @@ public class BookTableComponent extends Box {
 
         this.add(btnPanel);
 
-        Object[] columnNames = {"编号", "书名", "作者", "简介", "价格", "库存", "借出"};
+        Object[] columnNames = {"ISBN", "书名", "作者", "简介", "价格", "库存", "借出"};
 
         requestData();
-        JTable table = new JTable(obj, columnNames);
+        JTable table = new JTable(obj, columnNames){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         JScrollPane jsp = new JScrollPane(table);
         this.add(jsp);
     }
@@ -100,7 +108,7 @@ public class BookTableComponent extends Box {
             rs = ps.executeQuery();
             while(rs.next()){
                 Vector<Object> temp = new Vector<>();
-                String id = rs.getString("id");
+                String id = rs.getString("ISBN");
                 String name = rs.getString("name");
                 String author = rs.getString("author");
                 String description = rs.getString("description");

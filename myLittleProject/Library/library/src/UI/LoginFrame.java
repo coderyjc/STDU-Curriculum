@@ -51,8 +51,6 @@ public class LoginFrame {
         Box pBox = Box.createHorizontalBox();
         JLabel pLabel = new JLabel("密    码   ");
         JPasswordField pFiled = new JPasswordField(15);
-//        pLabel.setFont(new Font(null, Font.PLAIN, 20));
-//        pFiled.setFont(new Font(null, Font.PLAIN, 20));
         pBox.add(pLabel);
         pBox.add(Box.createVerticalStrut(20));
         pBox.add(pFiled);
