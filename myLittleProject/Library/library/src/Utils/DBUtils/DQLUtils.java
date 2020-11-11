@@ -1,5 +1,6 @@
 package Utils.DBUtils;
 
+import Domain.Book;
 import Domain.User;
 
 import java.sql.Connection;
@@ -57,14 +58,12 @@ public class DQLUtils {
     }
 
     /**
-     *
-     * @param ISBN 图书的ISBN号
-     * @param name 图书名
-     * @return ISBN和图书名都一样才返回 1
-     *         ISBN 一样，书名不一样返回 -1
+     * 获取图书的工具类
+     * @param ISBN 书籍的ISBN号
+     * @return 如果找到了这本书，就返回这本书构成的对象，如果没找到，就返回null
      */
-    public static int bookExist(String ISBN, String name){
-        int rst = 0;
+    public static Book getBook(String ISBN){
+        Book rst = null;
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -75,9 +74,14 @@ public class DQLUtils {
             ps.setString(1, ISBN);
             rs = ps.executeQuery();
             if(rs.next()){
-                if(rs.getString("name").equals(name))
-                    rst = 1;
-                rst = -1;
+                rst = new Book();
+                rst.setAuthor(rs.getString("author"));
+                rst.setBookISBN(rs.getString("ISBN"));
+                rst.setBookName(rs.getString("name"));
+                rst.setBookPrice(Double.valueOf(rs.getString("price")));
+                rst.setDescription(rs.getString("description"));
+                rst.setLent(Integer.parseInt(rs.getString("lent")));
+                rst.setStock(Integer.parseInt(rs.getString("stock")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

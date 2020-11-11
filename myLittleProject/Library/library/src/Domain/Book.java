@@ -11,6 +11,9 @@ public class Book {
     private String description; // varchar 200
     private int lent; // int  2
 
+    public Book(){
+    }
+
     public Book(String name){
         this.bookName = name;
     }
