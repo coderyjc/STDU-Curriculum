@@ -1,6 +1,7 @@
 package UI;
 
 import Components.BackgroundPanel;
+import Components.BookTableComponent;
 import Domain.User;
 import Utils.RealPath;
 
@@ -24,13 +25,24 @@ public class LibraryBodyFrame {
         BackgroundPanel bgp = new BackgroundPanel(ImageIO.read(new File(RealPath.realPath("manage.png"))));
         bgp.setBounds(0, 0, WIDTH, HEIGHT);
 
+        //设置分割面板
+//        JSplitPane sp = new JSplitPane();
 
+        //支持连续布局
+//        sp.setContinuousLayout(true);
+//        sp.setDividerLocation(150);
+//        sp.setDividerSize(7);
 
+        //分割面板右侧布局
+//        sp.setRightComponent(new BookTableComponent(jf));
 
+//        jf.add(sp);
 
+        bgp.add(new BookTableComponent(jf));
 
         jf.add(bgp);
         jf.setResizable(false);
         jf.setVisible(true);
     }
+
 }

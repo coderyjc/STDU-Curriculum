@@ -37,7 +37,6 @@ public class signUpFrame  {
         nBox.add(Box.createHorizontalStrut(20));
         nBox.add(nField);
 
-
         //组装用户名
         Box uBox = Box.createHorizontalBox();
         JLabel uLabel = new JLabel("用户ID：");
@@ -64,7 +63,6 @@ public class signUpFrame  {
         pBox2.add(pLabel2);
         pBox2.add(pField2);
 
-
         //组装手机号
         Box tBox = Box.createHorizontalBox();
         JLabel tLabel = new JLabel("手机号 ：");
@@ -82,7 +80,6 @@ public class signUpFrame  {
         sBox.add(sLabel);
         sBox.add(Box.createHorizontalStrut(20));
         sBox.add(sjcb);
-
 
         //组装性别
         Box gBox = Box.createHorizontalBox();

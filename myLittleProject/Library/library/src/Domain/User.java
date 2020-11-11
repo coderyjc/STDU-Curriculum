@@ -3,12 +3,12 @@ package Domain;
 import java.util.Objects;
 
 public class User {
-    private String userName;
-    private int userSex;
-    private String userId;
-    private String userPwd;
-    private int userType;
-    private String userTel;
+    private String userName;  // varchar 40
+    private Integer userSex; // int 1
+    private String userId; // varchar 20
+    private String userPwd; // varchar 20
+    private Integer userType; // int 1
+    private String userTel; // varchar 20
 
     public User() {}
 
