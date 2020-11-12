@@ -1,5 +1,7 @@
 package Components;
 
+import Domain.Book;
+import Utils.DBUtils.DMLUtils;
 import Utils.RealPath;
 import Utils.ScreenUtils;
 
@@ -68,10 +70,20 @@ public class UpdateBookDialog extends JDialog {
         cButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                boolean rst = false;
+                Book temp = new Book(iField.getText().trim());
                 int item = jcbItem.getSelectedIndex();
                 switch (item){
                     //进行相关信息的更新
-
+                    case 0 : rst = DMLUtils.updateBook(temp, "name",uField.getText().trim()); break;
+                    case 1 : rst = DMLUtils.updateBook(temp, "price",uField.getText().trim()); break;
+                    case 2 : rst = DMLUtils.updateBook(temp, "author",uField.getText().trim()); break;
+                    case 3 : rst = DMLUtils.updateBook(temp, "stock",uField.getText().trim()); break;
+                    case 4 : rst = DMLUtils.updateBook(temp, "description",uField.getText().trim()); break;
+                }
+                if(rst){
+                    JOptionPane.showMessageDialog(jf, "修改成功");
+//                    dispose();
                 }
             }
         });
@@ -92,7 +104,6 @@ public class UpdateBookDialog extends JDialog {
         vBox.add(uBox);
         vBox.add(Box.createVerticalStrut(30));
         vBox.add(bBox);
-
 
         Box tBox = Box.createHorizontalBox();
         tBox.add(vBox);

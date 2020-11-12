@@ -691,7 +691,7 @@
     </column>
     <column id="216" parent="207" name="name">
       <Position>2</Position>
-      <DataType>varchar(20)|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="217" parent="207" name="price">

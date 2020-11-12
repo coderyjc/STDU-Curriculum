@@ -102,14 +102,14 @@ public class AddBookDialog extends JDialog {
                     JOptionPane.showMessageDialog(jf, "请把表格填完整！");
                     return;
                 }
-                int result = DMLUtils.addBook(new Book(nField.getText().trim(),
+                boolean result = DMLUtils.addBook(new Book(nField.getText().trim(),
                         iField.getText().trim(),
                         Double.parseDouble(pField.getText().trim()),
                         aField.getText().trim(),
                         Integer.parseInt(sField.getText().trim()),
                         dField.getText().trim()));
 
-                if (result == 1 || result == 0) {
+                if (result) {
                     JOptionPane.showMessageDialog(jf, "添加成功,重新登录后刷新图书列表");
                     nField.setText("");
                     iField.setText("");
@@ -117,9 +117,7 @@ public class AddBookDialog extends JDialog {
                     aField.setText("");
                     sField.setText("");
                     dField.setText("");
-                }else if(result == -1)
-                    JOptionPane.showMessageDialog(jf, "ISBN和书籍名称不对应");
-                else JOptionPane.showMessageDialog(jf, "添加失败");
+                } else JOptionPane.showMessageDialog(jf, "添加失败");
             }
         });
 

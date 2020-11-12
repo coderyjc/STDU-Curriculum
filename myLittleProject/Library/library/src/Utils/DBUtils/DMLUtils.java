@@ -42,7 +42,7 @@ public class DMLUtils {
     /**
      *  添加图书，如果已经有了就添加到库存里
      * @param book 要添加的图书
-     * @return
+     * @return 添加图书的业务是否成功了
      */
     public static boolean addBook(Book book){
         // inStock 来存储在数据库中的书，以获得其库存量。
@@ -85,31 +85,23 @@ public class DMLUtils {
      * @return 执行的情况 成功/失败 + 数量
      * 约定几种情况 ：没有足够的书籍，应该：----
      */
-    public static int updateBook(Book book, String column, String changed){
-        String name = book.getBookName();
+    public static boolean updateBook(Book book, String column, String changed){
         Connection conn = null;
         PreparedStatement ps = null;
+        boolean succ = false;
         try {
             conn = DBUtil.getConnection();
-
-            String sql = "";
-
+            /*
+                这里要针对不同的字段修改做不同的语句处理
+             */
+            String sql = "update books set " + column + " = '" + changed + "' where ISBN = " + book.getBookISBN();
             ps = conn.prepareStatement(sql);
+            int rst = ps.executeUpdate();
+            if(rst != 0)
+                succ = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return 0;
-    }
-
-
-
-    public static boolean deleteBook(Book book){
-        boolean success = false;
-
-
-
-
-        return success;
+        return succ;
     }
 }

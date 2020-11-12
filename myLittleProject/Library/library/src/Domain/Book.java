@@ -14,8 +14,8 @@ public class Book {
     public Book(){
     }
 
-    public Book(String name){
-        this.bookName = name;
+    public Book(String isbn){
+        this.bookISBN = isbn;
     }
 
     public Book(String bookName, String bookISBN, Double bookPrice, String author, int stock, String description) {
