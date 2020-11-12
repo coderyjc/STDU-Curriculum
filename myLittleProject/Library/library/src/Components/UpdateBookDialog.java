@@ -83,7 +83,7 @@ public class UpdateBookDialog extends JDialog {
                 }
                 if(rst){
                     JOptionPane.showMessageDialog(jf, "修改成功");
-//                    dispose();
+                    listener.hasDone(null);
                 }
             }
         });

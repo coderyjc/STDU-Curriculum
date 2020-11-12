@@ -14,8 +14,6 @@ public class DMLUtils {
         boolean success = false;
         Connection conn = null;
         PreparedStatement ps = null;
-        int rs = 0;
-
         try {
             conn = DBUtil.getConnection();
             String sql = "insert into users values (?, ?, ?, ?, ?, ?)";
@@ -26,7 +24,7 @@ public class DMLUtils {
             ps.setString(4, String.valueOf(user.getUserSex()));
             ps.setString(5, user.getUserTel());
             ps.setString(6, user.getUserPwd());
-            rs = ps.executeUpdate();
+            int rs = ps.executeUpdate();
             if(rs != 0){
                 success = true;
             }
@@ -93,9 +91,16 @@ public class DMLUtils {
             conn = DBUtil.getConnection();
             /*
                 这里要针对不同的字段修改做不同的语句处理
+                一种本身就是字符串型的
+                一种是数字型的，这俩分别写sql
              */
-            String sql = "update books set " + column + " = '" + changed + "' where ISBN = " + book.getBookISBN();
-            ps = conn.prepareStatement(sql);
+            if(column.equals("lent") || column.equals("stock") || column.equals("price")){
+                String sql_int = "update books set " + column + " = " + changed + " where ISBN = " + book.getBookISBN();
+                ps = conn.prepareStatement(sql_int);
+            }else{
+                String sql_string = "update books set " + column + " = '" + changed + "' where ISBN = " + book.getBookISBN();
+                ps = conn.prepareStatement(sql_string);
+            }
             int rst = ps.executeUpdate();
             if(rst != 0)
                 succ = true;
@@ -103,5 +108,28 @@ public class DMLUtils {
             e.printStackTrace();
         }
         return succ;
+    }
+
+    /**
+     *  删除一列书的数据
+     * @param book 传进来的book参数，只有一个ISBN 属性
+     * @return 删除成功或者失败，在这里选中的列一定是数据库中已经存在的，所以一般不会有删除失败的情况
+     */
+    public static boolean deleteBook(Book book){
+        boolean success = false;
+        Connection conn;
+        PreparedStatement ps;
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "delete from books where ISBN = " + book.getBookISBN();
+            ps = conn.prepareStatement(sql);
+            int rst = ps.executeUpdate();
+            if(rst != 0)
+                success = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return  success;
     }
 }

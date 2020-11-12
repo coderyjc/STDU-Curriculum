@@ -1,8 +1,11 @@
 package Components;
 
+import Domain.Book;
 import Utils.DBUtils.DBUtil;
+import Utils.DBUtils.DMLUtils;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.Vector;
 
 public class BookTableComponent extends Box {
@@ -20,7 +24,8 @@ public class BookTableComponent extends Box {
     JFrame jf;
     private JTable table;
     private Object[][] obj = null;
-    Vector<Vector<Object>> td =  new Vector<>();
+    Vector<Vector> td = new Vector<>();
+    DefaultTableModel model;
 
     public BookTableComponent(JFrame jf) {
         super(BoxLayout.Y_AXIS);
@@ -30,13 +35,26 @@ public class BookTableComponent extends Box {
         //----添加图书，修改图书，删除图书的按钮
 
         JPanel btnPanel = new JPanel();
-        btnPanel.setOpaque(false); // 设置透明度
         btnPanel.setMaximumSize(new Dimension(WIDTH,80));
         btnPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
         JButton addButton = new JButton("添加");
         JButton updButton = new JButton("修改");
-        JButton delButton = new JButton("删除");
+        JButton delButton = new JButton("删除选中行");
+
+        Object[] columnNames = {"ISBN", "书名", "作者", "简介", "价格", "库存", "借出"};
+
+        Vector columnName = new Vector<>();
+        Collections.addAll(columnName, columnNames);
+        model = new DefaultTableModel(td, columnName);
+        JTable table = new JTable(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table.setModel(model);
+        table.setRowHeight(25);
 
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -45,11 +63,7 @@ public class BookTableComponent extends Box {
                 new AddBookDialog(jf, "添加图书", true, new ActionListenerCallBack() {
                     @Override
                     public void hasDone(Object obj) {
-                        /*
-                            问题根本没有解决。我只是画出了一个表格的样子，但没有真正实现表格的动态刷新。
-                            这个问题先这样放下吧，等我画完了整体框架再用表格模型试试。
-                         */
-                        table = null;
+                        model.getDataVector().clear();
                         requestData(); //获取信息并刷新表格
                     }
                 }).setVisible(true);
@@ -63,7 +77,8 @@ public class BookTableComponent extends Box {
                 new UpdateBookDialog(jf, "修改图书", true, new ActionListenerCallBack() {
                     @Override
                     public void hasDone(Object obj) {
-
+                        model.getDataVector().clear();
+                        requestData(); //获取信息并刷新表格
                     }
                 }).setVisible(true);
             }
@@ -73,27 +88,33 @@ public class BookTableComponent extends Box {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //删除图书信息
-
+                int selected = table.getSelectedRow();
+                if(selected == -1){
+                    JOptionPane.showMessageDialog(jf, "当前未选中行");
+                } else {
+                    int click = JOptionPane.showConfirmDialog(jf, "确定删除选中行？");
+                    if(click == JOptionPane.YES_OPTION){
+                        //执行图书删除业务
+                        boolean succ = DMLUtils.deleteBook(new Book((String) td.get(selected).get(0)));
+                        model.getDataVector().clear();
+                        requestData(); //获取信息并刷新表格
+                        if(succ){
+                            JOptionPane.showMessageDialog(jf, "删除成功");
+                        }else
+                            JOptionPane.showMessageDialog(jf, "删除失败");
+                    }
+                }
             }
         });
 
         btnPanel.add(addButton);
         btnPanel.add(updButton);
         btnPanel.add(delButton);
-
         this.add(btnPanel);
 
-        Object[] columnNames = {"ISBN", "书名", "作者", "简介", "价格", "库存", "借出"};
-
-        requestData();
-        JTable table = new JTable(obj, columnNames){
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
         JScrollPane jsp = new JScrollPane(table);
         this.add(jsp);
+        requestData();
     }
 
     public void requestData(){
@@ -125,13 +146,7 @@ public class BookTableComponent extends Box {
             DBUtil.close(conn, ps, rs);
         }
 
-        obj = new Object[td.size()][7];
-        int j = 0;
-        for(Vector vector : td){
-            for(int i = 0; i < 7; i ++)
-                obj[j][i] = vector.get(i);
-            j++;
-        }
-    }
+        model.fireTableDataChanged();
 
+    }
 }

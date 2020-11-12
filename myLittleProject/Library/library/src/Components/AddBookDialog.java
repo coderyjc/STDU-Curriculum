@@ -110,13 +110,14 @@ public class AddBookDialog extends JDialog {
                         dField.getText().trim()));
 
                 if (result) {
-                    JOptionPane.showMessageDialog(jf, "添加成功,重新登录后刷新图书列表");
+                    JOptionPane.showMessageDialog(jf, "添加成功");
                     nField.setText("");
                     iField.setText("");
                     pField.setText("");
                     aField.setText("");
                     sField.setText("");
                     dField.setText("");
+                    listener.hasDone(null);
                 } else JOptionPane.showMessageDialog(jf, "添加失败");
             }
         });

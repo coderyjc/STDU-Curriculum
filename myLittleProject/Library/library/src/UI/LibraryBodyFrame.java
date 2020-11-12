@@ -1,18 +1,14 @@
 package UI;
 
-import Components.BackgroundPanel;
 import Components.BookTableComponent;
-import Domain.Book;
+import Components.LendingComponent;
 import Domain.User;
-import Utils.RealPath;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
 public class LibraryBodyFrame {
@@ -26,9 +22,7 @@ public class LibraryBodyFrame {
         jf.setTitle("欢迎 " + user.getUserName());
         jf.setBounds((Toolkit.getDefaultToolkit().getScreenSize().width - WIDTH)/2, (Toolkit.getDefaultToolkit().getScreenSize().height - HEIGHT)/2, WIDTH, HEIGHT);
         jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//        BackgroundPanel bgp = new BackgroundPanel(ImageIO.read(new File(RealPath.realPath("manage.png"))));
-//        bgp.setBounds(0, 0, WIDTH, HEIGHT);
-//        bgp.setLayout(new FlowLayout(FlowLayout.CENTER));
+
         // 分割面板
         JSplitPane jsp = new JSplitPane();
 
@@ -38,14 +32,16 @@ public class LibraryBodyFrame {
         jsp.setDividerSize(7);
 
         // 左侧操作树
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("图书馆管理系统");
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("图书馆管理");
         DefaultMutableTreeNode borrowManage = new DefaultMutableTreeNode("借阅/归还");
-        DefaultMutableTreeNode bookManage = new DefaultMutableTreeNode("图书");
-        DefaultMutableTreeNode userManage = new DefaultMutableTreeNode("用户");
+        DefaultMutableTreeNode bookManage = new DefaultMutableTreeNode("图书管理");
+        DefaultMutableTreeNode userManage = new DefaultMutableTreeNode("用户管理");
+        DefaultMutableTreeNode lentManage = new DefaultMutableTreeNode("借阅管理");
 
         root.add(borrowManage);
         root.add(bookManage);
         root.add(userManage);
+        root.add(lentManage);
 
         Color color = new Color(255,255,255);
         JTree tree = new JTree(root);
@@ -66,8 +62,11 @@ public class LibraryBodyFrame {
                 }else if (bookManage.equals(lastPathComponent)){
                     jsp.setRightComponent(new BookTableComponent(jf));
                     jsp.setDividerLocation(150);
-                } if (borrowManage.equals(lastPathComponent)){
-                    jsp.setRightComponent(new JLabel("这里进行借阅管理..."));
+                }else if (borrowManage.equals(lastPathComponent)){
+                    jsp.setRightComponent(new LendingComponent(jf));
+                    jsp.setDividerLocation(150);
+                }else{
+                    jsp.setRightComponent(new JLabel("这里进行归还管理"));
                     jsp.setDividerLocation(150);
                 }
             }
@@ -79,5 +78,4 @@ public class LibraryBodyFrame {
         jf.setResizable(false);
         jf.setVisible(true);
     }
-
 }

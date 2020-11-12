@@ -696,7 +696,7 @@
     </column>
     <column id="217" parent="207" name="price">
       <Position>3</Position>
-      <DataType>double(4,2 digit)|0s</DataType>
+      <DataType>double(10,2 digit)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="218" parent="207" name="author">
@@ -706,7 +706,7 @@
     </column>
     <column id="219" parent="207" name="stock">
       <Position>5</Position>
-      <DataType>int(2)|0s</DataType>
+      <DataType>int(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="220" parent="207" name="description">
@@ -716,7 +716,7 @@
     </column>
     <column id="221" parent="207" name="lent">
       <Position>7</Position>
-      <DataType>int(2)|0s</DataType>
+      <DataType>int(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="222" parent="208" name="userId">
