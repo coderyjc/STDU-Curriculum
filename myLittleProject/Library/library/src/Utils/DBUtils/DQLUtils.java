@@ -13,7 +13,7 @@ public class DQLUtils {
     private DQLUtils(){}
 
     public static boolean isExist(User user){
-        boolean exist = false;
+        boolean succ = false;
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -24,18 +24,19 @@ public class DQLUtils {
             ps.setString(1, user.getUserId());
             rs = ps.executeQuery();
             if(rs.next()){
-                exist = true;
+                succ = false;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             DBUtil.close(conn, ps , rs);
         }
-        return exist;
+        return succ;
     }
 
-    public static boolean login(Map<String, String> user){
-        boolean loginSuccess = false;
+    public static User login(Map<String, String> user){
+        User usr = new User();
+//        boolean loginSuccess = false;
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -47,14 +48,17 @@ public class DQLUtils {
             ps.setString(2, user.get("userPwd"));
             rs = ps.executeQuery();
             if(rs.next()){
-                loginSuccess = true;
+                // 在登录的时候只把ID和姓名查找出来，其他的以后再说
+                usr.setUserId(user.get("userId"));
+                usr.setUserName(rs.getString("name"));
+                usr.setUserType(Integer.parseInt(rs.getString("type")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             DBUtil.close(conn, ps , rs);
         }
-        return loginSuccess;
+        return usr;
     }
 
     /**
@@ -90,4 +94,7 @@ public class DQLUtils {
         }
         return rst;
     }
+
+
+
 }

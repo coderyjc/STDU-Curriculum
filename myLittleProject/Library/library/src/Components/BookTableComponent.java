@@ -1,6 +1,7 @@
 package Components;
 
 import Domain.Book;
+import Domain.User;
 import Utils.DBUtils.DBUtil;
 import Utils.DBUtils.DMLUtils;
 
@@ -22,25 +23,13 @@ public class BookTableComponent extends Box {
     final int HEIGHT = 750;
 
     JFrame jf;
-    private JTable table;
-    private Object[][] obj = null;
     Vector<Vector> td = new Vector<>();
     DefaultTableModel model;
 
-    public BookTableComponent(JFrame jf) {
+    public BookTableComponent(JFrame jf, User user) {
         super(BoxLayout.Y_AXIS);
         this.jf = jf;
 
-        //----这个功能应该是管理员才有的，读者的功能应该只有借阅和还书
-        //----添加图书，修改图书，删除图书的按钮
-
-        JPanel btnPanel = new JPanel();
-        btnPanel.setMaximumSize(new Dimension(WIDTH,80));
-        btnPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-
-        JButton addButton = new JButton("添加");
-        JButton updButton = new JButton("修改");
-        JButton delButton = new JButton("删除选中行");
 
         Object[] columnNames = {"ISBN", "书名", "作者", "简介", "价格", "库存", "借出"};
 
@@ -55,6 +44,94 @@ public class BookTableComponent extends Box {
         };
         table.setModel(model);
         table.setRowHeight(25);
+
+        this.add(Box.createVerticalStrut(30));
+
+        //借阅，归还 按钮
+        JPanel lentPanel = new JPanel();
+        lentPanel.setMaximumSize(new Dimension(WIDTH, 50));
+        lentPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        JButton borrowButton = new JButton("借阅图书");
+        JButton returnButton = new JButton("归还图书");
+        borrowButton.setSize(150, 100);
+        returnButton.setSize(150, 100);
+        lentPanel.add(borrowButton);
+        lentPanel.add(Box.createHorizontalStrut(50));
+        lentPanel.add(returnButton);
+        this.add(lentPanel);
+
+        // 借阅和归还模块
+        borrowButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(table.getSelectedRow() == -1){
+                    JOptionPane.showMessageDialog(jf, "请选中一本图书");
+                } else {
+                    new BorrowBookDialog(jf, "Borrow Book", true);
+
+                }
+            }
+        });
+
+
+        this.add(Box.createVerticalStrut(15));
+        // 书籍搜索框
+        JPanel searchPanel = new JPanel();
+        searchPanel.setMaximumSize(new Dimension(WIDTH, 70));
+        searchPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        JLabel sLabel = new JLabel("书籍查询 按照");
+        JTextField sField = new JTextField(20);
+        JButton sButton = new JButton("查询");
+        JComboBox<String> jcb_column = new JComboBox<>(new String[]{
+                "书名", "ISBN", "作者"
+        });
+
+        sButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(sField.getText().trim().equals("")){
+                    JOptionPane.showMessageDialog(jf, "请输入查询内容");
+                }else{
+                    model.getDataVector().clear();
+                    switch (jcb_column.getSelectedIndex()){
+                        case 0 : searchBook("name", sField.getText().trim()); break;
+                        case 1 : searchBook("ISBN", sField.getText().trim()); break;
+                        case 2 : searchBook("author", sField.getText().trim()); break;
+                    }
+                    if(td.isEmpty()){
+                        JOptionPane.showMessageDialog(jf, "查找失败");
+                        requestData();
+                    } else {
+                        JOptionPane.showMessageDialog(jf, "查询成功");
+                    }
+                }
+            }
+        });
+
+        searchPanel.add(sLabel);
+        searchPanel.add(Box.createHorizontalStrut(20));
+        searchPanel.add(jcb_column);
+        searchPanel.add(Box.createHorizontalStrut(20));
+        searchPanel.add(sField);
+        searchPanel.add(Box.createHorizontalStrut(20));
+        searchPanel.add(sButton);
+        this.add(searchPanel);
+
+        this.add(Box.createVerticalStrut(10));
+
+        //----这个功能应该是管理员才有的，读者的功能应该只有借阅和还书
+        //----添加图书，修改图书，删除图书的按钮
+
+        JPanel btnPanel = new JPanel();
+        btnPanel.setMaximumSize(new Dimension(WIDTH,80));
+        btnPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+
+        JButton addButton = new JButton("添加");
+        JButton updButton = new JButton("修改");
+        JButton delButton = new JButton("删除选中行");
+
 
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -73,8 +150,12 @@ public class BookTableComponent extends Box {
         updButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String defaultText = "";
+                if(table.getSelectedRow() != -1)
+                    defaultText = (String) td.get(table.getSelectedRow()).get(0);
                 // 修改图书信息
-                new UpdateBookDialog(jf, "修改图书", true, new ActionListenerCallBack() {
+                new UpdateBookDialog(defaultText
+                        ,jf, "修改图书", true, new ActionListenerCallBack() {
                     @Override
                     public void hasDone(Object obj) {
                         model.getDataVector().clear();
@@ -108,9 +189,16 @@ public class BookTableComponent extends Box {
         });
 
         btnPanel.add(addButton);
+        btnPanel.add(Box.createHorizontalStrut(10));
         btnPanel.add(updButton);
+        btnPanel.add(Box.createHorizontalStrut(10));
         btnPanel.add(delButton);
-        this.add(btnPanel);
+
+        //管理员权限： 对书籍的添加，修改和删除
+        if(user.getUserType() == 0){
+            this.add(btnPanel);
+            this.add(Box.createVerticalStrut(10));
+        }
 
         JScrollPane jsp = new JScrollPane(table);
         this.add(jsp);
@@ -145,8 +233,43 @@ public class BookTableComponent extends Box {
         } finally {
             DBUtil.close(conn, ps, rs);
         }
-
         model.fireTableDataChanged();
+    }
 
+
+    /**
+     *  使用查询更新当前的数据向量
+     * @param column 要查询的字段
+     * @param text 查询的文本
+     */
+    public void searchBook(String column, String text){
+        Connection conn;
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "select * from books where " + column + " like ?";
+            ps = conn.prepareStatement(sql);
+            String even = "%" + text + "%";
+            ps.setString(1, even);
+            rs = ps.executeQuery();
+            td.clear();
+            while(rs.next()){
+                Vector<Object> temp = new Vector<>();
+                String id = rs.getString("ISBN");
+                String name = rs.getString("name");
+                String author = rs.getString("author");
+                String description = rs.getString("description");
+                String price = rs.getString("price");
+                String stock = rs.getString("stock");
+                String lent = rs.getString("lent");
+                temp.add(id); temp.add(name); temp.add(author); temp.add(description);
+                temp.add(price); temp.add(stock); temp.add(lent);
+                td.add(temp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        model.fireTableDataChanged();
     }
 }

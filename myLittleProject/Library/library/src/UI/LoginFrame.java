@@ -22,6 +22,8 @@ public class LoginFrame {
     final int WIDTH = 600;
     final int HEIGHT = 500;
 
+    User localUser;
+
     void initUI() throws Exception{
         InitGlobalFont(new Font("alias", Font.PLAIN, 20));
 
@@ -40,13 +42,11 @@ public class LoginFrame {
         Box uBox = Box.createHorizontalBox();
         JLabel uLabel = new JLabel("用户ID");
         JTextField uField = new JTextField(15);
-//        uLabel.setFont(new Font(null, Font.PLAIN, 20));
-//        uField.setFont(new Font(null, Font.PLAIN, 20));
         uBox.add(uLabel);
         uBox.add(Box.createHorizontalStrut(20));
         uBox.add(uField);
 
-    //密码
+        //密码
         Box pBox = Box.createHorizontalBox();
         JLabel pLabel = new JLabel("密    码   ");
         JPasswordField pFiled = new JPasswordField(15);
@@ -76,17 +76,13 @@ public class LoginFrame {
                     Map<String, String> user = new HashMap<>();
                     user.put("userId", userId);
                     user.put("userPwd", passWord);
-                    if (DQLUtils.login(user)) { //用户存在
+                    localUser = DQLUtils.login(user);
+                    if (localUser != null) { //用户存在
                         JOptionPane.showMessageDialog(jf, "登录成功！");
-                        try {
-                            new LibraryBodyFrame().initUI(new User(userId, passWord));
-                        } catch (IOException ioException) {
-                            ioException.printStackTrace();
-                        }
+                        new LibraryBodyFrame().initUI(localUser);
                         //这里在用户进行登录的时候，只传进去了一个”虚拟“的用户
                         //这是一个残缺的用户，只有密码和用户名
                         //所以在执行一些操作的时候还要和数据库进行通讯查询是否有权限。
-                        //【待改进】
                         jf.dispose();
                     } else { //用户不存在或者密码错误
                         JOptionPane.showMessageDialog(jf, "用户不存在或者密码错误");

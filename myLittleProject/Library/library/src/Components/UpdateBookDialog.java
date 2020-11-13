@@ -17,7 +17,7 @@ public class UpdateBookDialog extends JDialog {
     final int WIDTH = 500;
     final int HEIGHT = 450;
 
-    public UpdateBookDialog(JFrame jf, String title, boolean isModel, ActionListenerCallBack listener) {
+    public UpdateBookDialog(String ISBN, JFrame jf, String title, boolean isModel, ActionListenerCallBack listener) {
         super(jf, title, isModel);
 
         this.setBounds((ScreenUtils.getScreenWidth() - WIDTH) / 2, (ScreenUtils.getScreenHeight() - HEIGHT) / 2, WIDTH, HEIGHT);
@@ -39,7 +39,7 @@ public class UpdateBookDialog extends JDialog {
         iBox.add(iLabel);
         iBox.add(Box.createHorizontalStrut(20));
         iBox.add(iField);
-
+        iField.setText(ISBN);
         // 要更改的项目
         Box cBox = Box.createHorizontalBox();
         JLabel cLabel = new JLabel("要更改的项目");

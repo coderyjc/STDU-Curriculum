@@ -76,7 +76,7 @@ public class signUpFrame  {
         Box sBox = Box.createHorizontalBox();
         JLabel sLabel = new JLabel("  身份   ");
         JComboBox<String> sjcb = new JComboBox<>(new String[]{"1.其他人","2.本科生","3.研究生","4.教师","0.管理员"});
-        sjcb.getItemAt(0);
+        //sjcb.getItemAt(0);
         sBox.add(sLabel);
         sBox.add(Box.createHorizontalStrut(20));
         sBox.add(sjcb);
