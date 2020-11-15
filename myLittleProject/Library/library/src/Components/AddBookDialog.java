@@ -97,8 +97,8 @@ public class AddBookDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if(nField.getText().equals("") || pField.getText().equals("") || iField.getText().equals("")
-                        || aField.getText().equals("") || sField.getText().equals("") || dField.getText().equals("")){
+                if("".equals(nField.getText()) || "".equals(pField.getText()) || "".equals(iField.getText())
+                        || "".equals(aField.getText()) || "".equals(sField.getText()) || "".equals(dField.getText())){
                     JOptionPane.showMessageDialog(jf, "请把表格填完整！");
                     return;
                 }
@@ -118,7 +118,9 @@ public class AddBookDialog extends JDialog {
                     sField.setText("");
                     dField.setText("");
                     listener.hasDone(null);
-                } else JOptionPane.showMessageDialog(jf, "添加失败");
+                } else {
+                    JOptionPane.showMessageDialog(jf, "添加失败");
+                }
             }
         });
 

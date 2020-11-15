@@ -68,8 +68,36 @@ public class BookTableComponent extends Box {
                 if(table.getSelectedRow() == -1){
                     JOptionPane.showMessageDialog(jf, "请选中一本图书");
                 } else {
-                    new BorrowBookDialog(jf, "Borrow Book", true);
+                    Book toBorrow = new Book((String)td.get(table.getSelectedRow()).get(0),
+                            (String)td.get(table.getSelectedRow()).get(1),
+                            Double.parseDouble((String)td.get(table.getSelectedRow()).get(4)),
+                            (String)td.get(table.getSelectedRow()).get(2),
+                            Integer.parseInt((String)td.get(table.getSelectedRow()).get(5)),
+                            (String)td.get(table.getSelectedRow()).get(3),
+                            Integer.parseInt((String) td.get(table.getSelectedRow()).get(6)));
+                    new BorrowBookDialog(toBorrow, user, jf, "Borrow Book", true);
+                    model.getDataVector().clear();
+                    requestData();
+                }
+            }
+        });
 
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(table.getSelectedRow() == -1){
+                    JOptionPane.showMessageDialog(jf, "请选中一本图书");
+                } else {
+                    Book toBorrow = new Book((String) td.get(table.getSelectedRow()).get(0),
+                            (String) td.get(table.getSelectedRow()).get(1),
+                            Double.parseDouble((String) td.get(table.getSelectedRow()).get(4)),
+                            (String) td.get(table.getSelectedRow()).get(2),
+                            Integer.parseInt((String) td.get(table.getSelectedRow()).get(5)),
+                            (String) td.get(table.getSelectedRow()).get(3),
+                            Integer.parseInt((String) td.get(table.getSelectedRow()).get(6)));
+                    new ReturnBookDialog(toBorrow, user, jf, "Return Book", true);
+                    model.getDataVector().clear();
+                    requestData();
                 }
             }
         });
@@ -99,6 +127,7 @@ public class BookTableComponent extends Box {
                         case 0 : searchBook("name", sField.getText().trim()); break;
                         case 1 : searchBook("ISBN", sField.getText().trim()); break;
                         case 2 : searchBook("author", sField.getText().trim()); break;
+                        default:
                     }
                     if(td.isEmpty()){
                         JOptionPane.showMessageDialog(jf, "查找失败");
@@ -151,8 +180,9 @@ public class BookTableComponent extends Box {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String defaultText = "";
-                if(table.getSelectedRow() != -1)
+                if(table.getSelectedRow() != -1) {
                     defaultText = (String) td.get(table.getSelectedRow()).get(0);
+                }
                 // 修改图书信息
                 new UpdateBookDialog(defaultText
                         ,jf, "修改图书", true, new ActionListenerCallBack() {
@@ -181,8 +211,9 @@ public class BookTableComponent extends Box {
                         requestData(); //获取信息并刷新表格
                         if(succ){
                             JOptionPane.showMessageDialog(jf, "删除成功");
-                        }else
+                        }else {
                             JOptionPane.showMessageDialog(jf, "删除失败");
+                        }
                     }
                 }
             }
@@ -243,9 +274,9 @@ public class BookTableComponent extends Box {
      * @param text 查询的文本
      */
     public void searchBook(String column, String text){
-        Connection conn;
-        PreparedStatement ps;
-        ResultSet rs;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             conn = DBUtil.getConnection();
             String sql = "select * from books where " + column + " like ?";
@@ -269,6 +300,8 @@ public class BookTableComponent extends Box {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            DBUtil.close(conn, ps, rs);
         }
         model.fireTableDataChanged();
     }

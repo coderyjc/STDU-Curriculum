@@ -3,13 +3,16 @@ package Utils.DBUtils;
 import Domain.Book;
 import Domain.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DMLUtils {
     private DMLUtils(){}
 
+    /**
+     *  添加一个用户
+     * @param user 用户实体
+     * @return 添加成功还是失败
+     */
     public static boolean addUser(User user){
         boolean success = false;
         Connection conn = null;
@@ -35,6 +38,40 @@ public class DMLUtils {
             DBUtil.close(conn, ps);
         }
         return success;
+    }
+
+
+    /**
+     * 更新一个用户
+     * @param user 用户实体
+     * @param column 要更新的字段
+     * @param changed 更新后的值
+     * @return 更新成功还是失败
+     */
+    public static boolean updateUser(User user, String column, String changed){
+        boolean succ = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        /**
+         * 在这里，使用sql语句的时候不能把要修改的字段名也作为 ？ 匹配的成员，因为在转化的时候系统会自动在String
+         * 类型的变量前后加上单引号，
+         */
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "update users set " + column + " = ? where id = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, changed);
+            ps.setString(2, user.getUserId());
+            int result = ps.executeUpdate();
+            if(result != 0){
+                succ = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBUtil.close(conn, ps);
+        }
+        return succ;
     }
 
     /**
@@ -102,10 +139,13 @@ public class DMLUtils {
                 ps = conn.prepareStatement(sql_string);
             }
             int rst = ps.executeUpdate();
-            if(rst != 0)
+            if(rst != 0) {
                 succ = true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            DBUtil.close(conn, ps);
         }
         return succ;
     }
@@ -117,20 +157,86 @@ public class DMLUtils {
      */
     public static boolean deleteBook(Book book){
         boolean success = false;
-        Connection conn;
-        PreparedStatement ps;
+        Connection conn = null;
+        PreparedStatement ps = null;
         try {
             conn = DBUtil.getConnection();
             String sql = "delete from books where ISBN = " + book.getBookISBN();
             ps = conn.prepareStatement(sql);
             int rst = ps.executeUpdate();
-            if(rst != 0)
+            if(rst != 0) {
                 success = true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            DBUtil.close(conn, ps);
         }
         return  success;
     }
 
+    /**
+     *  借书操作
+     * @param book 要借的书籍对象
+     * @param user 借书人
+     * @return 结束成功还是失败
+     */
+    public static boolean borrowBook(Book book, User user){
+        if(book.getStock() <= 0){
+            return false;
+        }
+        boolean succ = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "insert into borrow value (?, ?, ?)";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, user.getUserId());
+            ps.setString(2, book.getBookISBN());
+            ps.setTimestamp(3, Timestamp.valueOf(String.valueOf(new Timestamp(System.currentTimeMillis()))));
+            int result = ps.executeUpdate();
+            succ = updateBook(book, "stock", String.valueOf(book.getStock() - 1));
+            succ = updateBook(book, "lent", String.valueOf(book.getLent() + 1));
+            if(result != 0){
+                succ = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBUtil.close(conn, ps);
+        }
+        return succ;
+    }
+
+    /**
+     *  还书操作
+     * @param book 要归还的书籍对象
+     * @param user 还书的人
+     * @return 还书成功还是失败
+     */
+    public static boolean returnBook(Book book, User user){
+        boolean succ = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "delete from borrow where userId = ? and bookId = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, user.getUserId());
+            ps.setString(2, book.getBookISBN());
+            int result = ps.executeUpdate();
+            if(result != 0){
+                succ = true;
+                DMLUtils.updateBook(book, "stock", String.valueOf(book.getStock() + 1));
+                DMLUtils.updateBook(book, "lent", String.valueOf(book.getLent() - 1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBUtil.close(conn, ps);
+        }
+        return succ;
+    }
 
 }

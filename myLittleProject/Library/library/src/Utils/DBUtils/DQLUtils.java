@@ -35,7 +35,12 @@ public class DQLUtils {
     }
 
     public static User login(Map<String, String> user){
-        User usr = new User();
+        /**
+         * 原来的时候我在这里给usr new了一个内存，这就导致了在返回的时候usr永远不可能为null
+         * 所以登录的时候永远显示成功，所以应该改成null，等到查找到了之后才给他分配一个地址
+         * 避免了空指针异常
+         */
+        User usr = null;
 //        boolean loginSuccess = false;
         Connection conn = null;
         PreparedStatement ps = null;
@@ -49,9 +54,16 @@ public class DQLUtils {
             rs = ps.executeQuery();
             if(rs.next()){
                 // 在登录的时候只把ID和姓名查找出来，其他的以后再说
+
+                /*
+                 * 我在第一次查找的时候只找了姓名和类型，而没有找密码，从而导致了在修改密码的时候修改错误。
+                 * 这个用户的类型要传递就要传递完整的类型，不能只传一半，不然后期出错了之后会会很难找。
+                 */
+                usr = new User();
                 usr.setUserId(user.get("userId"));
                 usr.setUserName(rs.getString("name"));
                 usr.setUserType(Integer.parseInt(rs.getString("type")));
+                usr.setUserPwd(rs.getString("password"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,7 +106,4 @@ public class DQLUtils {
         }
         return rst;
     }
-
-
-
 }
