@@ -21,10 +21,13 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Vector;
 
+/**
+ * 主页面上，树形结构的右半边
+ * @author Jingcun Yan
+ */
 public class BookTableComponent extends Box {
 
     final int WIDTH = 1000;
-    final int HEIGHT = 750;
 
     JFrame jf;
     Vector<Vector> td = new Vector<>();

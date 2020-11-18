@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * 修改密码的对话框
  * @author Jingcun Yan
  */
 public class ChangePwdDialog extends JDialog {
@@ -97,6 +98,7 @@ public class ChangePwdDialog extends JDialog {
             }
         });
 
+        // 取消修改密码的监听器
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

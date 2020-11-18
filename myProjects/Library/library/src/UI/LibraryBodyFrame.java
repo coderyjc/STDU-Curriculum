@@ -12,9 +12,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * @author Jingcun Yan
+ */
 public class LibraryBodyFrame {
 
     private final JFrame jf = new JFrame();
+
 
     final int WIDTH = 1200;
     final int HEIGHT = 800;
@@ -32,6 +36,7 @@ public class LibraryBodyFrame {
         JMenuItem m1 = new JMenuItem("切换账号");
         JMenuItem m2 = new JMenuItem("退出程序");
 
+        // 切换账号监听
         m1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,6 +49,7 @@ public class LibraryBodyFrame {
             }
         });
 
+        // 退出程序监听
         m2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -51,11 +57,13 @@ public class LibraryBodyFrame {
             }
         });
 
+        // 修改密码监听
         m3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // 修改密码
                 new ChangePwdDialog(user, jf, "修改密码", true, new ActionListenerCallBack() {
+                    // 回调函数，执行成功的情况下调用
                     @Override
                     public void hasDone(Object obj) {
                         try {
@@ -122,18 +130,22 @@ public class LibraryBodyFrame {
                 if (userManage.equals(lastPathComponent)){
                     jsp.setRightComponent(new UserTableComponent(jf, user));
                     jsp.setDividerLocation(150);
-                }else if (bookManage.equals(lastPathComponent)){
+                }
+                if (bookManage.equals(lastPathComponent)){
                     jsp.setRightComponent(new BookTableComponent(jf, user));
                     jsp.setDividerLocation(150);
-                }else{
+                }
+                if(lentManage.equals(lastPathComponent)){
                     jsp.setRightComponent(new BorrowTableComponent(jf, user));
                     jsp.setDividerLocation(150);
                 }
             }
         });
 
+        // 左右的栏目显示
         jsp.setLeftComponent(tree);
         jsp.setRightComponent(new BookTableComponent(jf, user));
+
         jf.add(jsp);
         jf.setResizable(false);
         jf.setVisible(true);

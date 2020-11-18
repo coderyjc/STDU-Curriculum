@@ -3,9 +3,12 @@ package Components.Panel;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * @author Jingcun Yan
+ */
 public class BackgroundPanel extends JPanel {
 
-    private Image backIcon;
+    private final Image backIcon;
 
     public BackgroundPanel(Image backIcon){
         this.backIcon = backIcon;

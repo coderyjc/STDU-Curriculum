@@ -3,17 +3,49 @@ package Domain;
 import java.util.Objects;
 
 public class Book {
-    private String bookISBN; // int 10
-    private String bookName; // varchar 20
-    private Double bookPrice; // double 4, 2
-    private String author; // int 10
-    private int stock; // int 2
-    private String description; // varchar 200
-    private int lent; // int  2
+    /**
+     * 书籍的ISBN
+     * 建表方式 varchar 20
+     */
+    private String bookISBN;
 
-    public Book(){
-    }
+    /**
+     * 书名字
+     * 建表方式 varchar 255
+     */
+    private String bookName;
 
+    /**
+     * 书籍的价格
+     * varchar 10, 2
+     */
+    private Double bookPrice;
+
+    /**
+     * 书籍的作者（考虑使用表连接，目前还没有实现）
+     * varchar 255
+     */
+    private String author;
+
+    /**
+     * 书籍目前的库存
+     * int 10
+     */
+    private int stock;
+
+    /**
+     * 书籍的简介
+     * varchar 200
+     */
+    private String description;
+
+    /**
+     * 已经借出去的书籍的数量
+     * int 10
+     */
+    private int lent;
+
+    public Book(){}
 
     public Book(String isbn){
         this.bookISBN = isbn;
@@ -88,8 +120,12 @@ public class Book {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Book book = (Book) o;
 

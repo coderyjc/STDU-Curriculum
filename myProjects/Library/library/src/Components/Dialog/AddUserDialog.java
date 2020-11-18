@@ -1,5 +1,5 @@
 /**
- * @Author JingcunYan
+ * @Author Jingcun Yan
  * @Date 12:32 2020/11/16
  * @Description
  */
@@ -21,6 +21,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * 添加用户的对话框
+ * @author Jingcun Yan
+ */
 public class AddUserDialog extends JDialog {
 
     final int WIDTH = 600;
@@ -119,7 +123,7 @@ public class AddUserDialog extends JDialog {
         btnBox.add(Box.createHorizontalStrut(80));
         btnBox.add(backBtn);
 
-
+        // 添加用户的监听器
         registBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -150,6 +154,7 @@ public class AddUserDialog extends JDialog {
             }
         });
 
+        // 返回按钮的监听器
         backBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

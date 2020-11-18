@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+/**
+ * @author Jingcun Yan
+ */
 public class DMLUtils {
     private DMLUtils(){}
 
@@ -38,7 +41,7 @@ public class DMLUtils {
             e.printStackTrace();
         } finally {
             //关闭数据库连接
-            DBUtil.close(conn, ps);
+            DBUtil.close(conn, ps, null);
         }
         return success;
     }
@@ -72,7 +75,7 @@ public class DMLUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-            DBUtil.close(conn, ps);
+            DBUtil.close(conn, ps, null);
         }
         return succ;
     }
@@ -98,12 +101,10 @@ public class DMLUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtil.close(conn, ps);
+            DBUtil.close(conn, ps, null);
         }
         return succ;
     }
-
-
 
     /**
      *  添加图书，如果已经有了就添加到库存里
@@ -140,7 +141,7 @@ public class DMLUtils {
             e.printStackTrace();
         } finally {
             //关闭数据库连接
-            DBUtil.close(conn, ps);
+            DBUtil.close(conn, ps, null);
         }
         return rst;
     }
@@ -149,7 +150,6 @@ public class DMLUtils {
      * @param book 书籍对象
      * @param column 要修改的字段
      * @return 执行的情况 成功/失败 + 数量
-     * 约定几种情况 ：没有足够的书籍，应该：----
      */
     public static boolean updateBook(Book book, String column, String changed){
         Connection conn = null;
@@ -162,12 +162,12 @@ public class DMLUtils {
                 一种本身就是字符串型的
                 一种是数字型的，这俩分别写sql
              */
-            if(column.equals("lent") || column.equals("stock") || column.equals("price")){
-                String sql_int = "update books set " + column + " = " + changed + " where ISBN = " + book.getBookISBN();
-                ps = conn.prepareStatement(sql_int);
+            if("lent".equals(column) || "stock".equals(column) || "price".equals(column)){
+                String sqlInt = "update books set " + column + " = " + changed + " where ISBN = " + book.getBookISBN();
+                ps = conn.prepareStatement(sqlInt);
             }else{
-                String sql_string = "update books set " + column + " = '" + changed + "' where ISBN = " + book.getBookISBN();
-                ps = conn.prepareStatement(sql_string);
+                String sqlString = "update books set " + column + " = '" + changed + "' where ISBN = " + book.getBookISBN();
+                ps = conn.prepareStatement(sqlString);
             }
             int rst = ps.executeUpdate();
             if(rst != 0) {
@@ -176,7 +176,7 @@ public class DMLUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-            DBUtil.close(conn, ps);
+            DBUtil.close(conn, ps, null);
         }
         return succ;
     }
@@ -201,7 +201,7 @@ public class DMLUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-            DBUtil.close(conn, ps);
+            DBUtil.close(conn, ps, null);
         }
         return  success;
     }
@@ -235,7 +235,7 @@ public class DMLUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-            DBUtil.close(conn, ps);
+            DBUtil.close(conn, ps, null);
         }
         return succ;
     }
@@ -265,7 +265,7 @@ public class DMLUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-            DBUtil.close(conn, ps);
+            DBUtil.close(conn, ps, null);
         }
         return succ;
     }

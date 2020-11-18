@@ -20,6 +20,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * 管理员主动修改用户信息
+ * @author Jingcun Yan
+ */
 public class UpdateUserDialog extends JDialog {
 
     final int WIDTH = 500;
@@ -30,6 +34,7 @@ public class UpdateUserDialog extends JDialog {
 
         this.setBounds((ScreenUtils.getScreenWidth() - WIDTH) / 2, (ScreenUtils.getScreenHeight() - HEIGHT) / 2, WIDTH, HEIGHT);
         BackgroundPanel bgp = null;
+
         try {
             bgp = new BackgroundPanel(ImageIO.read(new File(RealPath.realPath("updateUser.png"))));
         } catch (IOException e) {
@@ -119,7 +124,6 @@ public class UpdateUserDialog extends JDialog {
         tBox.add(Box.createHorizontalStrut(20));
         bgp.add(tBox);
         tBox.add(Box.createHorizontalStrut(20));
-
 
         this.add(bgp);
     }

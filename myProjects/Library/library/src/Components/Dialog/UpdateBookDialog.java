@@ -14,6 +14,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * 修改图书信息
+ * @author Jingcun Yan
+ */
 public class UpdateBookDialog extends JDialog {
 
     final int WIDTH = 500;
@@ -42,6 +46,7 @@ public class UpdateBookDialog extends JDialog {
         iBox.add(Box.createHorizontalStrut(20));
         iBox.add(iField);
         iField.setText(ISBN);
+
         // 要更改的项目
         Box cBox = Box.createHorizontalBox();
         JLabel cLabel = new JLabel("要更改的项目");
@@ -108,11 +113,13 @@ public class UpdateBookDialog extends JDialog {
         vBox.add(Box.createVerticalStrut(30));
         vBox.add(bBox);
 
+        // 为了让界面看起类不那么拥挤，就添加了一个box，让里面的内容收敛了一点。
         Box tBox = Box.createHorizontalBox();
         tBox.add(vBox);
         tBox.add(Box.createHorizontalStrut(20));
         bgp.add(tBox);
         tBox.add(Box.createHorizontalStrut(20));
+
         this.add(bgp);
     }
 }

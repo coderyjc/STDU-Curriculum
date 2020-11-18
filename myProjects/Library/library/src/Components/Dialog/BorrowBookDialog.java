@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * 借书的对话框
  * @author JingcunYan
  */
 public class BorrowBookDialog extends JDialog {
@@ -23,7 +24,9 @@ public class BorrowBookDialog extends JDialog {
     final int HEIGHT = 350;
 
     public BorrowBookDialog(Book book, User user, JFrame jf, String title, boolean isModel){
+
         super(jf, title, isModel);
+
         this.setBounds((ScreenUtils.getScreenWidth() - WIDTH) / 2, (ScreenUtils.getScreenHeight() - HEIGHT) / 2, WIDTH, HEIGHT);
         BackgroundPanel bgp = null;
         try {
@@ -35,10 +38,12 @@ public class BorrowBookDialog extends JDialog {
         // 整个垂直界面的箱子
         Box vBox = Box.createVerticalBox();
 
+        // 确认的箱子
         Box conBox = Box.createHorizontalBox();
         JLabel confirmLabel = new JLabel("确定借阅" + book.getBookName() + " ? ");
         conBox.add(confirmLabel);
 
+        // 确认按钮
         Box bBox = Box.createHorizontalBox();
         JButton confirmButton = new JButton("确认");
         JButton cancelButton = new JButton("取消");
@@ -60,6 +65,7 @@ public class BorrowBookDialog extends JDialog {
             }
         });
 
+        // 取消按钮
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -2,8 +2,13 @@ package Utils.DBUtils;
 
 import java.sql.*;
 
+
+/**
+ * @author Jingcun Yan
+ */
 public class DBUtil {
-    private DBUtil(){}
+    private DBUtil() {
+    }
 
     static {
         try {
@@ -20,13 +25,14 @@ public class DBUtil {
 
     /**
      * 关闭数据库， 释放资源
+     *
      * @param conn 数据库连接对象
-     * @param ps SQL语句
-     * @param rs 查询结果集
+     * @param ps   SQL语句
+     * @param rs   查询结果集
      */
-    public static void close(Connection conn, PreparedStatement ps, ResultSet rs){
+    public static void close(Connection conn, PreparedStatement ps, ResultSet rs) {
 
-        if(conn != null){
+        if (conn != null) {
             try {
                 conn.close();
             } catch (SQLException e) {
@@ -34,7 +40,7 @@ public class DBUtil {
             }
         }
 
-        if(ps != null){
+        if (ps != null) {
             try {
                 ps.close();
             } catch (SQLException e) {
@@ -42,32 +48,9 @@ public class DBUtil {
             }
         }
 
-        if(rs != null){
+        if (rs != null) {
             try {
                 rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * 重载，关闭数据库连接 -关闭执行 DQL 语句的数据库连接
-     * @param conn 数据库连接
-     * @param ps 关闭数据库操作对象
-     */
-    public static void close(Connection conn, PreparedStatement ps){
-        if(conn != null){
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if(ps != null){
-            try {
-                ps.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

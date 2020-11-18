@@ -14,17 +14,29 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * 注册界面
+ * @author Jingcun Yan
+ */
 public class SignUpFrame {
     private final JFrame jf = new JFrame("Sign Up");
 
     final int WIDTH = 600;
     final int HEIGHT = 700;
 
-    public void initUI() throws IOException {
+    public void initUI() {
+
         jf.setBounds((Toolkit.getDefaultToolkit().getScreenSize().width - WIDTH)/2, (Toolkit.getDefaultToolkit().getScreenSize().height - HEIGHT)/2, WIDTH, HEIGHT);
         jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        BackgroundPanel bgp = new BackgroundPanel(ImageIO.read(new File(RealPath.realPath("regist.png"))));
 
+        BackgroundPanel bgp = null;
+        try {
+            bgp = new BackgroundPanel(ImageIO.read(new File(RealPath.realPath("regist.png"))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 存放整体布局的大垂直的box
         Box vBox = Box.createVerticalBox();
 
         //用户姓名
@@ -106,7 +118,7 @@ public class SignUpFrame {
         btnBox.add(Box.createHorizontalStrut(80));
         btnBox.add(backBtn);
 
-
+        // 注册按钮
         registBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -144,6 +156,7 @@ public class SignUpFrame {
             }
         });
 
+        // 返回按钮
         backBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -174,7 +187,6 @@ public class SignUpFrame {
         vBox.add(btnBox);
 
         bgp.add(vBox);
-
         jf.add(bgp);
         jf.setVisible(true);
         jf.setResizable(false);

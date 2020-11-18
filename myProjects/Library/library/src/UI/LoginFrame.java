@@ -12,12 +12,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 登录界面，程序的入口
  * @author JingcunYan
  */
 public class LoginFrame {
@@ -25,10 +25,15 @@ public class LoginFrame {
     final int WIDTH = 600;
     final int HEIGHT = 500;
 
+    /**
+     * 本地用户，用来判断用户是否具有管理员权限，以及修改信息等
+     */
     User localUser;
 
     void initUI() throws Exception {
-        InitGlobalFont(new Font("alias", Font.PLAIN, 20));
+
+        // 设置全局字体
+        initGlobalFont(new Font("alias", Font.PLAIN, 20));
 
         JFrame jf = new JFrame("Login");
         jf.setBounds((Toolkit.getDefaultToolkit().getScreenSize().width - WIDTH)/2, (Toolkit.getDefaultToolkit().getScreenSize().height - HEIGHT)/2, WIDTH, HEIGHT);
@@ -67,6 +72,7 @@ public class LoginFrame {
         bBox.add(Box.createHorizontalStrut(100));
         bBox.add(signUp);
 
+        // 登录监听
         signIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -96,14 +102,11 @@ public class LoginFrame {
             }
         });
 
+        // 注册监听
         signUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    new SignUpFrame().initUI();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
+                new SignUpFrame().initUI();
                 jf.dispose();
             }
         });
@@ -122,7 +125,11 @@ public class LoginFrame {
         jf.setResizable(false);
     }
 
-    private static void InitGlobalFont(Font font) {
+    /**
+     *  初始化全局字体
+     * @param font 字体对象
+     */
+    private static void initGlobalFont(Font font) {
         FontUIResource fontRes = new FontUIResource(font);
         for (Enumeration<Object> keys = UIManager.getDefaults().keys();
              keys.hasMoreElements(); ) {
@@ -134,6 +141,10 @@ public class LoginFrame {
         }
     }
 
+    /**
+     * 主函数，程序的入口
+     * @param args 形参。
+     */
     public static void main(String[] args) {
         try {
             new LoginFrame().initUI();

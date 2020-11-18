@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * @author Jingcun Yan
+ */
 public class DQLUtils {
     private DQLUtils(){}
 

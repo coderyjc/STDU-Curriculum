@@ -20,6 +20,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * 还书的对话框
+ * @author Jingcun Yan
+ */
 public class ReturnBookDialog extends JDialog {
 
     final int WIDTH = 500;
@@ -39,10 +43,12 @@ public class ReturnBookDialog extends JDialog {
         // 整个垂直界面的箱子
         Box vBox = Box.createVerticalBox();
 
+        // 为了让文字什么的都对齐，弄了一个确认归还Label的箱子
         Box conBox = Box.createHorizontalBox();
         JLabel confirmLabel = new JLabel("确定归还" + book.getBookName() + " ? ");
         conBox.add(confirmLabel);
 
+        // 按钮的箱子
         Box bBox = Box.createHorizontalBox();
         JButton confirmButton = new JButton("确认");
         JButton cancelButton = new JButton("取消");
@@ -68,13 +74,13 @@ public class ReturnBookDialog extends JDialog {
             }
         });
 
+        // 取消按钮的监听器
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }
         });
-
 
         vBox.add(Box.createVerticalStrut(60));
         vBox.add(conBox);
@@ -84,7 +90,5 @@ public class ReturnBookDialog extends JDialog {
         bgp.add(vBox);
         this.add(bgp);
         this.setVisible(true);
-
     }
-
 }

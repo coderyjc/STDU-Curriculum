@@ -14,6 +14,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * 添加图书的对话框
+ * @author Jingcun Yan
+ */
 public class AddBookDialog extends JDialog {
 
     final int WIDTH = 500;

@@ -2,13 +2,45 @@ package Domain;
 
 import java.util.Objects;
 
+/**
+ * @author Jingcun Yan
+ */
 public class User {
-    private String userName;  // varchar 40
-    private Integer userSex; // int 1
-    private String userId; // varchar 20
-    private String userPwd; // varchar 20
-    private Integer userType; // int 1
-    private String userTel; // varchar 20
+    /**
+     * 用户名
+     * varchar 40
+     */
+    private String userName;
+
+    /**
+     * 用户性别
+     * int 1
+     */
+    private Integer userSex;
+
+    /**
+     *  用户ID
+     *  varchar 20
+     */
+    private String userId;
+
+    /**
+     * 用户的密码
+     * varchar 20
+     */
+    private String userPwd;
+
+    /**
+     * 用户的类型
+     * int 1
+     */
+    private Integer userType;
+
+    /**
+     * 用户的电话
+     * varchar 20
+     */
+    private String userTel;
 
     public User() {}
 
@@ -80,8 +112,12 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         User user = (User) o;
 
