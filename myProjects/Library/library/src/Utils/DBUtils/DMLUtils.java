@@ -2,6 +2,7 @@ package Utils.DBUtils;
 
 import Domain.Book;
 import Domain.User;
+import Utils.EncryptUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +33,8 @@ public class DMLUtils {
             ps.setString(3, String.valueOf(user.getUserType()));
             ps.setString(4, String.valueOf(user.getUserSex()));
             ps.setString(5, user.getUserTel());
-            ps.setString(6, user.getUserPwd());
+            // 将 md5 加密后的密码存入数据库
+            ps.setString(6, new EncryptUtil().MD5(user.getUserPwd()));
             int rs = ps.executeUpdate();
             if(rs != 0){
                 success = true;
@@ -246,7 +248,7 @@ public class DMLUtils {
      * @param user 还书的人
      * @return 还书成功还是失败
      */
-    public static boolean returnBook(Book book, User user){
+    public static boolean returnBook(Book book, User user) {
         boolean succ = false;
         Connection conn = null;
         PreparedStatement ps = null;
@@ -257,17 +259,16 @@ public class DMLUtils {
             ps.setString(1, user.getUserId());
             ps.setString(2, book.getBookISBN());
             int result = ps.executeUpdate();
-            if(result != 0){
+            if (result != 0) {
                 succ = true;
                 DMLUtils.updateBook(book, "stock", String.valueOf(book.getStock() + 1));
                 DMLUtils.updateBook(book, "lent", String.valueOf(book.getLent() - 1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             DBUtil.close(conn, ps, null);
         }
         return succ;
     }
-
 }

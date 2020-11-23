@@ -65,6 +65,8 @@ public class UserTableComponent extends Box {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new AddUserDialog(jf, "创建用户", true);
+                model.getDataVector().clear();
+                requestData();
             }
         });
 
@@ -100,6 +102,8 @@ public class UserTableComponent extends Box {
                         //执行图书删除业务
                         boolean succ = DMLUtils.deleteUser(new User((String) td.get(table.getSelectedRow()).get(0)));
                         if(succ){
+                            model.getDataVector().clear();
+                            requestData();
                             JOptionPane.showMessageDialog(jf, "删除成功");
                         }else {
                             JOptionPane.showMessageDialog(jf, "删除失败");
@@ -198,6 +202,7 @@ public class UserTableComponent extends Box {
         }finally {
             DBUtil.close(conn, ps, rs);
         }
+        model.fireTableDataChanged();
     }
 
     public void searchUser(String column, String text){

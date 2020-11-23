@@ -18,5 +18,6 @@
 - UI
 
 - Utils
-    - 只把与数据库相关的类分为了DMLUtils\DQLUtils等几个类的方式是否合理？也就是说，我把对Books和对Users的DML和
-    - 在DML
+    - 只把与数据库相关的类分为了DMLUtils\DQLUtils等几个类的方式是否合理？也就是说，我把对Books和对Users的DML都放在了同一个文件里是否合理？（我觉得可以改进）
+
+    

@@ -3,6 +3,7 @@ package UI;
 import Components.Panel.BackgroundPanel;
 import Domain.User;
 import Utils.DBUtils.DQLUtils;
+import Utils.EncryptUtil;
 import Utils.RealPath;
 
 import javax.imageio.ImageIO;
@@ -82,9 +83,9 @@ public class LoginFrame {
                     JOptionPane.showMessageDialog(jf,"用户名和密码都不能为空");
                 } else {
                     // 查询数据库，看看这个用户是否存在
-                    Map<String, String> user = new HashMap<>();
+                    Map<String, String> user = new HashMap<>(16);
                     user.put("userId", userId);
-                    user.put("userPwd", passWord);
+                    user.put("userPwd", new EncryptUtil().MD5(passWord));
                     localUser = DQLUtils.login(user);
                     if (localUser != null) { //用户存在
                         JOptionPane.showMessageDialog(jf, "登录成功！");
@@ -93,8 +94,8 @@ public class LoginFrame {
                         //这是一个残缺的用户，只有密码和用户名
                         //所以在执行一些操作的时候还要和数据库进行通讯查询是否有权限。
                         jf.dispose();
-                    } else { //用户不存在或者密码错误
-                        JOptionPane.showMessageDialog(jf, "用户不存在或者密码错误");
+                    } else { //密码错误
+                        JOptionPane.showMessageDialog(jf, "密码错误");
                         uField.setText("");
                         pFiled.setText("");
                     }

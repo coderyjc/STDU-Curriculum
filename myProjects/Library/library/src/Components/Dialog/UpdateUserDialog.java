@@ -10,6 +10,7 @@ import Components.ActionListenerCallBack;
 import Components.Panel.BackgroundPanel;
 import Domain.User;
 import Utils.DBUtils.DMLUtils;
+import Utils.EncryptUtil;
 import Utils.RealPath;
 import Utils.ScreenUtils;
 
@@ -92,11 +93,13 @@ public class UpdateUserDialog extends JDialog {
                     case 1: rst = DMLUtils.updateUser(user, "type", uField.getText().trim()); break;
                     case 2: rst = DMLUtils.updateUser(user, "sex", uField.getText().trim()); break;
                     case 3: rst = DMLUtils.updateUser(user, "tel", uField.getText().trim()); break;
-                    case 4: rst = DMLUtils.updateUser(user, "password", uField.getText().trim()); break;
+                    // md5 加密后的密码存入数据库
+                    case 4: rst = DMLUtils.updateUser(user, "password", new EncryptUtil().MD5(uField.getText().trim())); break;
                     default:
                 }
                 if(rst){
                     JOptionPane.showMessageDialog(jf, "修改成功");
+                    dispose();
                     listener.hasDone(null);
                 }
             }

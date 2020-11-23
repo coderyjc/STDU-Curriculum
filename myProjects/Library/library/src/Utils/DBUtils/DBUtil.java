@@ -25,7 +25,6 @@ public class DBUtil {
 
     /**
      * 关闭数据库， 释放资源
-     *
      * @param conn 数据库连接对象
      * @param ps   SQL语句
      * @param rs   查询结果集

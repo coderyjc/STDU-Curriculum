@@ -147,6 +147,7 @@ public class AddUserDialog extends JDialog {
                     boolean isSuc = DMLUtils.addUser(new User(userName, sex, userId, pwd1, type, tel));
                     if (isSuc){
                         JOptionPane.showMessageDialog(jf,"账号创建成功！");
+                        dispose();
                     } else{
                         JOptionPane.showMessageDialog(jf,"遇到未知错误，请重试！");
                     }

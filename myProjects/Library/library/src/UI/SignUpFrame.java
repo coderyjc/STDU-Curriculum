@@ -127,7 +127,8 @@ public class SignUpFrame {
                 String pwd1 = pField.getText().trim();
                 String pwd2 = pField2.getText().trim();
                 String tel = tField.getText().trim();
-                int type = sjcb.getItemCount();
+                int type = sjcb.getItemCount() == 5 ?
+                        0 : sjcb.getItemCount();
                 int sex = maleBtn.isSelected() ? 1 : 0;
                 //异常情况处理
                 //账号已存在

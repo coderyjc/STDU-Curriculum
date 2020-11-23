@@ -26,7 +26,7 @@ public class User {
 
     /**
      * 用户的密码
-     * varchar 20
+     * varchar 255
      */
     private String userPwd;
 

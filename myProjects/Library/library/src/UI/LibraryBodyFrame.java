@@ -1,6 +1,7 @@
 package UI;
 
 import Components.*;
+import Components.Dialog.AboutDialog;
 import Components.Dialog.ChangePwdDialog;
 import Domain.User;
 
@@ -19,12 +20,11 @@ public class LibraryBodyFrame {
 
     private final JFrame jf = new JFrame();
 
-
     final int WIDTH = 1200;
     final int HEIGHT = 800;
 
     public void initUI(User user) {
-        jf.setTitle("欢迎 " + user.getUserName());
+        jf.setTitle("欢迎你，" + user.getUserName());
         jf.setBounds((Toolkit.getDefaultToolkit().getScreenSize().width - WIDTH)/2, (Toolkit.getDefaultToolkit().getScreenSize().height - HEIGHT)/2, WIDTH, HEIGHT);
         jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,17 +82,16 @@ public class LibraryBodyFrame {
         jMenu.add(m2);
         menuBar.add(jMenu);
 
-        JMenu aboutMenu = new JMenu("关于");
-        menuBar.add(aboutMenu);
+        JMenuItem aboutMenu = new JMenuItem("关于");
+        jMenu.add(aboutMenu);
         aboutMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                new AboutDialog(jf, "关于", true).setVisible(true);
             }
         });
 
-
-         // 添加到frame中
+        // 添加到frame中
         jf.setJMenuBar(menuBar);
 
         // 分割面板
@@ -109,7 +108,9 @@ public class LibraryBodyFrame {
         root.add(bookManage);
 
         DefaultMutableTreeNode userManage = new DefaultMutableTreeNode("用户管理");
-        root.add(userManage);
+        if(user.getUserType() == 0) {
+            root.add(userManage);
+        }
 
         DefaultMutableTreeNode lentManage = new DefaultMutableTreeNode("借阅管理");
         root.add(lentManage);

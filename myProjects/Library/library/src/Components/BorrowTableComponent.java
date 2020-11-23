@@ -27,7 +27,7 @@ public class BorrowTableComponent extends Box {
     final int HEIGHT = 750;
 
     JFrame jf;
-    Vector<Vector> td = new Vector<>();
+    Vector<Vector<Object>> td = new Vector<>();
     DefaultTableModel model;
 
     public BorrowTableComponent(JFrame jf, User user) {
@@ -50,7 +50,8 @@ public class BorrowTableComponent extends Box {
 
         this.add(Box.createVerticalStrut(30));
 
-        //查询按钮
+        // 这个查询按钮应是管理元才有的权限，在一个用户访问的时候应该显示他自己的借阅信息
+        // 所以如果是查询的话，直接不显示以姓名或者ID查询就行了
         JPanel searchPanel = new JPanel();
         searchPanel.setMaximumSize(new Dimension(WIDTH, 70));
         searchPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -58,19 +59,25 @@ public class BorrowTableComponent extends Box {
         JLabel sLabel = new JLabel("记录查询 按照");
         JTextField sField = new JTextField(20);
         JButton sButton = new JButton("查询");
-        JComboBox<String> jcb_column = new JComboBox<>(new String[]{
+        JComboBox<String> jcbColumn = new JComboBox<>(new String[]{
                 "借阅人姓名", "借阅人ID", "书名", "ISBN", "作者"
         });
 
+
+        // 监听用户查询信息
         sButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // 查询
                 if("".equals(sField.getText().trim())){
                     JOptionPane.showMessageDialog(jf, "请输入查询内容");
-                }else{
+                } else if (user.getUserType() != 0 &&
+                        (jcbColumn.getSelectedIndex() == 0 || jcbColumn.getSelectedIndex() == 1)){
+                    JOptionPane.showMessageDialog(jf, "非管理员无权操作");
+                    return;
+                } else {
                     model.getDataVector().clear();
-                    switch (jcb_column.getSelectedIndex()){
+                    switch (jcbColumn.getSelectedIndex()){
                         case 0:searchBorrow("u.name", sField.getText().trim()); break;
                         case 1:searchBorrow("u.id", sField.getText().trim()); break;
                         case 2:searchBorrow("b.name", sField.getText().trim()); break;
@@ -79,19 +86,19 @@ public class BorrowTableComponent extends Box {
                         default:
                     }
                 }
-                    if(td.isEmpty()){
-                        JOptionPane.showMessageDialog(jf, "查找失败");
-                        requestData();
-                    } else {
-                        JOptionPane.showMessageDialog(jf, "查询成功");
-                    }
+                if(td.isEmpty()){
+                    JOptionPane.showMessageDialog(jf, "查找失败");
+                    requestData();
+                } else {
+                    JOptionPane.showMessageDialog(jf, "查询成功");
+                }
             }
         });
 
 
         searchPanel.add(sLabel);
         searchPanel.add(Box.createHorizontalStrut(20));
-        searchPanel.add(jcb_column);
+        searchPanel.add(jcbColumn);
         searchPanel.add(Box.createHorizontalStrut(20));
         searchPanel.add(sField);
         searchPanel.add(Box.createHorizontalStrut(20));
@@ -102,7 +109,13 @@ public class BorrowTableComponent extends Box {
 
         JScrollPane jsp = new JScrollPane(table);
         this.add(jsp);
-        requestData();
+
+        // 如果是管理员，那么可以requestData,如果不是，则只能通过筛选输出
+        if(user.getUserType() == 0){
+            requestData();
+        } else {
+            searchBorrow("u.id", user.getUserId());
+        }
         this.setVisible(true);
     }
 

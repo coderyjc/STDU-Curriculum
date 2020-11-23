@@ -4,6 +4,7 @@ import Components.ActionListenerCallBack;
 import Components.Panel.BackgroundPanel;
 import Domain.User;
 import Utils.DBUtils.DMLUtils;
+import Utils.EncryptUtil;
 import Utils.RealPath;
 import Utils.ScreenUtils;
 
@@ -75,7 +76,9 @@ public class ChangePwdDialog extends JDialog {
                 String newPwd = new String(nField.getPassword());
                 String rePwd = new String(cField.getPassword());
                 //旧密码错误判断
-                if(!old.equals(user.getUserPwd())){
+                if(!user.getUserPwd().equals(new EncryptUtil().MD5(old))){
+                    System.out.println(user.getUserPwd());
+                    System.out.println(old);
                     JOptionPane.showMessageDialog(jf, "旧密码错误");
                 // 空值判断
                 }
@@ -89,7 +92,7 @@ public class ChangePwdDialog extends JDialog {
                     JOptionPane.showMessageDialog(jf, "新旧密码一致");
                 //更新数据库，并提示重新登录
                 }else{
-                    if(DMLUtils.updateUser(user, "password", newPwd)){
+                    if(DMLUtils.updateUser(user, "password", new EncryptUtil().MD5(newPwd))){
                         JOptionPane.showMessageDialog(jf, "密码修改成功，请重新登录");
                         // 回调函数，关闭界面并重新登陆
                         listener.hasDone(null);
