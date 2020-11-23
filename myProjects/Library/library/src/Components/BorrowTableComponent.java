@@ -95,7 +95,6 @@ public class BorrowTableComponent extends Box {
             }
         });
 
-
         searchPanel.add(sLabel);
         searchPanel.add(Box.createHorizontalStrut(20));
         searchPanel.add(jcbColumn);
