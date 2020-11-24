@@ -49,7 +49,7 @@ public class LoginFrame {
         //登录相关的元素
         //用户名
         Box uBox = Box.createHorizontalBox();
-        JLabel uLabel = new JLabel("用户ID");
+        JLabel uLabel = new JLabel("账   号  ");
         JTextField uField = new JTextField(15);
         uBox.add(uLabel);
         uBox.add(Box.createHorizontalStrut(20));
@@ -57,7 +57,7 @@ public class LoginFrame {
 
         //密码
         Box pBox = Box.createHorizontalBox();
-        JLabel pLabel = new JLabel("密    码   ");
+        JLabel pLabel = new JLabel("密    码    ");
         JPasswordField pFiled = new JPasswordField(15);
         pBox.add(pLabel);
         pBox.add(Box.createVerticalStrut(20));

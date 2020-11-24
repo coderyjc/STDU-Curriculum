@@ -6,6 +6,8 @@
 
 package Components;
 
+import Components.Dialog.ReturnBookDialog;
+import Domain.Book;
 import Domain.User;
 import Utils.DBUtils.DBUtil;
 
@@ -34,7 +36,7 @@ public class BorrowTableComponent extends Box {
         super(BoxLayout.Y_AXIS);
         this.jf = jf;
 
-        Object[] columnNames = {"借阅人姓名", "书名", "作者", "借阅时间", "借阅人ID", "书籍ISBN"};
+        Object[] columnNames = {"书籍ISBN", "书名", "作者", "借阅人", "账号", "借阅时间"};
 
         Vector columnName = new Vector<>();
         Collections.addAll(columnName, columnNames);
@@ -48,9 +50,44 @@ public class BorrowTableComponent extends Box {
         table.setModel(model);
         table.setRowHeight(25);
 
-        this.add(Box.createVerticalStrut(30));
+        // 归还按钮
+        JPanel lentPanel = new JPanel();
+        lentPanel.setMaximumSize(new Dimension(WIDTH, 50));
+        lentPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        // 这个查询按钮应是管理元才有的权限，在一个用户访问的时候应该显示他自己的借阅信息
+        JButton returnButton = new JButton("归还图书");
+        returnButton.setSize(150, 100);
+        lentPanel.add(returnButton);
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(table.getSelectedRow() == -1){
+                    JOptionPane.showMessageDialog(jf, "请选中一本图书");
+                } else {
+                    Book toBorrow = new Book(
+                            (String) td.get(table.getSelectedRow()).get(0),
+                            (String) td.get(table.getSelectedRow()).get(1),
+                            null , // book price
+                            null ,
+                            1
+                    );
+                    new ReturnBookDialog(toBorrow, user, jf, "Return Book", true);
+                    model.getDataVector().clear();
+                    // 如果是管理员，那么可以requestData,如果不是，则只能通过筛选输出
+                    if(user.getUserType() == 0){
+                        requestData();
+                    } else {
+                        searchBorrow("u.id", user.getUserId());
+                    }
+                }
+            }
+        });
+
+        this.add(lentPanel);
+
+        this.add(Box.createVerticalStrut(20));
+
+        // 这个查询按钮应是管理员才有的权限，在一个用户访问的时候应该显示他自己的借阅信息
         // 所以如果是查询的话，直接不显示以姓名或者ID查询就行了
         JPanel searchPanel = new JPanel();
         searchPanel.setMaximumSize(new Dimension(WIDTH, 70));
@@ -125,17 +162,17 @@ public class BorrowTableComponent extends Box {
         ResultSet rs = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "select u.name as username, b.name as bookname, b.author, bo.borrowdate, u.id, b.isbn from users u, books b, borrow bo where u.id = bo.userId and bo.bookId = b.ISBN";
+            String sql = "select b.isbn, b.name as bookname, b.author, u.name as username, u.id, bo.datetime from t_user u, t_book b, t_borrowing bo where u.id = bo.id and bo.isbn = b.isbn order by datetime desc";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
                 Vector<Object> temp = new Vector<>();
-                temp.add(rs.getString("username"));
+                temp.add(rs.getString("isbn"));
                 temp.add(rs.getString("bookname"));
                 temp.add(rs.getString("author"));
-                temp.add(rs.getString("borrowdate"));
+                temp.add(rs.getString("username"));
                 temp.add(rs.getString("id"));
-                temp.add(rs.getString("isbn"));
+                temp.add(rs.getString("datetime"));
                 td.add(temp);
             }
         } catch (SQLException e) {
@@ -152,19 +189,19 @@ public class BorrowTableComponent extends Box {
         ResultSet rs = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "select u.name as username, b.name as bookname, b.author, bo.borrowdate, u.id, b.isbn from users u, books b, borrow bo where u.id = bo.userId and bo.bookId = b.ISBN and " + column + " = ?";
+            String sql = "select b.isbn, b.name as bookname, b.author, u.name as username, u.id, bo.datetime from t_user u, t_book b, t_borrowing bo where u.id = bo.id and bo.isbn = b.isbn and " + column + " = ? order by datetime desc";
             ps = conn.prepareStatement(sql);
             ps.setString(1, text);
             rs = ps.executeQuery();
             td.clear();
             while(rs.next()){
                 Vector<Object> temp = new Vector<>();
-                temp.add(rs.getString("username"));
+                temp.add(rs.getString("isbn"));
                 temp.add(rs.getString("bookname"));
                 temp.add(rs.getString("author"));
-                temp.add(rs.getString("borrowdate"));
+                temp.add(rs.getString("username"));
                 temp.add(rs.getString("id"));
-                temp.add(rs.getString("isbn"));
+                temp.add(rs.getString("datetime"));
                 td.add(temp);
             }
         } catch (SQLException e) {

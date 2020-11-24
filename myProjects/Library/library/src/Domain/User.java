@@ -125,6 +125,18 @@ public class User {
     }
 
     @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", userSex=" + userSex +
+                ", userId='" + userId + '\'' +
+                ", userPwd='" + userPwd + '\'' +
+                ", userType=" + userType +
+                ", userTel='" + userTel + '\'' +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         return userId != null ? userId.hashCode() : 0;
     }

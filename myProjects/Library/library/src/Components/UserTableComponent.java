@@ -184,7 +184,7 @@ public class UserTableComponent extends Box {
         ResultSet rs = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "select  * from users";
+            String sql = "select * from t_user";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
@@ -211,7 +211,7 @@ public class UserTableComponent extends Box {
         ResultSet rs = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "select * from users where " + column + " = ?";
+            String sql = "select * from t_user where " + column + " = ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, text);
             rs = ps.executeQuery();

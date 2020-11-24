@@ -65,7 +65,7 @@ public class AddUserDialog extends JDialog {
         //组装密码
         Box pBox = Box.createHorizontalBox();
         JLabel pLabel = new JLabel("密   码：");
-        JTextField pField = new JTextField(15);
+        JPasswordField pField = new JPasswordField(15);
 
         pBox.add(pLabel);
         pBox.add(Box.createHorizontalStrut(20));
@@ -74,7 +74,7 @@ public class AddUserDialog extends JDialog {
         //确认密码
         Box pBox2 = Box.createHorizontalBox();
         JLabel pLabel2 = new JLabel("确认密码：");
-        JTextField pField2 = new JTextField(15);
+        JPasswordField pField2 = new JPasswordField(15);
 
         pBox2.add(pLabel2);
         pBox2.add(pField2);
@@ -91,7 +91,7 @@ public class AddUserDialog extends JDialog {
         //身份
         Box sBox = Box.createHorizontalBox();
         JLabel sLabel = new JLabel("  身份   ");
-        JComboBox<String> sjcb = new JComboBox<>(new String[]{"1.其他人","2.本科生","3.研究生","4.教师","0.管理员"});
+        JComboBox<String> sjcb = new JComboBox<>(new String[]{"1.其他人", "0.管理员"});
         sBox.add(sLabel);
         sBox.add(Box.createHorizontalStrut(20));
         sBox.add(sjcb);
@@ -132,7 +132,7 @@ public class AddUserDialog extends JDialog {
                 String pwd1 = pField.getText().trim();
                 String pwd2 = pField2.getText().trim();
                 String tel = tField.getText().trim();
-                int type = sjcb.getItemCount();
+                int type = 1 - sjcb.getSelectedIndex();
                 int sex = maleBtn.isSelected() ? 1 : 0;
                 //异常情况处理
                 //账号已存在

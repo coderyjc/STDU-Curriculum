@@ -28,22 +28,11 @@ public class Book {
     private String author;
 
     /**
-     * 书籍目前的库存
-     * int 10
+     * 书籍现在的状态，是借出去了还是在库中
+     * 1 表示借出去了
+     * 0 表示还在库中
      */
-    private int stock;
-
-    /**
-     * 书籍的简介
-     * varchar 200
-     */
-    private String description;
-
-    /**
-     * 已经借出去的书籍的数量
-     * int 10
-     */
-    private int lent;
+    private int status;
 
     public Book(){}
 
@@ -51,23 +40,12 @@ public class Book {
         this.bookISBN = isbn;
     }
 
-    public Book(String bookName, String bookISBN, Double bookPrice, String author, int stock, String description) {
-        this.bookName = bookName;
-        this.bookISBN = bookISBN;
-        this.bookPrice = bookPrice;
-        this.author = author;
-        this.stock = stock;
-        this.description = description;
-    }
-
-    public Book(String bookISBN, String bookName, Double bookPrice, String author, int stock, String description, int lent) {
+    public Book(String bookISBN, String bookName, Double bookPrice, String author, int status) {
         this.bookISBN = bookISBN;
         this.bookName = bookName;
         this.bookPrice = bookPrice;
         this.author = author;
-        this.stock = stock;
-        this.description = description;
-        this.lent = lent;
+        this.status = status;
     }
 
     public String getBookName() {
@@ -102,21 +80,14 @@ public class Book {
         this.author = author;
     }
 
-    public int getStock() {
-        return stock;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
+    public int getStatus(){
+        return this.status;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -132,12 +103,15 @@ public class Book {
         return Objects.equals(bookISBN, book.bookISBN);
     }
 
-    public int getLent() {
-        return lent;
-    }
-
-    public void setLent(int lent) {
-        this.lent = lent;
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookISBN='" + bookISBN + '\'' +
+                ", bookName='" + bookName + '\'' +
+                ", bookPrice=" + bookPrice +
+                ", author='" + author + '\'' +
+                ", status=" + status +
+                '}';
     }
 
     @Override

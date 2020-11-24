@@ -71,24 +71,6 @@ public class AddBookDialog extends JDialog {
         pBox.add(Box.createHorizontalStrut(20));
         pBox.add(pField);
 
-        //库存
-        Box sBox = Box.createHorizontalBox();
-        JLabel sLabel = new JLabel("书籍库存");
-        JTextField sField = new JTextField(15);
-
-        sBox.add(sLabel);
-        sBox.add(Box.createHorizontalStrut(20));
-        sBox.add(sField);
-
-        //简介
-        Box dBox = Box.createHorizontalBox();
-        JLabel dLabel = new JLabel("书籍简介");
-        JTextField dField = new JTextField(15);
-
-        dBox.add(dLabel);
-        dBox.add(Box.createHorizontalStrut(20));
-        dBox.add(dField);
-
         //按钮
         Box bBox = Box.createHorizontalBox();
         JButton addButton = new JButton("添加");
@@ -104,16 +86,18 @@ public class AddBookDialog extends JDialog {
             public void actionPerformed(ActionEvent e) {
 
                 if("".equals(nField.getText()) || "".equals(pField.getText()) || "".equals(iField.getText())
-                        || "".equals(aField.getText()) || "".equals(sField.getText()) || "".equals(dField.getText())){
+                        || "".equals(aField.getText())){
                     JOptionPane.showMessageDialog(jf, "请把表格填完整！");
                     return;
                 }
-                boolean result = DMLUtils.addBook(new Book(nField.getText().trim(),
+
+                boolean result = DMLUtils.addBook(new Book(
                         iField.getText().trim(),
-                        Double.parseDouble(pField.getText().trim()),
+                        nField.getText().trim(),
+                        Double.parseDouble( pField.getText().trim()),
                         aField.getText().trim(),
-                        Integer.parseInt(sField.getText().trim()),
-                        dField.getText().trim()));
+                        0
+                ));
 
                 if (result) {
                     JOptionPane.showMessageDialog(jf, "添加成功");
@@ -121,8 +105,6 @@ public class AddBookDialog extends JDialog {
                     iField.setText("");
                     pField.setText("");
                     aField.setText("");
-                    sField.setText("");
-                    dField.setText("");
                     listener.hasDone(null);
                 } else {
                     JOptionPane.showMessageDialog(jf, "添加失败");
@@ -147,10 +129,6 @@ public class AddBookDialog extends JDialog {
         vBox.add(aBox);
         vBox.add(Box.createVerticalStrut(30));
         vBox.add(pBox);
-        vBox.add(Box.createVerticalStrut(30));
-        vBox.add(sBox);
-        vBox.add(Box.createVerticalStrut(30));
-        vBox.add(dBox);
         vBox.add(Box.createVerticalStrut(30));
         vBox.add(bBox);
 

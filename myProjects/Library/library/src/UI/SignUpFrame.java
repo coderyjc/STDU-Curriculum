@@ -50,17 +50,17 @@ public class SignUpFrame {
 
         //用户名
         Box uBox = Box.createHorizontalBox();
-        JLabel uLabel = new JLabel("用户ID：");
+        JLabel uLabel = new JLabel("账号：");
         JTextField uField = new JTextField(15);
 
         uBox.add(uLabel);
         uBox.add(Box.createHorizontalStrut(20));
         uBox.add(uField);
 
-        //组装密码
+        //密码
         Box pBox = Box.createHorizontalBox();
         JLabel pLabel = new JLabel("密   码：");
-        JTextField pField = new JTextField(15);
+        JPasswordField pField = new JPasswordField(15);
 
         pBox.add(pLabel);
         pBox.add(Box.createHorizontalStrut(20));
@@ -69,7 +69,7 @@ public class SignUpFrame {
         //确认密码
         Box pBox2 = Box.createHorizontalBox();
         JLabel pLabel2 = new JLabel("确认密码：");
-        JTextField pField2 = new JTextField(15);
+        JPasswordField pField2 = new JPasswordField(15);
 
         pBox2.add(pLabel2);
         pBox2.add(pField2);
@@ -86,7 +86,7 @@ public class SignUpFrame {
         //身份
         Box sBox = Box.createHorizontalBox();
         JLabel sLabel = new JLabel("  身份   ");
-        JComboBox<String> sjcb = new JComboBox<>(new String[]{"1.其他人","2.本科生","3.研究生","4.教师","0.管理员"});
+        JComboBox<String> sjcb = new JComboBox<>(new String[]{"1.其他人","0.管理员"});
         sBox.add(sLabel);
         sBox.add(Box.createHorizontalStrut(20));
         sBox.add(sjcb);
@@ -127,12 +127,10 @@ public class SignUpFrame {
                 String pwd1 = pField.getText().trim();
                 String pwd2 = pField2.getText().trim();
                 String tel = tField.getText().trim();
-                int type = sjcb.getItemCount() == 5 ?
-                        0 : sjcb.getItemCount();
+                int type = 1 - sjcb.getSelectedIndex();
                 int sex = maleBtn.isSelected() ? 1 : 0;
                 //异常情况处理
                 //账号已存在
-
                 if ("".equals(userName) || "".equals(userId) || "".equals(pwd1)|| "".equals(pwd2)|| "".equals(tel)){
                     JOptionPane.showMessageDialog(jf, "请全部填完之后再提交。");
                 } else if (DQLUtils.isExist(new User(userId))){

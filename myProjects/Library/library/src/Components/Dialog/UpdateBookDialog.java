@@ -51,7 +51,7 @@ public class UpdateBookDialog extends JDialog {
         Box cBox = Box.createHorizontalBox();
         JLabel cLabel = new JLabel("要更改的项目");
         JComboBox<String> jcbItem = new JComboBox<>(new String[]{
-                "书名", "价格", "作者", "库存", "简介"
+                "书名", "价格", "作者"
         });
         cBox.add(cLabel);
         cBox.add(Box.createHorizontalStrut(20));
@@ -85,8 +85,6 @@ public class UpdateBookDialog extends JDialog {
                     case 0 : rst = DMLUtils.updateBook(temp, "name",uField.getText().trim()); break;
                     case 1 : rst = DMLUtils.updateBook(temp, "price",uField.getText().trim()); break;
                     case 2 : rst = DMLUtils.updateBook(temp, "author",uField.getText().trim()); break;
-                    case 3 : rst = DMLUtils.updateBook(temp, "stock",uField.getText().trim()); break;
-                    case 4 : rst = DMLUtils.updateBook(temp, "description",uField.getText().trim()); break;
                     default:
                 }
                 if(rst){

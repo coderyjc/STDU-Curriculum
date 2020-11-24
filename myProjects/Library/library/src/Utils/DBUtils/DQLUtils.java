@@ -27,7 +27,7 @@ public class DQLUtils {
         ResultSet rs = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "select * from users where id = ?";
+            String sql = "select * from t_user where id = ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.getUserId());
             rs = ps.executeQuery();
@@ -49,13 +49,12 @@ public class DQLUtils {
          * 避免了空指针异常
          */
         User usr = null;
-//        boolean loginSuccess = false;
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "select * from users where id = ? and password = ?";
+            String sql = "select * from t_user where id = ? and password = ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.get("userId"));
             ps.setString(2, user.get("userPwd"));
@@ -84,7 +83,7 @@ public class DQLUtils {
     /**
      * 获取图书的工具类
      * @param ISBN 书籍的ISBN号
-     * @return 如果找到了这本书，就返回这本书构成的对象，如果没找到，就返回null
+     * @return 如果找到了这本书就返回这本书，找不到就返回null
      */
     public static Book getBook(String ISBN){
         Book rst = null;
@@ -93,19 +92,17 @@ public class DQLUtils {
         ResultSet rs = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "select * from books where ISBN = ?";
+            String sql = "select * from t_book where isbn = ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, ISBN);
             rs = ps.executeQuery();
             if(rs.next()){
                 rst = new Book();
                 rst.setAuthor(rs.getString("author"));
-                rst.setBookISBN(rs.getString("ISBN"));
+                rst.setBookISBN(rs.getString("isbn"));
                 rst.setBookName(rs.getString("name"));
                 rst.setBookPrice(Double.valueOf(rs.getString("price")));
-                rst.setDescription(rs.getString("description"));
-                rst.setLent(Integer.parseInt(rs.getString("lent")));
-                rst.setStock(Integer.parseInt(rs.getString("stock")));
+                rst.setStatus(Integer.parseInt(rs.getString("instock")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

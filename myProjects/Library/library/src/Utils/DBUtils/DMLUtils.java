@@ -26,7 +26,7 @@ public class DMLUtils {
         PreparedStatement ps = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "insert into users values (?, ?, ?, ?, ?, ?)";
+            String sql = "insert into t_user values (?, ?, ?, ?, ?, ?)";
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.getUserId());
             ps.setString(2, user.getUserName());
@@ -66,7 +66,7 @@ public class DMLUtils {
          */
         try {
             conn = DBUtil.getConnection();
-            String sql = "update users set " + column + " = ? where id = ?";
+            String sql = "update t_user set " + column + " = ? where id = ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, changed);
             ps.setString(2, user.getUserId());
@@ -93,7 +93,7 @@ public class DMLUtils {
         PreparedStatement ps = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "delete from users where id = ?";
+            String sql = "delete from t_user where id = ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.getUserId());
             int result = ps.executeUpdate();
@@ -109,32 +109,26 @@ public class DMLUtils {
     }
 
     /**
-     *  添加图书，如果已经有了就添加到库存里
+     *  添加图书
      * @param book 要添加的图书
      * @return 添加图书的业务是否成功了
      */
     public static boolean addBook(Book book){
-        // inStock 来存储在数据库中的书，以获得其库存量。
-        Book inStock = DQLUtils.getBook(book.getBookISBN());
-        if(inStock != null){
-            // 如果已经存在，此时book已经是完整的一本书了，就添加到库存中
-            int last = book.getStock() + inStock.getStock();
-            DMLUtils.updateBook(book, "stock", String.valueOf(last));
-            return true;
+        if(DQLUtils.getBook(book.getBookISBN()) != null){
+            // 如果已经存在了就返回false
+            return false;
         }
         boolean rst = false;
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "insert into books values (?, ?, ?, ?, ?, ?, 0)";
+            String sql = "insert into t_book values (?, ?, ?, ?, 0, null)";
             ps = conn.prepareStatement(sql);
             ps.setString(1, book.getBookISBN());
             ps.setString(2, book.getBookName());
-            ps.setString(3, String.valueOf(book.getBookPrice()));
-            ps.setString(4, book.getAuthor());
-            ps.setString(5, String.valueOf(book.getStock()));
-            ps.setString(6, book.getDescription());
+            ps.setString(3, book.getAuthor());
+            ps.setString(4, String.valueOf(book.getBookPrice()));
             int rs = ps.executeUpdate();
             if(rs != 0){
                 rst = true;
@@ -164,13 +158,10 @@ public class DMLUtils {
                 一种本身就是字符串型的
                 一种是数字型的，这俩分别写sql
              */
-            if("lent".equals(column) || "stock".equals(column) || "price".equals(column)){
-                String sqlInt = "update books set " + column + " = " + changed + " where ISBN = " + book.getBookISBN();
-                ps = conn.prepareStatement(sqlInt);
-            }else{
-                String sqlString = "update books set " + column + " = '" + changed + "' where ISBN = " + book.getBookISBN();
-                ps = conn.prepareStatement(sqlString);
-            }
+
+            String sql = "update t_book set " + column + " = " + changed + " where isbn = " + book.getBookISBN();
+            ps = conn.prepareStatement(sql);
+
             int rst = ps.executeUpdate();
             if(rst != 0) {
                 succ = true;
@@ -194,7 +185,7 @@ public class DMLUtils {
         PreparedStatement ps = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "delete from books where ISBN = " + book.getBookISBN();
+            String sql = "delete from t_book where isbn = " + book.getBookISBN();
             ps = conn.prepareStatement(sql);
             int rst = ps.executeUpdate();
             if(rst != 0) {
@@ -215,7 +206,7 @@ public class DMLUtils {
      * @return 结束成功还是失败
      */
     public static boolean borrowBook(Book book, User user){
-        if(book.getStock() <= 0){
+        if(book.getStatus() == 1){
             return false;
         }
         boolean succ = false;
@@ -223,15 +214,25 @@ public class DMLUtils {
         PreparedStatement ps = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "insert into borrow value (?, ?, ?)";
+            // 更新图书表
+            String sql = "insert into t_user_log value (?, ?, ?)";
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.getUserId());
             ps.setString(2, book.getBookISBN());
             ps.setTimestamp(3, Timestamp.valueOf(String.valueOf(new Timestamp(System.currentTimeMillis()))));
             int result = ps.executeUpdate();
-            succ = updateBook(book, "stock", String.valueOf(book.getStock() - 1));
-            succ = updateBook(book, "lent", String.valueOf(book.getLent() + 1));
-            if(result != 0){
+            // 更新借阅表
+            String sql2 = "insert into t_borrowing value (?, ?, ?)";
+            ps = conn.prepareStatement(sql2);
+            ps.setString(1, user.getUserId());
+            ps.setString(2, book.getBookISBN());
+            ps.setTimestamp(3, Timestamp.valueOf(String.valueOf(new Timestamp(System.currentTimeMillis()))));
+            int result2 = ps.executeUpdate();
+
+            // 执行结束业务
+            succ = updateBook(book, "instock", "1");
+
+            if(result != 0 && result2 != 0 && succ){
                 succ = true;
             }
         } catch (SQLException e) {
@@ -249,26 +250,25 @@ public class DMLUtils {
      * @return 还书成功还是失败
      */
     public static boolean returnBook(Book book, User user) {
-        boolean succ = false;
+        boolean succ1 =  DMLUtils.updateBook(book, "instock", "0");
+        boolean succ2 = false;
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "delete from borrow where userId = ? and bookId = ?";
+            String sql = "delete from t_borrowing where isbn = ? and id = ?";
             ps = conn.prepareStatement(sql);
-            ps.setString(1, user.getUserId());
-            ps.setString(2, book.getBookISBN());
-            int result = ps.executeUpdate();
-            if (result != 0) {
-                succ = true;
-                DMLUtils.updateBook(book, "stock", String.valueOf(book.getStock() + 1));
-                DMLUtils.updateBook(book, "lent", String.valueOf(book.getLent() - 1));
+            ps.setString(1, book.getBookISBN());
+            ps.setString(2, user.getUserId());
+            int rst = ps.executeUpdate();
+            if(rst != 0) {
+                succ2 = true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             DBUtil.close(conn, ps, null);
         }
-        return succ;
+        return succ1 && succ2;
     }
 }

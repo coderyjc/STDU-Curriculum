@@ -2,7 +2,6 @@ package Components;
 
 import Components.Dialog.AddBookDialog;
 import Components.Dialog.BorrowBookDialog;
-import Components.Dialog.ReturnBookDialog;
 import Components.Dialog.UpdateBookDialog;
 import Domain.Book;
 import Domain.User;
@@ -37,8 +36,7 @@ public class BookTableComponent extends Box {
         super(BoxLayout.Y_AXIS);
         this.jf = jf;
 
-
-        Object[] columnNames = {"ISBN", "书名", "作者", "简介", "价格", "库存", "借出"};
+        Object[] columnNames = {"ISBN", "书名", "作者", "价格", "是否借出"};
 
         Vector columnName = new Vector<>();
         Collections.addAll(columnName, columnNames);
@@ -52,65 +50,8 @@ public class BookTableComponent extends Box {
         table.setModel(model);
         table.setRowHeight(25);
 
-        this.add(Box.createVerticalStrut(30));
-
-        //借阅，归还 按钮
-        JPanel lentPanel = new JPanel();
-        lentPanel.setMaximumSize(new Dimension(WIDTH, 50));
-        lentPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        JButton borrowButton = new JButton("借阅图书");
-        JButton returnButton = new JButton("归还图书");
-        borrowButton.setSize(150, 100);
-        returnButton.setSize(150, 100);
-        lentPanel.add(borrowButton);
-        lentPanel.add(Box.createHorizontalStrut(50));
-        lentPanel.add(returnButton);
-        this.add(lentPanel);
-
-        // 借阅和归还模块
-        borrowButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(table.getSelectedRow() == -1){
-                    JOptionPane.showMessageDialog(jf, "请选中一本图书");
-                } else {
-                    Book toBorrow = new Book((String)td.get(table.getSelectedRow()).get(0),
-                            (String)td.get(table.getSelectedRow()).get(1),
-                            Double.parseDouble((String)td.get(table.getSelectedRow()).get(4)),
-                            (String)td.get(table.getSelectedRow()).get(2),
-                            Integer.parseInt((String)td.get(table.getSelectedRow()).get(5)),
-                            (String)td.get(table.getSelectedRow()).get(3),
-                            Integer.parseInt((String) td.get(table.getSelectedRow()).get(6)));
-                    new BorrowBookDialog(toBorrow, user, jf, "Borrow Book", true);
-                    model.getDataVector().clear();
-                    requestData();
-                }
-            }
-        });
-
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(table.getSelectedRow() == -1){
-                    JOptionPane.showMessageDialog(jf, "请选中一本图书");
-                } else {
-                    Book toBorrow = new Book((String) td.get(table.getSelectedRow()).get(0),
-                            (String) td.get(table.getSelectedRow()).get(1),
-                            Double.parseDouble((String) td.get(table.getSelectedRow()).get(4)),
-                            (String) td.get(table.getSelectedRow()).get(2),
-                            Integer.parseInt((String) td.get(table.getSelectedRow()).get(5)),
-                            (String) td.get(table.getSelectedRow()).get(3),
-                            Integer.parseInt((String) td.get(table.getSelectedRow()).get(6)));
-                    new ReturnBookDialog(toBorrow, user, jf, "Return Book", true);
-                    model.getDataVector().clear();
-                    requestData();
-                }
-            }
-        });
-
-
         this.add(Box.createVerticalStrut(15));
+
         // 书籍搜索框
         JPanel searchPanel = new JPanel();
         searchPanel.setMaximumSize(new Dimension(WIDTH, 70));
@@ -126,7 +67,7 @@ public class BookTableComponent extends Box {
         sButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(sField.getText().trim().equals("")){
+                if("".equals(sField.getText().trim())){
                     JOptionPane.showMessageDialog(jf, "请输入查询内容");
                 }else{
                     model.getDataVector().clear();
@@ -226,6 +167,32 @@ public class BookTableComponent extends Box {
             }
         });
 
+        //借阅按钮
+        JButton borrowButton = new JButton("借阅图书");
+        borrowButton.setSize(150, 100);
+
+        borrowButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(table.getSelectedRow() == -1){
+                    JOptionPane.showMessageDialog(jf, "请选中一本图书");
+                } else {
+                    Book toBorrow = new Book(
+                            (String) td.get(table.getSelectedRow()).get(0),
+                            (String) td.get(table.getSelectedRow()).get(1),
+                            Double.parseDouble((String) td.get(table.getSelectedRow()).get(3)) ,
+                            (String) td.get(table.getSelectedRow()).get(2),
+                            Integer.parseInt((String) td.get(table.getSelectedRow()).get(4))
+                    );
+                    new BorrowBookDialog(toBorrow, user, jf, "Borrow Book", true);
+                    model.getDataVector().clear();
+                    requestData();
+                }
+            }
+        });
+
+        searchPanel.add(Box.createHorizontalStrut(20));
+        searchPanel.add(borrowButton);
         btnPanel.add(addButton);
         btnPanel.add(Box.createHorizontalStrut(10));
         btnPanel.add(updButton);
@@ -250,20 +217,16 @@ public class BookTableComponent extends Box {
         ResultSet rs = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "select * from books";
+            String sql = "select * from t_book";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
                 Vector<Object> temp = new Vector<>();
-                String id = rs.getString("ISBN");
-                String name = rs.getString("name");
-                String author = rs.getString("author");
-                String description = rs.getString("description");
-                String price = rs.getString("price");
-                String stock = rs.getString("stock");
-                String lent = rs.getString("lent");
-                temp.add(id); temp.add(name); temp.add(author); temp.add(description);
-                temp.add(price); temp.add(stock); temp.add(lent);
+                temp.add(rs.getString("isbn"));
+                temp.add( rs.getString("name"));
+                temp.add(rs.getString("author"));
+                temp.add(rs.getString("price"));
+                temp.add(rs.getString("instock"));
                 td.add(temp);
             }
         } catch (SQLException e) {
@@ -286,7 +249,7 @@ public class BookTableComponent extends Box {
         ResultSet rs = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "select * from books where " + column + " like ?";
+            String sql = "select * from t_book where " + column + " like ?";
             ps = conn.prepareStatement(sql);
             String even = "%" + text + "%";
             ps.setString(1, even);
@@ -294,15 +257,11 @@ public class BookTableComponent extends Box {
             td.clear();
             while(rs.next()){
                 Vector<Object> temp = new Vector<>();
-                String id = rs.getString("ISBN");
-                String name = rs.getString("name");
-                String author = rs.getString("author");
-                String description = rs.getString("description");
-                String price = rs.getString("price");
-                String stock = rs.getString("stock");
-                String lent = rs.getString("lent");
-                temp.add(id); temp.add(name); temp.add(author); temp.add(description);
-                temp.add(price); temp.add(stock); temp.add(lent);
+                temp.add(rs.getString("isbn"));
+                temp.add( rs.getString("name"));
+                temp.add(rs.getString("author"));
+                temp.add(rs.getString("price"));
+                temp.add(rs.getString("instock"));
                 td.add(temp);
             }
         } catch (SQLException e) {
