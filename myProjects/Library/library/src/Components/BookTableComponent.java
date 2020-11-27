@@ -7,6 +7,7 @@ import Domain.Book;
 import Domain.User;
 import Utils.DBUtils.DBUtil;
 import Utils.DBUtils.DMLUtils;
+import Utils.DBUtils.DQLUtils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -28,20 +29,27 @@ public class BookTableComponent extends Box {
 
     final int WIDTH = 1000;
 
+    final int COLUMN_PER_PAGE = 18;
+
     JFrame jf;
     Vector<Vector> td = new Vector<>();
+    JTable table;
     DefaultTableModel model;
+
+    // 显示页面数据的参数
+    public int totalPage = 0;
+    public int currPage = 1;
 
     public BookTableComponent(JFrame jf, User user) {
         super(BoxLayout.Y_AXIS);
         this.jf = jf;
 
-        Object[] columnNames = {"ISBN", "书名", "作者", "价格", "是否借出"};
+        Object[] columnNames = {"序号","ISBN", "书名", "作者", "价格", "是否借出"};
 
         Vector columnName = new Vector<>();
         Collections.addAll(columnName, columnNames);
         model = new DefaultTableModel(td, columnName);
-        JTable table = new JTable(){
+        table = new JTable(){
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -79,7 +87,7 @@ public class BookTableComponent extends Box {
                     }
                     if(td.isEmpty()){
                         JOptionPane.showMessageDialog(jf, "查找失败");
-                        requestData();
+                        requestData(currPage);
                     } else {
                         JOptionPane.showMessageDialog(jf, "查询成功");
                     }
@@ -109,7 +117,6 @@ public class BookTableComponent extends Box {
         JButton updButton = new JButton("修改");
         JButton delButton = new JButton("删除选中行");
 
-
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -118,7 +125,7 @@ public class BookTableComponent extends Box {
                     @Override
                     public void hasDone(Object obj) {
                         model.getDataVector().clear();
-                        requestData(); //获取信息并刷新表格
+                        requestData(currPage); //获取信息并刷新表格
                     }
                 }).setVisible(true);
             }
@@ -129,7 +136,7 @@ public class BookTableComponent extends Box {
             public void actionPerformed(ActionEvent e) {
                 String defaultText = "";
                 if(table.getSelectedRow() != -1) {
-                    defaultText = (String) td.get(table.getSelectedRow()).get(0);
+                    defaultText = (String) td.get(table.getSelectedRow()).get(1);
                 }
                 // 修改图书信息
                 new UpdateBookDialog(defaultText
@@ -137,7 +144,7 @@ public class BookTableComponent extends Box {
                     @Override
                     public void hasDone(Object obj) {
                         model.getDataVector().clear();
-                        requestData(); //获取信息并刷新表格
+                        requestData(1); //获取信息并刷新表格
                     }
                 }).setVisible(true);
             }
@@ -154,9 +161,9 @@ public class BookTableComponent extends Box {
                     int click = JOptionPane.showConfirmDialog(jf, "确定删除选中行？");
                     if(click == JOptionPane.YES_OPTION){
                         //执行图书删除业务
-                        boolean succ = DMLUtils.deleteBook(new Book((String) td.get(selected).get(0)));
+                        boolean succ = DMLUtils.deleteBook(new Book((String) td.get(selected).get(1)));
                         model.getDataVector().clear();
-                        requestData(); //获取信息并刷新表格
+                        requestData(currPage); //获取信息并刷新表格
                         if(succ){
                             JOptionPane.showMessageDialog(jf, "删除成功");
                         }else {
@@ -166,6 +173,48 @@ public class BookTableComponent extends Box {
                 }
             }
         });
+
+
+        JPanel pagePanel = new JPanel();
+        pagePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        // 获取图书总数量
+        totalPage = (int) Math.ceil(DQLUtils.getNumberOfBooks() / (double)COLUMN_PER_PAGE);
+        // 翻页按钮
+        JButton lastPageButton = new JButton("上一页");
+        JLabel numberLabel = new JLabel();
+        JButton nextPageButton = new JButton("下一页");
+
+        // 上一页的监听器
+        lastPageButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(currPage == 1){
+                    JOptionPane.showMessageDialog(jf, "已经是第一页了");
+                }else{
+                    // 请求第上一页
+                    model.getDataVector().clear();
+                    requestData(--currPage);
+                    numberLabel.setText(currPage + "/" + totalPage);
+                }
+            }
+        });
+
+
+        // 下一页的监听器
+        nextPageButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(currPage == totalPage){
+                    JOptionPane.showMessageDialog(jf, "已经是最后一页了");
+                } else{
+                    // 请求下一页的数据
+                    model.getDataVector().clear();
+                    requestData(++currPage);
+                    numberLabel.setText(currPage + "/" + totalPage);
+                }
+            }
+        });
+
 
         //借阅按钮
         JButton borrowButton = new JButton("借阅图书");
@@ -178,21 +227,28 @@ public class BookTableComponent extends Box {
                     JOptionPane.showMessageDialog(jf, "请选中一本图书");
                 } else {
                     Book toBorrow = new Book(
-                            (String) td.get(table.getSelectedRow()).get(0),
                             (String) td.get(table.getSelectedRow()).get(1),
-                            Double.parseDouble((String) td.get(table.getSelectedRow()).get(3)) ,
                             (String) td.get(table.getSelectedRow()).get(2),
-                            Integer.parseInt((String) td.get(table.getSelectedRow()).get(4))
+                            Double.parseDouble((String) td.get(table.getSelectedRow()).get(4)) ,
+                            (String) td.get(table.getSelectedRow()).get(3),
+                            Integer.parseInt((String) td.get(table.getSelectedRow()).get(5))
                     );
                     new BorrowBookDialog(toBorrow, user, jf, "Borrow Book", true);
                     model.getDataVector().clear();
-                    requestData();
+                    requestData(currPage);
                 }
             }
         });
 
         searchPanel.add(Box.createHorizontalStrut(20));
         searchPanel.add(borrowButton);
+
+        pagePanel.add(lastPageButton);
+        pagePanel.add(Box.createHorizontalStrut(10));
+        pagePanel.add(numberLabel);
+        pagePanel.add(Box.createHorizontalStrut(10));
+        pagePanel.add(nextPageButton);
+
         btnPanel.add(addButton);
         btnPanel.add(Box.createHorizontalStrut(10));
         btnPanel.add(updButton);
@@ -207,21 +263,30 @@ public class BookTableComponent extends Box {
 
         JScrollPane jsp = new JScrollPane(table);
         this.add(jsp);
-        requestData();
+        this.add(Box.createVerticalStrut(20));
+        this.add(pagePanel);
+        // 第一次请求数据只显示第一页
+        requestData(1);
+        numberLabel.setText(currPage + "/" + totalPage);
+        resizeColumnWidth();
     }
 
-    public void requestData(){
+    public void requestData(int page){
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        int i = COLUMN_PER_PAGE * (page - 1);
         try {
             conn = DBUtil.getConnection();
-            String sql = "select * from t_book";
+            String sql = "select * from t_book limit ?, ?";
             ps = conn.prepareStatement(sql);
+            ps.setInt(1,COLUMN_PER_PAGE * (page - 1));
+            ps.setInt(2, COLUMN_PER_PAGE);
             rs = ps.executeQuery();
             while(rs.next()){
                 Vector<Object> temp = new Vector<>();
+                temp.add(++i);
                 temp.add(rs.getString("isbn"));
                 temp.add( rs.getString("name"));
                 temp.add(rs.getString("author"));
@@ -229,6 +294,7 @@ public class BookTableComponent extends Box {
                 temp.add(rs.getString("instock"));
                 td.add(temp);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -247,6 +313,7 @@ public class BookTableComponent extends Box {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        int i = 1;
         try {
             conn = DBUtil.getConnection();
             String sql = "select * from t_book where " + column + " like ?";
@@ -257,6 +324,7 @@ public class BookTableComponent extends Box {
             td.clear();
             while(rs.next()){
                 Vector<Object> temp = new Vector<>();
+                temp.add(i++);
                 temp.add(rs.getString("isbn"));
                 temp.add( rs.getString("name"));
                 temp.add(rs.getString("author"));
@@ -270,5 +338,15 @@ public class BookTableComponent extends Box {
             DBUtil.close(conn, ps, rs);
         }
         model.fireTableDataChanged();
+    }
+
+    public void resizeColumnWidth(){
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        table.getColumnModel().getColumn(0).setPreferredWidth(80);
+        table.getColumnModel().getColumn(1).setPreferredWidth(220);
+        table.getColumnModel().getColumn(2).setPreferredWidth(300);
+        table.getColumnModel().getColumn(3).setPreferredWidth(250);
+        table.getColumnModel().getColumn(4).setPreferredWidth(180);
+        table.getColumnModel().getColumn(5).setPreferredWidth(150);
     }
 }

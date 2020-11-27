@@ -50,7 +50,7 @@ public class SignUpFrame {
 
         //用户名
         Box uBox = Box.createHorizontalBox();
-        JLabel uLabel = new JLabel("账号：");
+        JLabel uLabel = new JLabel("账   号：");
         JTextField uField = new JTextField(15);
 
         uBox.add(uLabel);

@@ -20,7 +20,7 @@ public class LibraryBodyFrame {
 
     private final JFrame jf = new JFrame();
 
-    final int WIDTH = 1200;
+    final int WIDTH = 1400;
     final int HEIGHT = 800;
 
     public void initUI(User user) {
@@ -104,12 +104,14 @@ public class LibraryBodyFrame {
 
         // 左侧操作树
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("图书馆管理");
-        DefaultMutableTreeNode bookManage = new DefaultMutableTreeNode("图书管理");
+        DefaultMutableTreeNode bookManage = new DefaultMutableTreeNode("所有图书");
         root.add(bookManage);
 
         DefaultMutableTreeNode userManage = new DefaultMutableTreeNode("用户管理");
+        DefaultMutableTreeNode recordManage = new DefaultMutableTreeNode("借还记录");
         if(user.getUserType() == 0) {
             root.add(userManage);
+            root.add(recordManage);
         }
 
         DefaultMutableTreeNode lentManage = new DefaultMutableTreeNode("借阅管理");
@@ -138,6 +140,10 @@ public class LibraryBodyFrame {
                 }
                 if(lentManage.equals(lastPathComponent)){
                     jsp.setRightComponent(new BorrowTableComponent(jf, user));
+                    jsp.setDividerLocation(150);
+                }
+                if (recordManage.equals(lastPathComponent)){
+                    jsp.setRightComponent(new RecordComponent(jf, user));
                     jsp.setDividerLocation(150);
                 }
             }

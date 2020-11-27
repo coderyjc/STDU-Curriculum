@@ -30,18 +30,19 @@ public class BorrowTableComponent extends Box {
 
     JFrame jf;
     Vector<Vector<Object>> td = new Vector<>();
+    JTable table;
     DefaultTableModel model;
 
     public BorrowTableComponent(JFrame jf, User user) {
         super(BoxLayout.Y_AXIS);
         this.jf = jf;
 
-        Object[] columnNames = {"书籍ISBN", "书名", "作者", "借阅人", "账号", "借阅时间"};
+        Object[] columnNames = {"序号", "书籍ISBN", "书名", "作者", "借阅人", "账号", "借阅时间"};
 
         Vector columnName = new Vector<>();
         Collections.addAll(columnName, columnNames);
         model = new DefaultTableModel(td, columnName);
-        JTable table = new JTable(){
+        table = new JTable(){
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -65,8 +66,8 @@ public class BorrowTableComponent extends Box {
                     JOptionPane.showMessageDialog(jf, "请选中一本图书");
                 } else {
                     Book toBorrow = new Book(
-                            (String) td.get(table.getSelectedRow()).get(0),
                             (String) td.get(table.getSelectedRow()).get(1),
+                            (String) td.get(table.getSelectedRow()).get(2),
                             null , // book price
                             null ,
                             1
@@ -127,7 +128,7 @@ public class BorrowTableComponent extends Box {
                     JOptionPane.showMessageDialog(jf, "查找失败");
                     requestData();
                 } else {
-                    JOptionPane.showMessageDialog(jf, "查询成功");
+                    //JOptionPane.showMessageDialog(jf, "查询成功");
                 }
             }
         });
@@ -153,6 +154,7 @@ public class BorrowTableComponent extends Box {
             searchBorrow("u.id", user.getUserId());
         }
         this.setVisible(true);
+        resizeColumnWidth();
     }
 
 
@@ -165,8 +167,10 @@ public class BorrowTableComponent extends Box {
             String sql = "select b.isbn, b.name as bookname, b.author, u.name as username, u.id, bo.datetime from t_user u, t_book b, t_borrowing bo where u.id = bo.id and bo.isbn = b.isbn order by datetime desc";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
+            int i = 1;
             while(rs.next()){
                 Vector<Object> temp = new Vector<>();
+                temp.add(i++);
                 temp.add(rs.getString("isbn"));
                 temp.add(rs.getString("bookname"));
                 temp.add(rs.getString("author"));
@@ -194,8 +198,10 @@ public class BorrowTableComponent extends Box {
             ps.setString(1, text);
             rs = ps.executeQuery();
             td.clear();
+            int i = 1;
             while(rs.next()){
                 Vector<Object> temp = new Vector<>();
+                temp.add(i++);
                 temp.add(rs.getString("isbn"));
                 temp.add(rs.getString("bookname"));
                 temp.add(rs.getString("author"));
@@ -212,4 +218,14 @@ public class BorrowTableComponent extends Box {
         model.fireTableDataChanged();
     }
 
+    public void resizeColumnWidth(){
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        table.getColumnModel().getColumn(0).setPreferredWidth(60);
+        table.getColumnModel().getColumn(1).setPreferredWidth(170);
+        table.getColumnModel().getColumn(2).setPreferredWidth(300);
+        table.getColumnModel().getColumn(3).setPreferredWidth(200);
+        table.getColumnModel().getColumn(4).setPreferredWidth(100);
+        table.getColumnModel().getColumn(5).setPreferredWidth(150);
+        table.getColumnModel().getColumn(6).setPreferredWidth(240);
+    }
 }

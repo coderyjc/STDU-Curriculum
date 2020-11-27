@@ -17,7 +17,7 @@
 //
 //    public static String getRandomISBN(){
 //        int i = 10000 + new Random().nextInt(9999);
-//        return "145260" + i;
+//        return "145261" + i;
 //    }
 //
 //    public static void main(String[] args) {
@@ -32,9 +32,9 @@
 //             int ran = r.nextInt(10);
 //            for(int i = 0 ; i < ran; i++){
 //                ps.setString(1, isbn + i);
-//                ps.setString(2, "《JavaScript程序设计》");
-//                ps.setString(3, "Zakas");
-//                ps.setString(4, "156.6");
+//                ps.setString(2, "《深度学习》");
+//                ps.setString(3, "Goodfellow,Yoshua...");
+//                ps.setString(4, "123.4");
 //                ps.setString(5, "0");
 //                ps.setString(6, null);
 //            ps.executeUpdate();

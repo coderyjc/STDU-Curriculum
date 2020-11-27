@@ -6,5 +6,10 @@
     <option name="excludeGitArtifactDirectory" value="false" />
     <option name="excludeSubversionArtifactDirectory" value="false" />
     <option name="excludeAndroidRJavaFile" value="false" />
+    <option name="excludedDirectories">
+      <list>
+        <option value="$PROJECT_DIR$/V1.0" />
+      </list>
+    </option>
   </component>
 </project>

@@ -28,18 +28,19 @@ public class UserTableComponent extends Box {
 
     JFrame jf;
     Vector<Vector> td = new Vector<>();
+    JTable table;
     DefaultTableModel model;
 
     public UserTableComponent(JFrame jf, User user){
         super(BoxLayout.Y_AXIS);
         this.jf = jf;
 
-        Object[] columnNames = {"ID", "姓名", "类型", "性别", "电话", "密码"};
+        Object[] columnNames = {"序号", "ID", "姓名", "类型", "性别", "电话", "密码"};
 
         Vector columnName = new Vector<>();
         Collections.addAll(columnName, columnNames);
         model = new DefaultTableModel(td, columnName);
-        JTable table = new JTable(){
+        table = new JTable(){
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -76,7 +77,7 @@ public class UserTableComponent extends Box {
             public void actionPerformed(ActionEvent e) {
                 String defaultText = "";
                 if(table.getSelectedRow() != -1) {
-                    defaultText = (String) td.get(table.getSelectedRow()).get(0);
+                    defaultText = (String) td.get(table.getSelectedRow()).get(1);
                 }
                 new UpdateUserDialog(defaultText, jf, "修改信息", true, new ActionListenerCallBack() {
                     @Override
@@ -100,7 +101,7 @@ public class UserTableComponent extends Box {
                     int click = JOptionPane.showConfirmDialog(jf, "确定删除此用户？");
                     if(click == JOptionPane.YES_OPTION){
                         //执行图书删除业务
-                        boolean succ = DMLUtils.deleteUser(new User((String) td.get(table.getSelectedRow()).get(0)));
+                        boolean succ = DMLUtils.deleteUser(new User((String) td.get(table.getSelectedRow()).get(1)));
                         if(succ){
                             model.getDataVector().clear();
                             requestData();
@@ -176,6 +177,7 @@ public class UserTableComponent extends Box {
         this.add(jsp);
         requestData();
         this.setVisible(true);
+        resizeColumnWidth();
     }
 
     public void requestData(){
@@ -187,8 +189,10 @@ public class UserTableComponent extends Box {
             String sql = "select * from t_user";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
+            int i = 1;
             while(rs.next()){
                 Vector<Object> temp = new Vector<>();
+                temp.add(i++);
                 temp.add(rs.getString("id"));
                 temp.add(rs.getString("name"));
                 temp.add(rs.getString("type"));
@@ -216,8 +220,10 @@ public class UserTableComponent extends Box {
             ps.setString(1, text);
             rs = ps.executeQuery();
             td.clear();
+            int i = 1;
             while(rs.next()){
                 Vector<Object> temp = new Vector<>();
+                temp.add(i++);
                 temp.add(rs.getString("id"));
                 temp.add(rs.getString("name"));
                 temp.add(rs.getString("type"));
@@ -232,5 +238,16 @@ public class UserTableComponent extends Box {
             DBUtil.close(conn, ps, rs);
         }
         model.fireTableDataChanged();
+    }
+
+    public void resizeColumnWidth(){
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        table.getColumnModel().getColumn(0).setPreferredWidth(60);
+        table.getColumnModel().getColumn(1).setPreferredWidth(170);
+        table.getColumnModel().getColumn(2).setPreferredWidth(240);
+        table.getColumnModel().getColumn(3).setPreferredWidth(150);
+        table.getColumnModel().getColumn(4).setPreferredWidth(100);
+        table.getColumnModel().getColumn(5).setPreferredWidth(150);
+        table.getColumnModel().getColumn(6).setPreferredWidth(280);
     }
 }

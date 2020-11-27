@@ -15,6 +15,28 @@ import java.util.Map;
 public class DQLUtils {
     private DQLUtils(){}
 
+
+    public static int getNumberOfBooks(){
+        int number = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "select count(*) as cnt from t_book";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                number = rs.getInt("cnt");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBUtil.close(conn, ps, rs);
+        }
+        return number;
+    }
+
     /**
      *  查看用户是否存在
      * @param user 用户，其中只包含用户的ID
@@ -42,6 +64,11 @@ public class DQLUtils {
         return succ;
     }
 
+    /**
+     *  用户登录接口
+     * @param user 用户的账号和密码集合
+     * @return 登录成功返回用户对象，不成功的返回null
+     */
     public static User login(Map<String, String> user){
         /**
          * 原来的时候我在这里给usr new了一个内存，这就导致了在返回的时候usr永远不可能为null

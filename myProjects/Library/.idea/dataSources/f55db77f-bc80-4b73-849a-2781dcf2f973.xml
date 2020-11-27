@@ -659,74 +659,57 @@
     <user id="205" parent="1" name="root">
       <Host>localhost</Host>
     </user>
-    <table id="206" parent="3" name="borrow"/>
-    <table id="207" parent="3" name="t_book"/>
-    <table id="208" parent="3" name="t_borrowing"/>
-    <table id="209" parent="3" name="t_user"/>
-    <table id="210" parent="3" name="t_user_log"/>
-    <table id="211" parent="3" name="users"/>
-    <column id="212" parent="206" name="userId">
-      <Position>1</Position>
-      <DataType>varchar(255)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="213" parent="206" name="bookId">
-      <Position>2</Position>
-      <DataType>varchar(255)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="214" parent="206" name="borrowdate">
-      <Position>3</Position>
-      <DataType>timestamp|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="215" parent="207" name="isbn">
+    <table id="206" parent="3" name="t_book"/>
+    <table id="207" parent="3" name="t_borrowing"/>
+    <table id="208" parent="3" name="t_user"/>
+    <table id="209" parent="3" name="t_user_log"/>
+    <column id="210" parent="206" name="isbn">
       <Position>1</Position>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="216" parent="207" name="name">
+    <column id="211" parent="206" name="name">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="217" parent="207" name="author">
+    <column id="212" parent="206" name="author">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="218" parent="207" name="price">
+    <column id="213" parent="206" name="price">
       <Position>4</Position>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="219" parent="207" name="instock">
+    <column id="214" parent="206" name="instock">
       <Position>5</Position>
       <DataType>int(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="220" parent="207" name="borrow_id">
+    <column id="215" parent="206" name="borrow_id">
       <Position>6</Position>
       <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="221" parent="207" name="PRIMARY">
+    <key id="216" parent="206" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>isbn</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="222" parent="208" name="id">
+    <column id="217" parent="207" name="id">
       <Position>1</Position>
       <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="223" parent="208" name="isbn">
+    <column id="218" parent="207" name="isbn">
       <Position>2</Position>
       <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="224" parent="208" name="datetime">
+    <column id="219" parent="207" name="datetime">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
@@ -734,83 +717,53 @@
       <ColumnKind>normal</ColumnKind>
       <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
     </column>
-    <column id="225" parent="209" name="id">
+    <column id="220" parent="208" name="id">
       <Position>1</Position>
       <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="226" parent="209" name="name">
+    <column id="221" parent="208" name="name">
       <Position>2</Position>
       <DataType>varchar(40)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="227" parent="209" name="type">
+    <column id="222" parent="208" name="type">
       <Position>3</Position>
       <DataType>int(2)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="228" parent="209" name="sex">
+    <column id="223" parent="208" name="sex">
       <Position>4</Position>
       <DataType>int(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="229" parent="209" name="tel">
+    <column id="224" parent="208" name="tel">
       <Position>5</Position>
       <DataType>varchar(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="230" parent="209" name="password">
+    <column id="225" parent="208" name="password">
       <Position>6</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="231" parent="210" name="id">
+    <column id="226" parent="209" name="id">
       <Position>1</Position>
       <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="232" parent="210" name="isbn">
+    <column id="227" parent="209" name="isbn">
       <Position>2</Position>
       <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="233" parent="210" name="datetime">
+    <column id="228" parent="209" name="datetime">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
       <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
-    </column>
-    <column id="234" parent="211" name="id">
-      <Position>1</Position>
-      <DataType>varchar(20)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="235" parent="211" name="name">
-      <Position>2</Position>
-      <DataType>varchar(40)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="236" parent="211" name="type">
-      <Position>3</Position>
-      <DataType>int(1)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="237" parent="211" name="sex">
-      <Position>4</Position>
-      <DataType>int(1)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="238" parent="211" name="tel">
-      <Position>5</Position>
-      <DataType>varchar(20)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="239" parent="211" name="password">
-      <Position>6</Position>
-      <DataType>varchar(255)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
     </column>
   </database-model>
 </dataSource>

@@ -24,6 +24,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/README.md" root0="SKIP_INSPECTION" root1="SKIP_INSPECTION" />
+    <setting file="file://E:/code/IDEA/testBS/src/BootstrapTest.html" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectId" id="1k3ECx56tic661PBjYUNAeNWGYt" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -38,22 +39,23 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/library/src/jar/mysql-connector-java-5.1.47.jar" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/V1.0" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="fileTemplates" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.statistic.project.settings" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\GITHUB\Curriculum\myProjects\Library\library\src\Utils" />
-      <recent name="D:\GITHUB\Curriculum\myLittleProject\Library\library\src\jar" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\code\IDEA\testBS" />
       <recent name="D:\GITHUB\Curriculum\myLittleProject\Library\library\src\Components" />
       <recent name="D:\GITHUB\Curriculum\myLittleProject\Library\library\src\Utils" />
       <recent name="D:\GITHUB\Curriculum\myLittleProject\Library\library\src\UI" />
       <recent name="D:\GITHUB\Curriculum\myLittleProject\Library\library\src\imgs" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\GITHUB\Curriculum\myProjects\Library\library\src\Utils" />
+      <recent name="D:\GITHUB\Curriculum\myLittleProject\Library\library\src\jar" />
     </key>
   </component>
   <component name="RunManager" selected="Application.LoginFrame">
@@ -174,6 +176,17 @@
       <workItem from="1606212537355" duration="57000" />
       <workItem from="1606217219157" duration="657000" />
       <workItem from="1606221817130" duration="15681000" />
+      <workItem from="1606239719490" duration="121000" />
+      <workItem from="1606267282853" duration="410000" />
+      <workItem from="1606268413706" duration="70000" />
+      <workItem from="1606269868050" duration="821000" />
+      <workItem from="1606275365639" duration="1191000" />
+      <workItem from="1606280467701" duration="43000" />
+      <workItem from="1606298146689" duration="6063000" />
+      <workItem from="1606316833942" duration="17000" />
+      <workItem from="1606388990485" duration="617000" />
+      <workItem from="1606389995457" duration="1209000" />
+      <workItem from="1606458915432" duration="9263000" />
     </task>
     <servers />
   </component>
@@ -181,10 +194,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="249" y="0" key="#Project_Structure" timestamp="1606144273346">
+    <state x="249" y="0" key="#Project_Structure" timestamp="1606269975930">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="249" y="0" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1606144273346" />
+    <state x="249" y="0" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1606269975930" />
     <state x="361" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606222193719">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -201,30 +214,34 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="98" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1605786720410" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1606222191252">
+    <state x="509" y="114" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1606299464606">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1606222191252" />
-    <state width="1493" height="135" key="GridCell.Tab.0.bottom" timestamp="1606239579355">
+    <state x="509" y="114" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1606299464606" />
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1606316839972">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="135" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606239579355" />
-    <state width="1493" height="135" key="GridCell.Tab.0.center" timestamp="1606239579355">
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1606316839972" />
+    <state width="1493" height="138" key="GridCell.Tab.0.bottom" timestamp="1606467803559">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="135" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606239579355" />
-    <state width="1493" height="135" key="GridCell.Tab.0.left" timestamp="1606239579354">
+    <state width="1493" height="138" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606467803559" />
+    <state width="1493" height="138" key="GridCell.Tab.0.center" timestamp="1606467803559">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="135" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606239579354" />
-    <state width="1493" height="135" key="GridCell.Tab.0.right" timestamp="1606239579355">
+    <state width="1493" height="138" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606467803559" />
+    <state width="1493" height="138" key="GridCell.Tab.0.left" timestamp="1606467803558">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="135" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606239579355" />
-    <state x="257" y="66" key="SettingsEditor" timestamp="1605713083795">
+    <state width="1493" height="138" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606467803558" />
+    <state width="1493" height="138" key="GridCell.Tab.0.right" timestamp="1606467803559">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="257" y="66" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605713083795" />
+    <state width="1493" height="138" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606467803559" />
+    <state x="257" y="66" key="SettingsEditor" timestamp="1606390079279">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="257" y="66" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1606390079279" />
     <state x="490" y="154" width="540" height="540" key="StructurePopup" timestamp="1605179129231">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -241,14 +258,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="178" y="0" key="new project wizard/0.0.1536.824@0.0.1536.824" timestamp="1606144262386" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1606222255900">
+    <state x="425" y="187" key="run.anything.popup" timestamp="1606464905847">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1606222255900" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1606236600219">
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1606464905847" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1606465251813">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1606236600219" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1606465251813" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
