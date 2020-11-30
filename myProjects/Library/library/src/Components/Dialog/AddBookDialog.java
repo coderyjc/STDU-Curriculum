@@ -96,7 +96,8 @@ public class AddBookDialog extends JDialog {
                         nField.getText().trim(),
                         Double.parseDouble( pField.getText().trim()),
                         aField.getText().trim(),
-                        0
+                        0,
+                        null
                 ));
 
                 if (result) {

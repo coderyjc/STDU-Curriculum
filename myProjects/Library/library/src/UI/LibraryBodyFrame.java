@@ -106,7 +106,7 @@ public class LibraryBodyFrame {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("图书馆管理");
         DefaultMutableTreeNode bookManage = new DefaultMutableTreeNode("所有图书");
         root.add(bookManage);
-
+        DefaultMutableTreeNode guessYouLike = new DefaultMutableTreeNode("图书推荐");
         DefaultMutableTreeNode userManage = new DefaultMutableTreeNode("用户管理");
         DefaultMutableTreeNode recordManage = new DefaultMutableTreeNode("借还记录");
         if(user.getUserType() == 0) {
@@ -144,6 +144,10 @@ public class LibraryBodyFrame {
                 }
                 if (recordManage.equals(lastPathComponent)){
                     jsp.setRightComponent(new RecordComponent(jf, user));
+                    jsp.setDividerLocation(150);
+                }
+                if(guessYouLike.equals(lastPathComponent)){
+                    jsp.setRightComponent(new GuessYouLikeComponent(jf, user));
                     jsp.setDividerLocation(150);
                 }
             }

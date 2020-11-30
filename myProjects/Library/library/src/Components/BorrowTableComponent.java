@@ -59,6 +59,8 @@ public class BorrowTableComponent extends Box {
         JButton returnButton = new JButton("归还图书");
         returnButton.setSize(150, 100);
         lentPanel.add(returnButton);
+
+        // 归还图书的监听器
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,7 +72,8 @@ public class BorrowTableComponent extends Box {
                             (String) td.get(table.getSelectedRow()).get(2),
                             null , // book price
                             null ,
-                            1
+                            1,
+                            null
                     );
                     new ReturnBookDialog(toBorrow, user, jf, "Return Book", true);
                     model.getDataVector().clear();

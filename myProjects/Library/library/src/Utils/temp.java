@@ -17,7 +17,7 @@
 //
 //    public static String getRandomISBN(){
 //        int i = 10000 + new Random().nextInt(9999);
-//        return "145261" + i;
+//        return "565260" + i;
 //    }
 //
 //    public static void main(String[] args) {
@@ -29,14 +29,14 @@
 //            String sql = "insert into t_book value (?, ?, ?, ?, ?, ?)";
 //             ps = conn.prepareStatement(sql);
 //             String isbn = getRandomISBN();
-//             int ran = r.nextInt(10);
+//             int ran = r.nextInt(7) + 1;
 //            for(int i = 0 ; i < ran; i++){
 //                ps.setString(1, isbn + i);
-//                ps.setString(2, "《深度学习》");
-//                ps.setString(3, "Goodfellow,Yoshua...");
-//                ps.setString(4, "123.4");
+//                ps.setString(2, "《临床医学》");
+//                ps.setString(3, "潍坊医学院");
+//                ps.setString(4, "199.66");
 //                ps.setString(5, "0");
-//                ps.setString(6, null);
+//                ps.setString(6, "5");
 //            ps.executeUpdate();
 //            }
 //        } catch (SQLException e) {

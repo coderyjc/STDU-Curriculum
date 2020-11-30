@@ -34,18 +34,25 @@ public class Book {
      */
     private int status;
 
+    /**
+     * 书籍的类型
+     * 在数据库的book表中是int(3), 前端有详细的东西
+     */
+    private String type;
+
     public Book(){}
 
     public Book(String isbn){
         this.bookISBN = isbn;
     }
 
-    public Book(String bookISBN, String bookName, Double bookPrice, String author, int status) {
+    public Book(String bookISBN, String bookName, Double bookPrice, String author, int status, String type) {
         this.bookISBN = bookISBN;
         this.bookName = bookName;
         this.bookPrice = bookPrice;
         this.author = author;
         this.status = status;
+        this.type = type;
     }
 
     public String getBookName() {

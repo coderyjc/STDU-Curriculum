@@ -214,13 +214,6 @@ public class DMLUtils {
         PreparedStatement ps = null;
         try {
             conn = DBUtil.getConnection();
-            // 更新图书表
-            String sql = "insert into t_user_log value (?, ?, ?)";
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, user.getUserId());
-            ps.setString(2, book.getBookISBN());
-            ps.setTimestamp(3, Timestamp.valueOf(String.valueOf(new Timestamp(System.currentTimeMillis()))));
-            int result = ps.executeUpdate();
             // 更新借阅表
             String sql2 = "insert into t_borrowing value (?, ?, ?)";
             ps = conn.prepareStatement(sql2);
@@ -228,11 +221,9 @@ public class DMLUtils {
             ps.setString(2, book.getBookISBN());
             ps.setTimestamp(3, Timestamp.valueOf(String.valueOf(new Timestamp(System.currentTimeMillis()))));
             int result2 = ps.executeUpdate();
-
             // 执行结束业务
             succ = updateBook(book, "instock", "1");
-
-            if(result != 0 && result2 != 0 && succ){
+            if(result2 != 0 && succ){
                 succ = true;
             }
         } catch (SQLException e) {
@@ -270,5 +261,30 @@ public class DMLUtils {
             DBUtil.close(conn, ps, null);
         }
         return succ1 && succ2;
+    }
+
+    /**
+     * 书写借阅和归还日志
+     * @param id 操作人id
+     * @param isbn 操作的书
+     * @param type 操作类型
+     */
+    public static void writeLog(String id, String isbn, int type){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "insert into t_user_log values (?, ?, ?, ?)";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
+            ps.setString(2, isbn);
+            ps.setTimestamp(3, Timestamp.valueOf(String.valueOf(new Timestamp(System.currentTimeMillis()))));
+            ps.setString(4, String.valueOf(type));
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBUtil.close(conn, ps, null);
+        }
     }
 }

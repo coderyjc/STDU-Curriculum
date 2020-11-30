@@ -67,6 +67,7 @@ public class ReturnBookDialog extends JDialog {
                 }
                 if(suc){
                     JOptionPane.showMessageDialog(jf, "书籍已归还");
+                    DMLUtils.writeLog(user.getUserId(), book.getBookISBN(), 1);
                 }else{
                     JOptionPane.showMessageDialog(jf, "还书失败");
                 }

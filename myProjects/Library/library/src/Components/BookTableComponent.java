@@ -37,14 +37,14 @@ public class BookTableComponent extends Box {
     DefaultTableModel model;
 
     // 显示页面数据的参数
-    public int totalPage = 0;
+    public int totalPage ;
     public int currPage = 1;
 
     public BookTableComponent(JFrame jf, User user) {
         super(BoxLayout.Y_AXIS);
         this.jf = jf;
 
-        Object[] columnNames = {"序号","ISBN", "书名", "作者", "价格", "是否借出"};
+        Object[] columnNames = {"序号","ISBN", "书名", "作者", "类别", "价格", "是否借出"};
 
         Vector columnName = new Vector<>();
         Collections.addAll(columnName, columnNames);
@@ -117,6 +117,7 @@ public class BookTableComponent extends Box {
         JButton updButton = new JButton("修改");
         JButton delButton = new JButton("删除选中行");
 
+        // 添加图书
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -131,6 +132,7 @@ public class BookTableComponent extends Box {
             }
         });
 
+        // 更新图书
         updButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -150,6 +152,7 @@ public class BookTableComponent extends Box {
             }
         });
 
+        // 删除图书
         delButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -229,9 +232,10 @@ public class BookTableComponent extends Box {
                     Book toBorrow = new Book(
                             (String) td.get(table.getSelectedRow()).get(1),
                             (String) td.get(table.getSelectedRow()).get(2),
-                            Double.parseDouble((String) td.get(table.getSelectedRow()).get(4)) ,
+                            Double.parseDouble((String) td.get(table.getSelectedRow()).get(5)) ,
                             (String) td.get(table.getSelectedRow()).get(3),
-                            Integer.parseInt((String) td.get(table.getSelectedRow()).get(5))
+                            Integer.parseInt((String) td.get(table.getSelectedRow()).get(6)),
+                            (String) td.get(table.getSelectedRow()).get(4)
                     );
                     new BorrowBookDialog(toBorrow, user, jf, "Borrow Book", true);
                     model.getDataVector().clear();
@@ -279,7 +283,7 @@ public class BookTableComponent extends Box {
         int i = COLUMN_PER_PAGE * (page - 1);
         try {
             conn = DBUtil.getConnection();
-            String sql = "select * from t_book limit ?, ?";
+            String sql = "select tb.isbn isbn, tb.name name, tb.author author, tb.price price, tb.instock instock, tt.typename typename from t_book tb, t_booktype tt where tb.type = tt.typeid limit ?, ?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1,COLUMN_PER_PAGE * (page - 1));
             ps.setInt(2, COLUMN_PER_PAGE);
@@ -290,11 +294,11 @@ public class BookTableComponent extends Box {
                 temp.add(rs.getString("isbn"));
                 temp.add( rs.getString("name"));
                 temp.add(rs.getString("author"));
+                temp.add(rs.getString("typename"));
                 temp.add(rs.getString("price"));
                 temp.add(rs.getString("instock"));
                 td.add(temp);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -316,7 +320,7 @@ public class BookTableComponent extends Box {
         int i = 1;
         try {
             conn = DBUtil.getConnection();
-            String sql = "select * from t_book where " + column + " like ?";
+            String sql = "select tb.isbn isbn, tb.name name, tb.author author, tb.price price, tb.instock instock, tt.typename typename from t_book tb, t_booktype tt where tb.type = tt.typeid and " + column + " like ?";
             ps = conn.prepareStatement(sql);
             String even = "%" + text + "%";
             ps.setString(1, even);
@@ -328,6 +332,7 @@ public class BookTableComponent extends Box {
                 temp.add(rs.getString("isbn"));
                 temp.add( rs.getString("name"));
                 temp.add(rs.getString("author"));
+                temp.add(rs.getString("typename"));
                 temp.add(rs.getString("price"));
                 temp.add(rs.getString("instock"));
                 td.add(temp);
@@ -343,10 +348,11 @@ public class BookTableComponent extends Box {
     public void resizeColumnWidth(){
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.getColumnModel().getColumn(0).setPreferredWidth(80);
-        table.getColumnModel().getColumn(1).setPreferredWidth(220);
+        table.getColumnModel().getColumn(1).setPreferredWidth(200);
         table.getColumnModel().getColumn(2).setPreferredWidth(300);
-        table.getColumnModel().getColumn(3).setPreferredWidth(250);
-        table.getColumnModel().getColumn(4).setPreferredWidth(180);
+        table.getColumnModel().getColumn(3).setPreferredWidth(200);
+        table.getColumnModel().getColumn(4).setPreferredWidth(100);
         table.getColumnModel().getColumn(5).setPreferredWidth(150);
+        table.getColumnModel().getColumn(6).setPreferredWidth(100);
     }
 }

@@ -58,6 +58,7 @@ public class BorrowBookDialog extends JDialog {
                 boolean suc = DMLUtils.borrowBook(book, user);
                 if(suc){
                     JOptionPane.showMessageDialog(jf, "借阅成功");
+                    DMLUtils.writeLog(user.getUserId(), book.getBookISBN(), 0);
                 }else{
                     JOptionPane.showMessageDialog(jf, "借阅失败");
                 }
@@ -72,7 +73,6 @@ public class BorrowBookDialog extends JDialog {
                 dispose();
             }
         });
-
 
         vBox.add(Box.createVerticalStrut(60));
         vBox.add(conBox);

@@ -31,9 +31,9 @@ public class RecordComponent  extends Box{
         super(BoxLayout.Y_AXIS);
         this.jf = jf;
 
-        Object[] columnNames = {"序号","借阅人账号", "书籍ID", "借阅时间"};
+        Object[] columnNames = {"序号","借阅人账号", "书籍ISBN", "借阅时间", "操作类型"};
 
-        Vector columnName = new Vector<>();
+        Vector<Object> columnName = new Vector<>();
         Collections.addAll(columnName, columnNames);
         model = new DefaultTableModel(td, columnName);
         table = new JTable(){
@@ -45,9 +45,10 @@ public class RecordComponent  extends Box{
         table.setModel(model);
         table.setRowHeight(25);
 
-
-
-
+        JScrollPane jsp = new JScrollPane(table);
+        this.add(jsp);
+        requestData();
+        this.setVisible(true);
     }
 
     public void requestData(){
@@ -56,16 +57,23 @@ public class RecordComponent  extends Box{
         ResultSet rs = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "select * from t_user_log";
+            String sql = "select tl.id id, tl.isbn isbn, tl.datetime datetime, tt.typename typename from t_user_log  as tl join t_operator_type as tt  where tt.typeid = tl.type";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
+            int i = 0;
             while(rs.next()){
-
-
-
+                Vector<String> temp = new Vector<>();
+                temp.add(String.valueOf(++i));
+                temp.add(rs.getString("id"));
+                temp.add(rs.getString("isbn"));
+                temp.add(rs.getString("datetime"));
+                temp.add(rs.getString("typename"));
+                td.add(temp);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBUtil.close(conn, ps, rs);
         }
         model.fireTableDataChanged();
     }
