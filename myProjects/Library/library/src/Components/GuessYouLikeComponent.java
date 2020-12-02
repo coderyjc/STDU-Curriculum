@@ -59,7 +59,7 @@ public class GuessYouLikeComponent extends Box {
         }
         System.out.println(userPreference.get(1));
 
-         
+
 
     }
 }
