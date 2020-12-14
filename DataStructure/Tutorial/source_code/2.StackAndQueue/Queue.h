@@ -27,7 +27,6 @@ public:
 	MyQueue() {
 		header = new QNode<T>();
 		this->_size = 0;
-		cout << "Q Constructor" << endl; //---------------debug
 	}
 
 	void push(T data); //Èë¶Ó - Î²²å
@@ -69,8 +68,7 @@ void MyQueue<T>::push(T data) {
 template<class T>
 void MyQueue<T>::pop() {
 	if (empty()) {
-		cout << "Empty List" << endl;
-		exit(0);
+		return;
 	} else {
 		NodePosi(T) t = header->next;
 		header->next = header->next->next;
@@ -87,8 +85,7 @@ bool MyQueue<T>::empty() {
 template<class T>
 T MyQueue<T>::front() {
 	if (empty()) {
-		cout << "Empty List" << endl;
-		exit(0);
+		return nullptr;
 	}
 	return header->next->data;
 }

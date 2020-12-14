@@ -7,7 +7,6 @@ template<class T>
 class MyDoubleStack {
 public:
 	MyDoubleStack() {
-		cout << "Stack Constructor" << endl; //-------------debug
 		_top[0] = _btm[0] = 0;
 		_top[1] = _btm[1] = MAX_STACK_SIZE * 2;
 		data = new T[MAX_STACK_SIZE * 2 + 1];
@@ -28,8 +27,6 @@ public:
 	bool empty_0();
 	bool empty_1();
 
-	//void destory();
-	//void clean();
 private:
 	int _top[2];
 	int _btm[2];

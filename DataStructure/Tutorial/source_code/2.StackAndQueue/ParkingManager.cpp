@@ -36,14 +36,22 @@ ParkingManager::~ParkingManager() {
 	}
 }
 
-
 // 前提：等候区容量无限
 
 void ParkingManager::enterPark() {
 	string id;
 	int time;
 	int type;
-	cin >> id >> type >> time;
+
+	int enterSuc = 0;
+	do {
+		cin >> id >> type >> time;
+		if (type < 1 || type > 3 || time < 0) {
+			cout << "输入数据有误，请重新输入" << endl;
+			enterSuc = 1;
+		} else break;
+	} while (enterSuc);
+
 	if (this->size - OCCUPY[type] < 0) { //	检查车库有没有满
 		cout << "车已停满，车辆进入等候区等候..." << endl;
 		this->wait.push(new Car(time, id, type));
@@ -68,11 +76,13 @@ void ParkingManager::outPark() {
 	cin >> id >> type >> time;
 	int flag = 0;
 	while (!this->parking.empty_0()) {
-		if (this->parking.top_0()->ID != id) { //这辆车不是要出去的车
+		if (this->parking.top_0()->ID != id) { 
+			//这辆车不是要出去的车
 			this->parking.push_1(this->parking.top_0());
 			this->parking.pop_0();
-		} else { // 这辆车是要出去的车
-			cout << "车号 " << this->parking.top_0()->ID
+		} else {
+			// 这辆车是要出去的车
+			cout << "车 " << this->parking.top_0()->ID
 				<< " 出库，时长为 " <<
 				(time - this->parking.top_0()->enTime) +
 				(this->parking.top_0()->enTime - this->parking.top_0()->waitTime)
@@ -82,23 +92,40 @@ void ParkingManager::outPark() {
 				<< endl;
 			Car* todel = this->parking.top_0();
 			this->parking.pop_0();
-			this->size -= OCCUPY[todel->type]; //减去容量
-			delete todel;//delete 刚出栈的车
+			
+			//车站的容量加上刚刚出去的这辆车的容量
+			this->size += OCCUPY[todel->type]; 
+			
+			//delete 刚出栈的车
+			delete todel;
 			flag = 1;
 			break;
 		}
 	}
-	if (flag) { // 在车库中找到了这辆车
-		while (!this->parking.empty_1()) { // 将刚才出去的车弄进去
+	if (flag) { 
+		// 在车库中找到了这辆车，这辆车已经出去了的情况下
+		while (!this->parking.empty_1()) {
+			// 将刚刚让路去的车弄进去
 			this->parking.push_0(this->parking.top_1());
 			this->parking.pop_1();
 		}
-		if (!this->wait.empty()) { // 把在外面等待的1辆车放进车库
-			this->wait.front()->enTime = time; //设置等待队列最前面的车的入库时间
-			this->parking.push_0(this->wait.front());
-			this->wait.pop();
+		// 如果在外面等待的第一辆车符合要求，
+		// 也就是车库中可以容纳这辆车
+		// 就把在外面等待的1辆车放进车库
+		if (!this->wait.empty()) { // 如果外面等待队列不空
+			//  如果车库中还有空间
+			if (this->size - OCCUPY[this->wait.front()->type] >= 0) {
+				this->size -= OCCUPY[this->wait.front()->type];
+				cout << "在等待队列中的车 " << this->wait.front()->ID << " 进入车库，时间为 " << time << endl;
+				this->wait.front()->enTime = time; 
+				
+				//设置等待队列最前面的车的入库时间
+				this->parking.push_0(this->wait.front());
+				this->wait.pop();
+			}
 		}
-	} else { // 在车库中没有找到这辆车，从等候区寻找这辆车
+	} else { 
+		// 在车库中没有找到这辆车，从等候区寻找这辆车
 		flag = 0;
 		// int findit = 0;
 		for (int i = 0; i < this->wait.size(); i++) {
@@ -109,7 +136,9 @@ void ParkingManager::outPark() {
 					<< " 应付金额为 " << OCCUPY[type] * WAIT_PER_TIME * (time - this->wait.front()->waitTime) << endl;
 				Car* todel = this->wait.front();
 				this->wait.pop();
-				delete todel; //出停车场的车，delete掉
+				
+				//出停车场的车，delete掉
+				delete todel; 
 				flag = 1;
 				break;
 			} else { 
@@ -128,7 +157,7 @@ void ParkingManager::mainLoop() {
 		cout << "A.进入" << endl
 			<< "D.开出" << endl
 			<< "E.退出" << endl
-			<< "请输入选项（A、D、E）、车号、车辆类型【小轿车（1）、客车（2）、十轮卡车（3）】和进入时间" << endl;
+			<< "请输入选项（A、D、E）、车号、车辆类型【小轿车（1）、客车（2）、十轮卡车（3）】和当前时间" << endl;
 		cin >> choose;
 		switch (choose) {
 			case 'A': case 'a': enterPark(); break;
