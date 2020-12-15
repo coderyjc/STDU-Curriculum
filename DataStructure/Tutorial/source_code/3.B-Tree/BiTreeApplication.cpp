@@ -17,7 +17,7 @@ BiTreeApplication::~BiTreeApplication() {
 }
 
 void BiTreeApplication::init() {
-	cout << "正在初始化..." << endl;
+	cout << "----------------\n正在初始化二叉树\n----------------" << endl;
 	// enter chars and its weight;
 	cout << "输入字符和其权值，中间以空格隔开，EOF 代表结束" << endl;
 
@@ -30,13 +30,17 @@ void BiTreeApplication::init() {
 	this->nodeCount--; //减去在循环的时候多出来的那个
 	this->maxLength = this->nodeCount * 2 - 1;
 
-	cout << " 输入字母代码成功... " << endl;
+	cout << "----------------\n提示\n\n输入字母代码成功\n----------------" << endl;
+	system("pause");
+	system("cls");
 	cin.clear();
 }
 
 void BiTreeApplication::constructHuffTree() {
-	if (this->maxLength == 0) {
-		cout << "字母代码未输入，请执行选项1" << endl;
+	if (this->maxLength <= 0) {
+		cout << "---------------------------\n提示：\n\n字母代码未输入，请执行选项1\n---------------------------" << endl;
+		system("pause");
+		system("cls");
 		return;
 	}
 	cout << "正在构建二叉树..." << endl;
@@ -50,20 +54,24 @@ void BiTreeApplication::constructHuffTree() {
 		this->huffTree[i].rch = s2;
 		this->huffTree[i].weight = this->huffTree[s1].weight + this->huffTree[s2].weight;
 	}
-	cout << "二叉树构建完毕..." << endl;
+	cout << "--------------\n提示：\n\n二叉树构建完毕\n--------------" << endl;
+	system("pause");
+	system("cls");
 	this->hasConstruct = 1;
 }
 
 void BiTreeApplication::encoding() {
 	if (!this->hasConstruct) {
-		cout << "二叉树尚未建立, 请执行选项2" << endl;
+		cout << "---------------------------\n提示：\n\n二叉树尚未建立, 请执行选项2\n---------------------------" << endl;
+		system("pause");
+		system("cls");
 		return;
 	}
-	cout << "输入字符(不含空格)，输出 Huffman Code: ";
+	cout << "输入字符(不含空格): ";
 	string str;
 	cin.clear();
 	cin >> str;
-	cout << "哈夫曼编码为 ";
+	cout << "\n哈夫曼编码为 :" << endl;
 	for (int i = 0; i < str.length(); i++) {
 		// 遍历树，寻找数据节点
 		string tempCode = "";
@@ -87,7 +95,9 @@ void BiTreeApplication::encoding() {
 		}
 		// 在树中没找到这个节点
 		if (!flag) {
-			cout << "\n==警告：未找到节点" << str[i] << " 程序即将返回上一层==" << endl;
+			cout << "\n\n警告：\n\n未找到节点" << str[i] << " 程序即将返回上一层\n" << endl;
+			system("pause");
+			system("cls");
 			return;
 		}
 		// 反转10序列然后输出
@@ -95,17 +105,21 @@ void BiTreeApplication::encoding() {
 		cout << tempCode;
 	}
 	cout << endl;
+	system("pause");
+	system("cls");
 }
 
 void BiTreeApplication::decoding() {
 	if (!this->hasConstruct) {
-		cout << "二叉树尚未建立, 请执行选项2" << endl;
+		cout << "---------------------------\n提示：\n\n二叉树尚未建立, 请执行选项2\n---------------------------" << endl;
+		system("pause");
+		system("cls");
 		return;
 	}
 	cout << "\n输入Huffman code：";
 	string source;
 	cin >> source;
-	cout << "解码结果为 ：";
+	cout << "\n解码结果为 ：";
 
 	int ptr = this->maxLength;
 	for (int i = 0; i <= source.length(); i++) {
@@ -115,7 +129,7 @@ void BiTreeApplication::decoding() {
 			} else if (source[i] == '1') {
 				ptr = this->huffTree[ptr].rch;
 			} else {
-				cout << source[i] << endl;
+				cout << source[i];
 			}
 		} else {
 			cout << this->huffTree[ptr].data;
@@ -124,16 +138,18 @@ void BiTreeApplication::decoding() {
 		}
 	}
 	cout << endl;
+	system("pause");
+	system("cls");
 }
 
 void BiTreeApplication::mainBody() {
 	int choose = 0;
 	do {
-		cout << "1. 初始化二叉树" << endl
+		cout << "-----------------\n二叉树应用测试\n-----------------\n1. 初始化二叉树" << endl
 			<< "2. 编制哈夫码" << endl
-			<< "3. 输入字符，输出哈夫码" << endl
-			<< "4. 输入哈夫码，输出字符" << endl
-			<< "0. 退出系统" << endl
+			<< "3. 为字符编码" << endl
+			<< "4. 解二进制码" << endl
+			<< "0. 退出系统\n-----------------" << endl
 			<< "输入选项 : " ;
 		cin >> choose;
 		switch (choose) {
@@ -143,7 +159,6 @@ void BiTreeApplication::mainBody() {
 			case 4:	this->decoding(); break;
 			default: return;
 		}
-		cout << endl;
 	} while (choose);
 }
 
