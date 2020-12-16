@@ -73,7 +73,7 @@ void MyQueue<T>::pop() {
 		NodePosi(T) t = header->next;
 		header->next = header->next->next;
 		delete t;
-		this->_size;
+		this->_size--;
 	}
 }
 

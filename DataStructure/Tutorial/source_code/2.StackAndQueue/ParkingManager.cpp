@@ -3,7 +3,7 @@
 #define PARK_PER_TIME 5.0 //停在停车场的单位时间内的价格
 #define WAIT_PER_TIME 2.0 //停在便道上的单位时间内的价格
 
-const string CARS[] = { "", "小轿车", "客车", "十轮卡车" };
+const string CARS[] = { "", "轿车", "客车", "卡车" };
 
 const double OCCUPY[4] = { 0, 1, 1.5, 3 }; //不同的车占据的车位数量，也是收取金额的系数
 
@@ -43,23 +43,55 @@ void ParkingManager::enterPark() {
 	int time;
 	int type;
 
-	int enterSuc = 0;
+	// 输入车号
 	do {
-		cin >> id >> type >> time;
-		if (type < 1 || type > 3 || time < 0) {
-			cout << "输入数据有误，请重新输入" << endl;
-			enterSuc = 1;
+		cout << "请输入车号" << endl;
+		cin >> id;
+		if (this->currentCar.find(id) != currentCar.end()) {
+			// 车辆已经存在
+			cout << "--------------------\n提醒\n\n车辆已存在，请重新输入\n--------------------\n" << endl;
 		} else break;
-	} while (enterSuc);
+	} while (1);
+
+	this->currentCar.insert(id);
+	// 输入车辆类型
+	do {
+		cout << "请选择车辆类型" << endl
+			<< "---------------" << endl
+			<< "1.轿车" << endl
+			<< "2.客车" << endl
+			<< "3.卡车" << endl
+			<< "请输入: ";
+		cin >> type;
+		if (type < 1 || type > 3) {
+			cout << "----------------\n警告：\n\n请输入正确的数字\n----------------" << endl;
+		} else break;
+	} while (1);
+
+	// 输入当前时间
+	do {
+		cout << "请输入当前时间 : ";
+		cin >> time;
+		if (time < 0) {
+			cout << "----------------\n警告：\n\n请输入正确的时间\n----------------" << endl;
+		} else break;
+	} while (1);
+
 
 	if (this->size - OCCUPY[type] < 0) { //	检查车库有没有满
-		cout << "车已停满，车辆进入等候区等候..." << endl;
+		cout << "----------------------------\n提醒：\n\n车已停满，车辆进入等候区等候...\n----------------------------" << endl;
 		this->wait.push(new Car(time, id, type));
+		system("pause");
+		system("cls");
 		return;
 	}
 	this->parking.push_0(new Car(id, type, time));
-	cout << "车号 " << id << " 进入 " << this->parking.size() << " 号车位, 时间为" << time << endl;
+	cout << "-----------------------\n提醒\n\n车号 " << id << " 进入 " << this->parking.size() << " 号车位, 时间为" << time << endl 
+		<< "-----------------------" << endl;
 	this->size -= OCCUPY[type];
+
+	system("pause");
+	system("cls");
 }
 
 /*
@@ -72,8 +104,12 @@ void ParkingManager::enterPark() {
 void ParkingManager::outPark() {
 	string id;
 	int time;
-	int type;
-	cin >> id >> type >> time;
+	
+	cout << "请输入出停车场的车号: ";
+	cin >> id;
+	cout << "请输入当前时间：";
+	cin >> time;
+	
 	int flag = 0;
 	while (!this->parking.empty_0()) {
 		if (this->parking.top_0()->ID != id) { 
@@ -82,14 +118,22 @@ void ParkingManager::outPark() {
 			this->parking.pop_0();
 		} else {
 			// 这辆车是要出去的车
-			cout << "车 " << this->parking.top_0()->ID
+			double toPay = OCCUPY[this->parking.top_0()->type] * (PARK_PER_TIME * (time - this->parking.top_0()->enTime) +
+				WAIT_PER_TIME * (this->parking.top_0()->enTime - this->parking.top_0()->waitTime));
+			if (toPay < 0) {
+				cout << "--------------------\n警告:\n\n计算错误！出站失败！\n--------------------" << endl;
+				system("pause");
+				system("cls");
+				return;
+			}
+			cout << "--------------------\n提醒: \n\n车 " << this->parking.top_0()->ID
 				<< " 出库，时长为 " <<
 				(time - this->parking.top_0()->enTime) +
 				(this->parking.top_0()->enTime - this->parking.top_0()->waitTime)
 				<< " 应付金额为 "
-				<< OCCUPY[type] * (PARK_PER_TIME * (time - this->parking.top_0()->enTime) + 
-					WAIT_PER_TIME * (this->parking.top_0()->enTime - this->parking.top_0()->waitTime))
-				<< endl;
+				<< toPay
+				<< endl
+				<< "--------------------\n" << endl;
 			Car* todel = this->parking.top_0();
 			this->parking.pop_0();
 			
@@ -116,7 +160,8 @@ void ParkingManager::outPark() {
 			//  如果车库中还有空间
 			if (this->size - OCCUPY[this->wait.front()->type] >= 0) {
 				this->size -= OCCUPY[this->wait.front()->type];
-				cout << "在等待队列中的车 " << this->wait.front()->ID << " 进入车库，时间为 " << time << endl;
+				cout << "--------------\n提示：\n\n在等待队列中的车 " << this->wait.front()->ID << " 进入车库，时间为 " << time 
+					<< "\n--------------"<< endl;
 				this->wait.front()->enTime = time; 
 				
 				//设置等待队列最前面的车的入库时间
@@ -133,10 +178,10 @@ void ParkingManager::outPark() {
 				// 找到了这辆车，这时候front位置就是我们要找的车辆
 				cout << "车号 " << this->wait.front()->ID
 					<< " 出库，时长为 " << time - this->wait.front()->waitTime
-					<< " 应付金额为 " << OCCUPY[type] * WAIT_PER_TIME * (time - this->wait.front()->waitTime) << endl;
+					<< " 应付金额为 " << OCCUPY[this->wait.front()->type] * WAIT_PER_TIME * (time - this->wait.front()->waitTime) << endl;
 				Car* todel = this->wait.front();
+				this->currentCar.erase(todel->ID); // 在所有的车辆集合中删除这辆车
 				this->wait.pop();
-				
 				//出停车场的车，delete掉
 				delete todel; 
 				flag = 1;
@@ -148,21 +193,92 @@ void ParkingManager::outPark() {
 			}
 		}
 	}
-	if (!flag) cout << "车库和等候区中没有这辆车" << endl;
+	if (!flag) cout << "--------------------\n提示: \n\n找不到这辆车\n--------------------" << endl;
+	system("pause");
+	system("cls");
 }
 
 void ParkingManager::mainLoop() {
-	char choose = 0;
+	int choose = 0;
 	while (true) {
-		cout << "A.进入" << endl
-			<< "D.开出" << endl
-			<< "E.退出" << endl
-			<< "请输入选项（A、D、E）、车号、车辆类型【小轿车（1）、客车（2）、十轮卡车（3）】和当前时间" << endl;
+		cout << "----------------\n停车场管理程序\n----------------" << endl
+			<< "1.进入停车场" << endl
+			<< "2.开出停车场" << endl
+			<< "3.查看停车场车辆" << endl
+			<< "4.查看等待区车辆" << endl
+			<< "0.退出程序\n----------------" << endl
+			<< "请输入选项: ";
 		cin >> choose;
 		switch (choose) {
-			case 'A': case 'a': enterPark(); break;
-			case 'D': case 'd': outPark(); break;
-			case 'E': case 'e': default: return;
+			case 1: enterPark(); break;
+			case 2: outPark(); break;
+			case 3: printParking(); break;
+			case 4: printWaiting(); break;
+			case 0: default: return;
 		}
 	}
+}
+
+void ParkingManager::printParking() {
+	// 用辅助栈帮助遍历
+	if (this->parking.empty_0()) {
+		cout << "--------------------\n提示：\n\n当前停车场中没有车辆\n----------------------" << endl;
+		system("pause");
+		system("cls");
+		return;
+	}
+	cout << "\n----------------\n停车场中的车辆\n----------------\n" << endl;
+
+	// 表头
+	cout << "序号" << "\t车号" << "\t车辆类型" << "\t进入车场时间" << "\t所占空间" << endl;
+	cout << "----------------------------------------------------------" << endl;
+	// 把已经遍历过的车放到辅助栈中
+	// 遍历完了之后再从辅助栈中拿出来
+	// 在辅助栈中进行操作的时候就不用进行 size 相关的操作了
+	// 先从 0 栈中放进辅助栈中，同时遍历。
+	int i = 1;
+	while (!this->parking.empty_0()) {
+		Car* temp = this->parking.top_0();
+		// 访问
+		cout << i++ << "\t" << temp->ID << "\t" << CARS[temp->type] << "\t\t" << temp->enTime << "\t\t" << OCCUPY[temp->type] <<  endl;
+		// 放进辅助栈
+		this->parking.push_1(temp);
+		// 弹出栈
+		this->parking.pop_0();
+	}
+	// 再从 1 栈中放进 0 栈中
+	while (!this->parking.empty_1()) {
+		this->parking.push_0(this->parking.top_1());
+		this->parking.pop_1();
+	}
+	system("pause");
+	system("cls");
+}
+
+void ParkingManager::printWaiting() {
+	if (this->wait.size() == 0) {
+		cout << "----------------------\n提示：\n\n当前等待队列中没有车辆\n----------------------" << endl;
+		system("pause");
+		system("cls");
+		return;
+	}
+	// 做一个 size 大小的出队和入队
+	// 获取现在等待队列的大小
+	int waitNumber = this->wait.size();
+	cout << "\n----------------\n等待队列中的车辆\n----------------\n" << endl;
+	// 表头
+	cout << "序号" << "\t车号" << "\t车辆类型" << "\t进入队列时间" << "\t所占空间" << endl;
+	cout << "----------------------------------------------------------" << endl;
+
+	// i 是打印序号
+	int i = 1;
+	while (waitNumber--) {
+		// 把当前遍历的车先遍历，再出栈，再入栈
+		Car* temp = this->wait.front();
+		cout << i++ << "\t" << temp->ID << "\t" << CARS[temp->type] << "\t\t" << temp->waitTime << "\t\t" << OCCUPY[temp->type] << endl;
+		this->wait.push(this->wait.front());
+		this->wait.pop();
+	}
+	system("pause");
+	system("cls");
 }

@@ -35,6 +35,8 @@ public:
 
 	Car(const Car& c) {
 		this->enTime = c.enTime;
+		this->type = c.type;
 		this->ID = c.ID;
+		this->waitTime = c.waitTime;
 	}
 };

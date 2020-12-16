@@ -2,6 +2,7 @@
 #include"Queue.h"
 #include"Stack.h"
 #include"Car.h"
+#include<set>
 
 class ParkingManager {
 public:
@@ -12,8 +13,18 @@ public:
 	void outPark();
 	void mainLoop();
 
+	void printParking();
+	void printWaiting();
+
 private:
 	double size;
-	MyDoubleStack<Car*> parking; // 车双栈
-	MyQueue<Car*> wait; // 等待队列
+
+	//当前的所有车
+	set<string> currentCar;
+	
+	// 车双栈
+	MyDoubleStack<Car*> parking; 
+	
+	// 等待队列
+	MyQueue<Car*> wait; 
 };
