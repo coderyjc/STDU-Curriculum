@@ -26,6 +26,8 @@ public:
 
 	void heapAdjust(int*, int, int);
 
+	void printNums(int *, int); // ´òÓ¡Êý×é
+
 public:
 	int cmpOfQuickSort;
 	int movOfQuickSort;

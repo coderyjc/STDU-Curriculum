@@ -83,7 +83,6 @@ void Sorts::quickSort(int* nums, int first, int last) {
 		this->movOfQuickSort += 2;
 	}
 	nums[low] = key;
-	this->movOfQuickSort++;
 	quickSort(nums, first, low - 1);
 	quickSort(nums, low + 1, last);
 }
@@ -130,6 +129,12 @@ void Sorts::heapAdjust(int* arr, int start, int end) {
 			dad = son;
 			son = dad * 2 + 1;
 		}
+	}
+}
+
+void Sorts::printNums(int* nums, int n) {
+	for (int i = 0; i < n; i++) {
+		cout << nums[i] << " ";
 	}
 }
 
