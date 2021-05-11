@@ -1,0 +1,167 @@
+﻿@charset "utf-8";
+html{
+     overflow:hidden;
+}
+
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{
+     margin:0;padding:0;
+}
+
+body{
+     font-family:"微软雅黑";
+     font-size:12px;
+     color:#000000;
+     word-wrap:break-word;
+     behavior:url("csshover.htc");
+     overflow:hidden;
+}
+
+button,input,select,textarea{
+     font:12px/1.5  Arial, "宋体", Helvetica,  Verdana, sans-serif;
+     word-wrap:break-word;
+     color:#565756;
+}
+
+ul,li{
+     list-style:none;
+     margin:0;
+     padding:0;
+}
+
+h1, h2, h3, h4, h5, h6{
+     font-weight:normal;
+     font-size:100%;
+} 
+
+img{
+     border:none;
+     border:0;
+     vertical-align:middle;
+}
+
+a{
+     text-decoration:none;
+     outline:none;
+}
+
+p{
+     margin:0;
+     padding:0;
+}
+
+input,select,textarea{
+     vertical-align:middle;
+     *font-size:100%;
+}
+
+input{
+     margin:0;
+     outline:none;
+     padding:0;
+}
+
+input::-ms-clear{
+     display:none;
+}
+
+.clearfix:after{
+     content:".";       
+     display:block;       
+     height:0;       
+     clear:both;       
+     visibility:hidden;       
+
+}
+
+.clearfix{
+     *zoom:1
+}
+
+.ddw{
+     position:absolute;
+     left:0;
+     top:0;
+     color:#000;
+     font-size:16px
+     ;z-index:9999;
+}
+
+.ddw2{
+     position:absolute;
+     left:20px;
+     top:0;
+     color:#000;
+     font-size:16px;
+     z-index:9999;
+}
+
+.num_box{
+     position:relative;
+}
+
+.num{
+     color:#fff;
+     font-size:50px;
+     width:100%;
+     text-align:center;
+     position:relative;
+}
+
+.num>div{
+     position:absolute;
+     top:0;
+     margin: auto;
+}
+
+.num ul{
+     width:100%;
+     position:absolute;
+     left:0;top:0;
+     height:100%;
+}
+
+.num ul li{
+     float:left;
+     height:100%;
+     position:relative;
+}
+
+#num_0{
+     background-image: url("../img/002.jpg");
+     background-position: center;
+     background-size: auto;
+}
+#num_1{ 
+     background-image: url("../img/001.jpg");
+     background-position: center;
+     background-size: auto;
+     
+}
+
+#num_2{ 
+     background-image: url("../img/003.jpg");
+     background-position: center;
+     background-size: auto;
+}
+
+
+.title{
+     width: 40%;
+     position: initial;
+}
+.title .subject-title{
+     text-decoration: underline;
+}
+.title .edit-by{
+     font-size: 20px;
+}
+
+.personal-info,.time-line{
+     width: 80%;
+     height: 80%;
+     background-color: aliceblue;
+     opacity: 0.7;
+     margin: auto;
+     color: black;
+     text-align: center;
+}
