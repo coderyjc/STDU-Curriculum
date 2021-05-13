@@ -104,7 +104,7 @@ function formatScreenSize(){
 	var single_hh = $(window).height();
 	var single_ww = $(window).width();
 	$('.num').height(single_hh);
-	$('.num li').width(single_ww);
+	$('.num').width(single_ww);
 }
 
 formatScreenSize();
