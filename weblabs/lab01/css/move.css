@@ -1,4 +1,4 @@
-﻿@charset "utf-8";
+@charset "utf-8";
 html{
      overflow:hidden;
 }
@@ -103,7 +103,7 @@ input::-ms-clear{
      color:#fff;
      font-size:50px;
      width:100%;
-     text-align:center;
+     /* text-align:center; */
      position:relative;
 }
 
@@ -153,16 +153,8 @@ input::-ms-clear{
 }
 .title .edit-by{
      font-size: 20px;
+	 text-align: center;
 }
 
-.personal-info,.time-line{
-     width: 80%;
-     height: 80%;
-     background-color: aliceblue;
-     opacity: 0.7;
-     margin: auto;
-     color: black;
-     text-align: center;
-}
 
 

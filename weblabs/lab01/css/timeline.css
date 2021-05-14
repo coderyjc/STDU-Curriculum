@@ -1,0 +1,83 @@
+/* 2019
+	9月 C
+2020
+	2月 C++
+	4月 JavaSE
+	7月 HTML、CSS
+	8月 MySQL
+	9月 Oracle DataBase
+	11月 JavaScript
+2021
+	1月 Jsp & Servlet
+	2月 JQuery & Ajax、Spring
+	3月 SpringMVC & MyBatis
+	4月 个人博客（HTML、CSS、Jquery/Ajax、Spring、SpringMVC、MyBatis）
+	5月至今 Vue.js & Spring Boot
+ */
+
+/* 透明遮罩 */
+.personal-info,.time-line{
+     width: 80%;
+     height: 80%;
+     background-color: aliceblue;
+     opacity: 0.7;
+     margin: auto;
+     color: black;
+     text-align: center;
+}
+
+
+/* 年份卡片 */
+.year-item{
+	border-radius: 20px;
+	width: 100%;
+}
+
+/* Time Line */
+.time-line-title{
+	height: 16%;
+}
+
+/* 左右内容区 */
+.time-line-content{
+	width: 46%;
+	height: 84%;
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+/* 右半部分内容区 */
+.time-line-content-right{
+	float: right;
+}
+
+/* 左半部分内容区 */
+.time-line-content-left{
+	float: left;
+}
+
+/* 2021年 字样 */
+.time-line-content .year-title{
+	font-size: 30px;
+	
+}
+
+/* 1月 Jsp&Servlet */
+.time-line-content .month-item{
+	text-align: left;
+	
+}
+
+/* 1月 */
+.time-line-content .month-title{
+	display: inline;
+	font-size: 23px;
+	font-weight: 600;
+	margin-right: 10px;
+}
+
+/* Jsp & Servlet */
+.time-line-content .month-learn{
+	display: inline;
+	font-size: 23px;
+}
