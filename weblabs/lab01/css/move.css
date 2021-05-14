@@ -3,6 +3,13 @@ html{
      overflow:hidden;
 }
 
+div{
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+}
+
 html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{
      margin:0;padding:0;
 }
@@ -113,18 +120,6 @@ input::-ms-clear{
      margin: auto;
 }
 
-.num ul{
-     width:100%;
-     position:absolute;
-     left:0;top:0;
-     height:100%;
-}
-
-.num ul li{
-     float:left;
-     height:100%;
-     position:relative;
-}
 
 #num_0{
      background-image: url("../img/002.jpg");
@@ -156,5 +151,14 @@ input::-ms-clear{
 	 text-align: center;
 }
 
+.page-index{
+	margin-top: 20px;
+	position: static;
+	font-size: 20px;
+	float: right;
+	opacity: 0.5;
+}
 
-
+.page-index-2{
+	margint-top:40px;
+}

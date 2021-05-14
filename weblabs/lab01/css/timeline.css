@@ -1,19 +1,3 @@
-/* 2019
-	9月 C
-2020
-	2月 C++
-	4月 JavaSE
-	7月 HTML、CSS
-	8月 MySQL
-	9月 Oracle DataBase
-	11月 JavaScript
-2021
-	1月 Jsp & Servlet
-	2月 JQuery & Ajax、Spring
-	3月 SpringMVC & MyBatis
-	4月 个人博客（HTML、CSS、Jquery/Ajax、Spring、SpringMVC、MyBatis）
-	5月至今 Vue.js & Spring Boot
- */
 
 /* 透明遮罩 */
 .personal-info,.time-line{
@@ -26,6 +10,13 @@
      text-align: center;
 }
 
+.segment-line{
+	height: 1px;
+	width: 80%;
+	background-color: #545356;
+	opacity: 0.5;
+	margin: 15px 10%;
+}
 
 /* 年份卡片 */
 .year-item{
@@ -35,15 +26,15 @@
 
 /* Time Line */
 .time-line-title{
-	height: 16%;
+	margin-top: 10px;
+	height: 12%;
 }
 
 /* 左右内容区 */
 .time-line-content{
 	width: 46%;
-	height: 84%;
+	height: 80%;
 	margin-left: 2%;
-	margin-right: 2%;
 }
 
 /* 右半部分内容区 */
@@ -62,22 +53,33 @@
 	
 }
 
-/* 1月 Jsp&Servlet */
-.time-line-content .month-item{
-	text-align: left;
-	
+/* li节点 */
+.year-item li{
+	width: 100%;
+	font-size: 22px;
+	margin: 10px auto;
+	border-radius: 5px;
+
 }
 
-/* 1月 */
-.time-line-content .month-title{
-	display: inline;
-	font-size: 23px;
+.year-item li:hover{
+	background-color: #c4c7c8;
+}
+
+.year-item .month-item{
+	float: left;
+}
+
+/* 几月 */
+.month-item .month-title{
 	font-weight: 600;
-	margin-right: 10px;
+	display: inline-block;
 }
 
-/* Jsp & Servlet */
-.time-line-content .month-learn{
-	display: inline;
-	font-size: 23px;
+/* 学了啥 */
+.month-item .month-learn{
+	margin-left: 10px;
+	display: inline-block;
+	font-size: 20px;
 }
+

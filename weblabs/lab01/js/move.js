@@ -25,7 +25,6 @@ $(function(){
 			return;	
 		}
 		// delta 表示鼠标滚轮方向， 1表示向上滚动，-1表示向下滚动
-		console.log("rollDirection = " + delta);
 		doActive(delta);
 	});
 });
@@ -35,14 +34,11 @@ $(function(){
 function doActive(a){
 	// 从这里可以看出 ddw 是当前距离页面顶部的层数
 	var nagtiveNumIndex =$('.ddw').val();
-	console.log("nagtiveNumIndex = " + nagtiveNumIndex);
 	// 当前距离页面顶部的层数，也就是屏幕标号的 负值
 	b = parseInt(nagtiveNumIndex);
 
 	// 屏的数量
 	AllScreens = $('.num').length;
-	console.log("Allscreens : " + AllScreens);
-
 	if(a < 0){
 		// 如果向下滚
 		if(-b == AllScreens - 1){
@@ -91,9 +87,7 @@ function doActive(a){
 	var single_hh = $(window).height();
 	// 当前应该在的屏幕高度 = 页面高度 * 层数
 	click_hh =- single_hh * b;
-	// 
 	$('.num_box').animate({'bottom': click_hh}, 1000);
-	// 
 	setTimeout(function(){
 		$('.ddw2').val(0);
 	},1400);

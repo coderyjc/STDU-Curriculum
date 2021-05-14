@@ -1,0 +1,26 @@
+.person-info-title{
+	margin-top: 10px;
+}
+
+table{
+	margin:0 10%;
+	margin-top: 20px;
+	width: 80%;
+	font-size: 20px;
+	border-collapse: collapse;
+}
+
+table tr td{
+	padding: 15px 0;
+	width: auto;
+	border-bottom: #000000 1px solid;
+	border-top: #000000 1px solid;
+}
+
+table tr li{
+	margin: 7px 0;
+}
+
+table tr:hover{
+	background-color: #d2d3d2;
+}

@@ -2,91 +2,187 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>roll</title>
+    <title>Lab01</title>
     <link href="./css/move.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="./css/timeline.css"/>
+	<link rel="stylesheet" type="text/css" href="./css/personalInfo.css">
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <body>
         <!-- 滑动下拉框 -->
         <div class="num_box" style="bottom: 0px;">
-            <div class="num" id="num_0" style="height: 636px;">
+            <div class="num" id="num_0">
                 <div class="title" style="margin-left: 30%;">
                     <div class="subject-title">Web应用开发技术-LAB01</div>
                     <div class="edit-by">信1901-4 闫竞存 20194127</div>
                 </div>
             </div>
-            <div class="num" id="num_1" style="height: 636px;">
+            <div class="num" id="num_1">
                 <div class="personal-info" style="margin-left: 10%;">
                     <!-- 标题 -->
                     <div class="person-info-title">Personal Resume</div>
                     <!-- 个人信息 -->
 					<div class="personal-info-content">
-						
+						<table>
+							<tr>
+								<td>姓名</td>
+								<td>闫竞存</td>
+							</tr>
+							<tr>
+								<td>性别</td>
+								<td>男</td>
+							</tr>
+							<tr>
+								<td>爱好</td>
+								<td>计算机科学/Java/Python</td>
+							</tr>
+							<tr>
+								<td>座右铭</td>
+								<td>十年饮冰，难凉热血。</td>
+							</tr>
+							<tr>
+								<td>主要成就</td>
+								<td>
+									<ul>
+										<li>2020.09 通过英语四级</li>
+										<li>2020.12 通过英语六级</li>
+										<li>2021.04 蓝桥杯省赛二等奖</li>
+										<li>两次优秀学生奖学金</li>
+										<li>在博客园发表技术博客数十篇并获得10k+访问量</li>
+										<li>Github一年内提交320次(截止2021.5.14)</li>
+									</ul>
+								</td>
+							</tr>
+						</table>
+						<div class="page-index">2/3</div>
 					</div>
                 </div>
             </div>
-            <div class="num" id="num_2" style="height: 636px;">
+            <div class="num" id="num_2">
                 <div class="time-line" style="margin-left: 10%;">
                     <div class="time-line-title">Time Line</div>
 					<!-- 时间线 -->
+					<div class="segment-line"></div>
 					<!-- 分成两半，左边和右边 -->
 					<!-- 左边的时间线 -->
 					<div class="time-line-content time-line-content-left">
 					    <!-- 年份 -->
-						<div class="year-item">
-							<div class="year-title">2021年</div>
+						<div class="year-title">2021年</div>
+						<div class="segment-line"></div>
+						<ul class="year-item">
 							<!-- 每个月学了点啥 -->
-							<div class="month-item">
-								<div class="month-title">5月至今</div><div class="month-learn">SpringBoot&Vue</div>
-							</div>
-							<div class="month-item">
-								<div class="month-title">4月</div><div class="month-learn">个人博客系统开发</div>
-							</div>
-							<div class="month-item">
-								<div class="month-title">3月</div><div class="month-learn">SpringMVC & MyBatis</div>
-							</div>
-							<div class="month-item">
-								<div class="month-title">2月</div><div class="month-learn">JQuery&Ajax, Spring</div>
-							</div>
-							<div class="month-item">
-								<div class="month-title">1月</div><div class="month-learn">JSP & Servlet</div>
-							</div>
+							<li class="clearfix">
+								<div class="month-item">
+									<div class="month-title">至今</div><div class="month-learn">SpringBoot&Vue</div>
+								</div>
+							</li>
+							<li class="clearfix">
+								<div class="month-item">
+									<div class="month-title">4月</div><div class="month-learn">个人博客【HTML/CSS/JQ/MySQL/SSM】(11K行)</div>
+								</div>
+							</li>
+							<li class="clearfix">
+								<div class="month-item">
+									<div class="month-title">3月</div><div class="month-learn">SpringMVC & MyBatis</div>
+								</div>
+							</li>
+							<li class="clearfix">
+								<div class="month-item">
+									<div class="month-title">2月</div><div class="month-learn">JQuery & Ajax, Spring</div>
+								</div>
+							</li>
+							<li class="clearfix">
+								<div class="month-item">
+									<div class="month-title">1月</div><div class="month-learn">员工管理系统【JSP/CSS/Servlet/MySQL】(1k行)</div>
+								</div>
+							</li>
+							<li class="clearfix">
+								<div class="month-item">
+									<div class="month-title">1月</div><div class="month-learn">JSP & Servlet</div>
+								</div>
+							</li>
+						</ul>
+					
+                        <!-- 年份 -->
+						<div class="year-title">2020年</div>
+						<div class="segment-line"></div>
+						<div class="year-item">
+							<ul>
+								<li class="clearfix">
+									<div class="month-item">
+										<div class="month-title">12月</div><div class="month-learn">图书馆管理系统【Oracle/JavaSE/JavaSwing】(4K行)</div>
+									</div>
+								</li>
+								<li class="clearfix">
+									<div class="month-item">
+										<div class="month-title">11月</div><div class="month-learn">JavaScript</div>
+									</div>
+								</li>
+							</ul>
 						</div>
 					</div>
                     <div class="time-line-content time-line-content-right">
-                        <!-- 年份 -->
-						<div class="year-title">2020年</div>
 						<!-- 每个月学了点啥 -->
 						<div class="year-item">
-							<div class="month-items">
-								<div class="month-item">
-									<div class="month-title">11月</div><div class="month-learn">JavaScript</div>
-								</div>
-								<div class="month-item">
-									<div class="month-title">9月</div><div class="month-learn">Oracle Database</div>
-								</div>
-								<div class="month-item">
-									<div class="month-title">8月</div><div class="month-learn">MySQL</div>
-								</div>
-								<div class="month-item">
-									<div class="month-title">7月</div><div class="month-learn">HTML & CSS</div>
-								</div>
-								<div class="month-item">
-									<div class="month-title">6月</div><div class="month-learn">JavaSE</div>
-								</div>
-								<div class="month-item">
-									<div class="month-title">4月</div><div class="month-learn">数据结构与算法</div>
-								</div>
-								<div class="month-item">
-									<div class="month-title">1月</div><div class="month-learn">C/C++</div>
-								</div>
-							</div>	
+							<ul>
+								<li class="clearfix">
+									<div class="month-item">
+										<div class="month-title">10月</div><div class="month-learn">Python爬虫(Scrapy/Selenium)</div>
+									</div>
+								</li>
+								<li class="clearfix">
+									<div class="month-item">
+										<div class="month-title">9月</div><div class="month-learn">Oracle Database</div>
+									</div>
+								</li>
+								<li class="clearfix">
+									<div class="month-item">
+										<div class="month-title">8月</div><div class="month-learn">MySQL</div>
+									</div>
+								</li>
+								<li class="clearfix">
+									<div class="month-item">
+										<div class="month-title">7月</div><div class="month-learn">HTML&CSS</div>
+									</div>
+								</li>
+								<li class="clearfix">
+									<div class="month-item">
+										<div class="month-title">6月</div><div class="month-learn">JavaSE</div>
+									</div>
+								</li>
+								<li class="clearfix">
+									<div class="month-item">
+										<div class="month-title">4月</div><div class="month-learn">Data Structure</div>
+									</div>
+								</li>
+								<li class="clearfix">
+									<div class="month-item">
+										<div class="month-title">3月</div><div class="month-learn">2048小游戏【C++/Command Line】(1k行)</div>
+									</div>
+								</li>
+								<li class="clearfix">
+									<div class="month-item">
+										<div class="month-title">2月</div><div class="month-learn">C++</div>
+									</div>
+								</li>
+							</ul>	
 						</div>
+						<!-- 年份 -->
+						<div class="year-title">2019年</div>
+						<div class="segment-line"></div>
+						<div class="year-item">
+							<ul>
+								<li class="clearfix">
+									<div class="month-item">
+										<div class="month-title">10月</div><div class="month-learn">C语言</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="page-index page-index-2">3/3</div>
 					</div>
                 </div>
-            </div>
+			</div>
         </div>
-
         <!-- 以下内容是不可见的 -->
         <!-- 接受鼠标滚轮下拉的input -->
         <input type="hidden" value="0" class="ddw">
