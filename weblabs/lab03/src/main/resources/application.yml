@@ -1,0 +1,25 @@
+# 添加yml文件的配置信息
+# Mybatis配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.jancoyan.lab03.pojo
+  configuration:
+    map-underscore-to-camel-case: true
+
+# 连接数据库的信息
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///sboot?serverTimezone=UTC
+    username: root
+    password: 333
+    type: com.alibaba.druid.pool.DruidDataSource
+  mvc:
+    view:
+      #视图的前缀和后缀
+      prefix: /WEB-INF/
+      suffix: .jsp
+
+logging:
+  level:
+    com.jancoyan.lab03.mapper: DEBUG
