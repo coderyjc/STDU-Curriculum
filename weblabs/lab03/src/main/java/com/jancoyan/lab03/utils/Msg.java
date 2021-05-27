@@ -27,8 +27,8 @@ public class Msg {
 
     public static Msg success(){
         Msg result = new Msg();
-        result.setCode(100);
-        result.setMsg("成功！");
+        result.setCode(0);
+        result.setMsg("");
         return result;
     }
 

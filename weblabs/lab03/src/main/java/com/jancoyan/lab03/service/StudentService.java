@@ -7,7 +7,9 @@
 
 package com.jancoyan.lab03.service;
 
-import com.jancoyan.lab03.mapper.StudentMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.jancoyan.lab03.dao.StudentDao;
 import com.jancoyan.lab03.pojo.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +20,15 @@ import java.util.List;
 public class StudentService {
 
     @Autowired
-    StudentMapper mapper;
+    StudentDao studentDao;
 
-    public List<Student> findAll(){
-        return mapper.findAll();
+    public PageInfo<Student> findAll(Integer page, Integer limit){
+        PageHelper.startPage(page, limit);
+        List<Student> list = studentDao.findAll();
+        return new PageInfo<>(list);
     }
 
+    public void deleteStudentById(Integer id) {
+        studentDao.deleteStudentById(id);
+    }
 }
