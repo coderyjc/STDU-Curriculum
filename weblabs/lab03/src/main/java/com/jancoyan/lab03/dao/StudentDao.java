@@ -29,4 +29,34 @@ public class StudentDao {
     public boolean deleteStudentById(Integer id) {
         return studentMapper.deleteStudentByPrimaryKey(id);
     }
+
+    public Integer getStudentMaxId() {
+        return studentMapper.getStudentMaxId();
+    }
+
+    public void updateStudent(Student student) {
+        studentMapper.updateStudent(
+                student.getId(),
+                student.getName(),
+                student.getAge(),
+                student.getSex(),
+                student.getGrade(),
+                student.getBirthday(),
+                student.getDept(),
+                student.getTelphone(),
+                student.getQq());
+    }
+
+    public void insertStudent(Student student) {
+        studentMapper.insertStudent(
+                student.getId(),
+                student.getName(),
+                student.getAge(),
+                student.getSex(),
+                student.getGrade(),
+                student.getBirthday(),
+                student.getDept(),
+                student.getTelphone(),
+                student.getQq());
+    }
 }

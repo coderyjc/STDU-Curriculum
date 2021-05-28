@@ -1,3 +1,4 @@
+
 # 添加yml文件的配置信息
 # Mybatis配置
 mybatis:
@@ -23,4 +24,5 @@ spring:
 logging:
   level:
     com.jancoyan.lab03.mapper: DEBUG
-
+server:
+  port: 8888

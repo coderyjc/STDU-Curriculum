@@ -11,6 +11,7 @@ import com.github.pagehelper.PageInfo;
 import com.jancoyan.lab03.pojo.Student;
 import com.jancoyan.lab03.service.StudentService;
 import com.jancoyan.lab03.utils.Msg;
+import com.jancoyan.lab03.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,17 +59,64 @@ public class StudentController {
     }
 
 
+
     @RequestMapping(value = "/students", method = RequestMethod.POST)
     @ResponseBody
-    public Msg updateStudent(){
-        return null;
+    public Msg updateStudent(Integer id,
+                             String name,
+                             Integer age,
+                             Integer sex,
+                             Integer grade,
+                             String birthday,
+                             Integer dept,
+                             String telphone,
+                             String qq){
+        Student student = new Student();
+        student.setId(id);
+        student.setAge(age);
+        student.setBirthday(TimeUtils.castDateStringToDateTypeYMD(birthday));
+        student.setDept(dept);
+        student.setGrade(grade);
+        student.setSex(sex);
+        student.setName(name);
+        student.setTelphone(telphone);
+        student.setQq(qq);
+        studentService.updateStudent(student);
+        return Msg.success();
     }
+
 
     @RequestMapping(value = "/students", method = RequestMethod.PUT)
     @ResponseBody
-    public Msg insertStudent(){
-        return null;
+    public Msg insertStudent(Integer id,
+                             String name,
+                             Integer age,
+                             Integer sex,
+                             Integer grade,
+                             String birthday,
+                             Integer dept,
+                             String telphone,
+                             String qq){
+        Student student = new Student();
+        student.setId(id);
+        student.setAge(age);
+        student.setBirthday(TimeUtils.castDateStringToDateTypeYMD(birthday));
+        student.setDept(dept);
+        student.setGrade(grade);
+        student.setSex(sex);
+        student.setName(name);
+        student.setTelphone(telphone);
+        student.setQq(qq);
+        System.out.println(student);
+        studentService.insertStudent(student);
+        return Msg.success();
     }
 
 
+    @RequestMapping(value = "/maxid", method = RequestMethod.GET)
+    @ResponseBody
+    public Msg getStudentMaxId(){
+        Integer id = studentService.getStudentMaxId();
+        return Msg.success().add("id", id);
+    }
 }

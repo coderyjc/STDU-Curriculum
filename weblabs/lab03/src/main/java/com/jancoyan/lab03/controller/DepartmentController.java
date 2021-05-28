@@ -24,6 +24,10 @@ public class DepartmentController {
     @Autowired
     DepartmentService departmentService;
 
+    /**
+     * 获取所有部门
+     * @return 成功消息
+     */
     @RequestMapping(value = "/depts", method = RequestMethod.GET)
     @ResponseBody
     public Msg getDepts(){
