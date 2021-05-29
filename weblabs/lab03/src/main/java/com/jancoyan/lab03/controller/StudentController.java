@@ -58,8 +58,6 @@ public class StudentController {
         return Msg.success();
     }
 
-
-
     @RequestMapping(value = "/students", method = RequestMethod.POST)
     @ResponseBody
     public Msg updateStudent(Integer id,
