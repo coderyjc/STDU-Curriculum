@@ -9,7 +9,7 @@
     /* 根据浏览器定位 */
     position: fixed;
     /* 放在顶部 */
-    z-index: 1;
+    z-index: 999;
     left: 0;
     top: 0;
     /* 全宽 */

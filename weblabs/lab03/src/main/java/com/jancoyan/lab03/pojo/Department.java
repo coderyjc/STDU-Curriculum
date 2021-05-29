@@ -15,7 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Department {
+
+    // INT(2) PRIMARY_KEY 院系号
     private int deptid;
+
+    // VARCHAR(20) 院系名称
     private String deptname;
+
+    // VARCHAR(50)  院系地址
     private String location;
 }

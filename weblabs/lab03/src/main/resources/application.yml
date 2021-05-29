@@ -10,9 +10,9 @@ mybatis:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql:///sboot?serverTimezone=UTC
+    url: jdbc:mysql:///sboot?serverTimezone=UTC&characterEncoding=utf-8
     username: root
-    password: Angel75574609
+    password: 333
     type: com.alibaba.druid.pool.DruidDataSource
   mvc:
     view:
@@ -23,4 +23,4 @@ logging:
   level:
     com.jancoyan.lab03.mapper: DEBUG
 server:
-  port: 8889
+  port: 8080

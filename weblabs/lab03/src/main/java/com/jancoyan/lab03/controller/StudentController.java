@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 @Controller
 public class StudentController {
 
@@ -58,6 +59,19 @@ public class StudentController {
         return Msg.success();
     }
 
+    /**
+     * 更新学生信息
+     * @param id 学号
+     * @param name 姓名
+     * @param age 年龄
+     * @param sex 性别
+     * @param grade 年级
+     * @param birthday 生日
+     * @param dept 学院
+     * @param telphone 电话
+     * @param qq qq
+     * @return 消息
+     */
     @RequestMapping(value = "/students", method = RequestMethod.POST)
     @ResponseBody
     public Msg updateStudent(Integer id,
@@ -83,7 +97,19 @@ public class StudentController {
         return Msg.success();
     }
 
-
+    /**
+     * 添加学生信息
+     * @param id 学号
+     * @param name 姓名
+     * @param age 年龄
+     * @param sex 性别
+     * @param grade 年级
+     * @param birthday 生日
+     * @param dept 学院
+     * @param telphone 电话
+     * @param qq qq
+     * @return 消息
+     */
     @RequestMapping(value = "/students", method = RequestMethod.PUT)
     @ResponseBody
     public Msg insertStudent(Integer id,
@@ -111,6 +137,10 @@ public class StudentController {
     }
 
 
+    /**
+     * 获取最高学生序号，用于添加学生时候的学号填充
+     * @return 消息
+     */
     @RequestMapping(value = "/maxid", method = RequestMethod.GET)
     @ResponseBody
     public Msg getStudentMaxId(){

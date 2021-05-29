@@ -9,6 +9,10 @@ import java.util.List;
 @Repository
 public interface DepartmentMapper {
 
+    /**
+     * 获取所有院系
+     * @return
+     */
     @Select("select * from tbl_dept")
     List<Department> getAll();
 

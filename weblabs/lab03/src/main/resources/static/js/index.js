@@ -17,6 +17,7 @@ $(function () {
         });
     });
     layui.form.render('select');
+
 })
 
 layui.use('table', function(){
