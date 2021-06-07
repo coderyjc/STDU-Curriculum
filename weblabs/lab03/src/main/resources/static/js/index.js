@@ -1,4 +1,3 @@
-
 var $ = layui.$;
 
 $(function () {
