@@ -24,11 +24,6 @@ public class SortBean implements WritableComparable<SortBean> {
     private Integer number;
 
     @Override
-    public String toString() {
-        return " number=" + number;
-    }
-
-    @Override
     public int compareTo(SortBean o) {
         return this.number.compareTo(o.getNumber());
     }
@@ -39,7 +34,11 @@ public class SortBean implements WritableComparable<SortBean> {
     }
 
     @Override
-    public void readFields(DataInput dataInput) throws IOException {
-        this.number = dataInput.readInt();
+    public void readFields(DataInput dataInput) {
+        try {
+            this.number = dataInput.readInt();
+        } catch (IOException e) {
+
+        }
     }
 }

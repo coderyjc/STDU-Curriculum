@@ -22,8 +22,9 @@ public class JobMain extends Configured implements Tool {
     @Override
     public int run(String[] strings) throws Exception {
         Job job = Job.getInstance(super.getConf(), "Sort");
+        job.setJarByClass(JobMain.class);
         job.setInputFormatClass(TextInputFormat.class);
-        TextInputFormat.addInputPath(job, new Path("hdfs://localhost:9000"));
+        TextInputFormat.addInputPath(job, new Path("hdfs://localhost:9000/mapreduce/in"));
 
         job.setMapperClass(SortMapper.class);
         job.setMapOutputKeyClass(SortBean.class);
@@ -34,7 +35,7 @@ public class JobMain extends Configured implements Tool {
         job.setOutputValueClass(Integer.class);
 
         job.setOutputFormatClass(TextOutputFormat.class);
-        TextOutputFormat.setOutputPath(job, new Path("hdfs://localhost:9000/out"));
+        TextOutputFormat.setOutputPath(job, new Path("hdfs://localhost:9000/mapreduce/out"));
 
         boolean b = job.waitForCompletion(true);
         return b ? 0 : 1;

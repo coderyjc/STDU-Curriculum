@@ -19,7 +19,13 @@ public class SortMapper extends Mapper<LongWritable, Text, SortBean, NullWritabl
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         SortBean bean = new SortBean();
-        bean.setNumber(Integer.parseInt(value.toString()));
-        context.write(bean, NullWritable.get());
+        if(0 == value.toString().length()){
+            return;
+        } else{
+            bean.setNumber(Integer.parseInt(value.toString()));
+            // debug
+            System.out.println(bean.getNumber());
+            context.write(bean, NullWritable.get());
+        }
     }
 }
