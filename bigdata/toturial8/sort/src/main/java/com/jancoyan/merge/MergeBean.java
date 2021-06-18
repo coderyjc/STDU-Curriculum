@@ -15,6 +15,7 @@ import org.apache.hadoop.io.WritableComparable;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -40,5 +41,18 @@ public class MergeBean implements WritableComparable<MergeBean> {
     public void readFields(DataInput dataInput) throws IOException {
         this.str = dataInput.readUTF();
         this.val = dataInput.readUTF();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MergeBean mergeBean = (MergeBean) o;
+        return Objects.equals(str, mergeBean.str) && Objects.equals(val, mergeBean.val);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(str, val);
     }
 }

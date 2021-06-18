@@ -23,7 +23,7 @@ public class JobMain extends Configured implements Tool {
     public int run(String[] strings) throws Exception {
         Job job = Job.getInstance(super.getConf(), "merge");
         job.setInputFormatClass(TextInputFormat.class);
-        TextInputFormat.addInputPath(job, new Path("hdfs://locaohost:9000"));
+        TextInputFormat.addInputPath(job, new Path("hdfs://locaohost:9000/in"));
 
         job.setMapperClass(MergeMapper.class);
         job.setMapOutputKeyClass(MergeBean.class);
@@ -34,7 +34,7 @@ public class JobMain extends Configured implements Tool {
         job.setOutputValueClass(NullWritable.class);
 
         job.setOutputFormatClass(TextOutputFormat.class);
-        TextOutputFormat.setOutputPath(job, new Path("hdfs://locahost:9000"));
+        TextOutputFormat.setOutputPath(job, new Path("hdfs://locahost:9000/out"));
 
         boolean b = job.waitForCompletion(true);
         return b ? 0 : 1;

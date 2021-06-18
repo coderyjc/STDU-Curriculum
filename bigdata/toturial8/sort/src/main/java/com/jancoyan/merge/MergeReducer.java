@@ -16,7 +16,6 @@ public class MergeReducer extends Reducer<MergeBean, NullWritable, MergeBean, Nu
 
     @Override
     protected void reduce(MergeBean key, Iterable<NullWritable> values, Context context) throws IOException, InterruptedException {
-
-
+        context.write(key, NullWritable.get());
     }
 }
