@@ -1,0 +1,3 @@
+R:/GITHUB/Curriculum/ShortTerms/sophomor/FirstStage/cmake-build-debug/CMakeFiles/FirstStage.dir
+R:/GITHUB/Curriculum/ShortTerms/sophomor/FirstStage/cmake-build-debug/CMakeFiles/edit_cache.dir
+R:/GITHUB/Curriculum/ShortTerms/sophomor/FirstStage/cmake-build-debug/CMakeFiles/rebuild_cache.dir
