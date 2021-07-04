@@ -1,6 +1,8 @@
-#include <iostream>
+#include "FileSystem.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    auto* system = new FileSystem();
+    system->login();
+    delete system;
     return 0;
 }

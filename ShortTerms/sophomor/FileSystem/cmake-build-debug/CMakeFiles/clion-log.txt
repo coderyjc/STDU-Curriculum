@@ -1,4 +1,0 @@
-D:\IDE\CLion\CLion_2021.1.2_Protable\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=D:/IDE/Devcpp/Dev-cpp5.4.0/Dev-Cpp/MinGW32/bin/mingw32-make.exe -DCMAKE_C_COMPILER=D:/IDE/Devcpp/Dev-cpp5.4.0/Dev-Cpp/MinGW32/bin/gcc.exe -DCMAKE_CXX_COMPILER=D:/IDE/Devcpp/Dev-cpp5.4.0/Dev-Cpp/MinGW32/bin/g++.exe -G "CodeBlocks - MinGW Makefiles" R:\GITHUB\Curriculum\ShortTerms\sophomor\FileSystem
--- Configuring done
--- Generating done
--- Build files have been written to: R:/GITHUB/Curriculum/ShortTerms/sophomor/FileSystem/cmake-build-debug
