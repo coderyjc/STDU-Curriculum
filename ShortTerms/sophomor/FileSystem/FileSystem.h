@@ -37,6 +37,9 @@ public:
     // 初始化，做一些初始的处理
     void init();
 
+    // 获取当前时间
+    string getCurrentTimeString();
+
     // 登录
     bool login();
 
@@ -52,4 +55,12 @@ public:
     // 改变当前目录
     int changeDirectory(string options, vector<string> parameters);
 
+    // 列出目录树
+    int treeSingleTree(string options, vector<string> parameters);
+
+    // 全局查找
+    int searchSingleDirectory(string options, vector<string> parameters);
+
+    // 目录解析器
+    vector<string> directoryDealer(string directory);
 };

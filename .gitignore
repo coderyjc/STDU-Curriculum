@@ -1,0 +1,14 @@
+
+*.obj
+*.pdb
+*.tlog
+*.ilk
+*.pdb
+*.log
+*.enc
+*.db
+*.db-wal
+*.ipch
+*.idb
+*.tlog
+*.tlog

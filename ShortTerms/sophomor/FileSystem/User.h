@@ -2,9 +2,11 @@
 class User {
 public:
 
-    User() {}
-
-    User(string userName, string passwd, int role) : userName(std::move(userName)), passwd(std::move(passwd)), role(role) {}
+    User() {
+        userName = "root";
+        passwd = "333";
+        role = 0;
+    }
 
 public:
     // ÓÃ»§Ãû
