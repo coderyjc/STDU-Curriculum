@@ -114,20 +114,6 @@ int FileSystem::execute(string command) {
         }
     }
 
-    // 至此，指令、选项、参数都已经完成提取
-    // 对指令进行排序简化
-    string newOption = "" + options[0];
-    sort(options.begin(), options.end());
-    // 指令清洗，相同的字母去掉
-    if (options.length() != 1) {
-        for (int i = 1; i < options.length(); ++i) {
-            if (options[i] != options[i - 1]) {
-                newOption += options[i];
-            }
-        }
-    }
-
-    options = newOption;
     // 清洗完成，进入指令分发器
     return commandDispatcher(instruction, options, params);
 }

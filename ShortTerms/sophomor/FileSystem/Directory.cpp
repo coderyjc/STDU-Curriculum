@@ -139,6 +139,7 @@ int Directory::makeDirectory(string options, vector<string> params) {
         }
         else break;
     }
+    
     // 开始建立节点
     Directory* newTemp;
     while (directoryIdx < directories.size()) {
