@@ -1,4 +1,9 @@
 {
   "masmtasm.ASM.MASMorTASM": "MASM",
-  "masmtasm.ASM.emulator": "jsdos"
+  "masmtasm.dosbox.config": {
+    "SDL.windowresolution": "1024x760",//通过这个选项可以调整屏幕的大小
+    "SDL.output": "opengl"
+},
+"masmtasm.ASM.toolspath": "V:\\Environment\\Assembler\\Assembly",
+"masmtasm.ASM.emulator": "jsdos" //设置自定义的汇编工具地址，将读取此路径下的masm文件夹和tasm文件夹
 }
