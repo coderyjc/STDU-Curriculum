@@ -1,3 +1,15 @@
+; **************************************************************************
+; * *
+; * Written by Mr. YanJingcun *
+; * *
+; * [Oct 09, 2021]
+; * *
+; * Function: *
+; *          在 TABLE 开始的内存字节单元中，存入了 10 个带符号数，
+; *          试编写完整的汇编语言程序 统计其中的正数、负数和零的个数。*
+; * *
+; **************************************************************************
+
 DATA SEGMENT
 	MEM DB 12H,91H,73H,64H,20H,0A5H,0D1H,91H,0A2H,00H
 	PLUS DB 00H
@@ -6,7 +18,7 @@ DATA SEGMENT
 DATA ENDS
  
 CODE SEGMENT
-ASSUME CS:CODE,DS:DATA
+			ASSUME CS:CODE,DS:DATA
 START:
 MOV AX,DATA
 MOV DS,AX
@@ -23,12 +35,6 @@ SIGN:
 		TEST DX,80H ; 和 1 相比
 		JZ PLUS_NUM
 		INC NEGO
-
-;		   1000 0000
-;  0ff 1111 1111
-;      1000 0000
-;
-;
 
 NEXT:
 		; 进行循环
@@ -55,7 +61,6 @@ NEXT:
 		MOV AH,4CH
 		INT 21H
 		
- 
 ZERO_NUM:
 		INC ZERO
 		JMP NEXT

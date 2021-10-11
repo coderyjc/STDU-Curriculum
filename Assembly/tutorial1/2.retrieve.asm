@@ -6,7 +6,6 @@
 ; * *
 ; * Function: 从键盘输入一个十进制数字 0-9，查表求键入数字的七段代码，存入 DL 中，并在键入 
 ; *           数字之前，显示提示信息“Please input a number:”。*
-; *           test*
 ; * *
 ; **************************************************************************
 
@@ -18,7 +17,6 @@ DATA    SEGMENT                          ;数据段
 DATA    ENDS
 
 STACK   SEGMENT PARA STACK 'STACK'       ;堆栈段
-
 STACK   ENDS
 
 CODE    SEGMENT                          ;代码段
@@ -26,7 +24,7 @@ CODE    SEGMENT                          ;代码段
 START:  MOV   AX,DATA
         MOV   DS,AX                      ;设置数据段
         
-        ; 输出提示信息
+        ;输出提示信息
         MOV  DX, OFFSET TIPS
         MOV  AH, 9H
         INT  21H
@@ -42,6 +40,7 @@ START:  MOV   AX,DATA
         ADD  BX, AX 
         MOV  DL,[BX] ;存入DL中
 
+        ; 返回DOS
         MOV AX,4C00H
         INT 21H
 
