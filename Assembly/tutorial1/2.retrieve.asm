@@ -23,7 +23,7 @@ CODE    SEGMENT                          ;代码段
         ASSUME CS:CODE,DS:DATA,SS:STACK  ;3个段寄存器分别与哪些段有关
 START:  MOV   AX,DATA
         MOV   DS,AX                      ;设置数据段
-        
+
         ;输出提示信息
         MOV  DX, OFFSET TIPS
         MOV  AH, 9H
