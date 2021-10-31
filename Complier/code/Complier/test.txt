@@ -1,0 +1,14 @@
+main() {
+
+	;name = id;
+	id = 1;
+	while(id == 1){
+		if(id >= 1){
+			str = id;
+			str != id;
+		}
+		id = 4 + str - 123 * id;
+	}
+	
+		i = i*i +i;
+}
