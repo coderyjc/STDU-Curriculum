@@ -1,6 +1,4 @@
 #pragma once
-#ifndef ERROR_H_INCLUDED
-#define ERROR_H_INCLUDED
 #include"global.h"
 
 #include<iostream>
@@ -81,9 +79,7 @@ public:
             "词法记号不存在"
         };
         errorNum++;
-        highlight("", ERRORCOLOR);
         cerr << lex->getFileName(true) << " <" << lex->getLineNum() << "行," << lex->getColNum() << "列> 词法错误:" << lexErrorTable[code] << ".\n";
-        highlight("", NORMAL);
     }
     static void SynError(int code, Token* t)
     {
@@ -106,14 +102,12 @@ public:
             "}"
         };
         errorNum++;
-        highlight("", ERRORCOLOR);
         if (code % 2 == 0) {
             cerr << lex->getFileName(true) << " <" << lex->getLineNum() << "行> 语法错误: 在 ";
             cerr << t->toString() << " 之前丢失" << synErrorTable[code / 2] << endl;
         }
 
         else cerr << lex->getFileName(true) << " <" << lex->getLineNum() << "行> 语法错误: 在 " << t->toString() << " 处没有正确匹配" << synErrorTable[code / 2] << endl;
-        highlight("", NORMAL);
     }
     static void SemError(int code, string name)
     {
@@ -141,9 +135,7 @@ public:
             "return语句和函数返回值类型不匹配"
         };
         errorNum++;
-        highlight("", ERRORCOLOR);
         cerr << lex->getFileName(true) << " <" << lex->getLineNum() << "行> 语义错误: " << name << " " << SemErrorTable[code] << endl;
-        highlight("", NORMAL);
     }
     static void SemWarn(int code, string name)
     {
@@ -153,13 +145,10 @@ public:
             "极有可能发生Segmentation Fault"
         };
         warnNum++;
-        highlight("", WARNINGCOLOR);
         cout << lex->getFileName(true) << " <" << lex->getLineNum() << "行> 语义警告: " << name << " " << SemWarnTable[code] << endl;
-        highlight("", NORMAL);
     }
 };
 #define LEXERROR Error::LexError
 #define SYNERROR Error::SynError
 #define SEMERROR Error::SemError
 #define SEMWARN Error::SemWarn
-#endif // ERROR_H_INCLUDED

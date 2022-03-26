@@ -1,6 +1,4 @@
 #pragma once
-#ifndef CHAR_H
-#define CHAR_H
 
 #include"Token.h"
 #include"TokenType.h"
@@ -26,5 +24,3 @@ protected:
 
 private:
 };
-
-#endif // CHAR_H

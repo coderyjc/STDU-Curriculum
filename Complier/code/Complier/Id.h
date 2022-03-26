@@ -1,7 +1,4 @@
 #pragma once
-#ifndef ID_H
-#define ID_H
-
 
 #include<string>
 #include"Token.h"
@@ -30,6 +27,3 @@ protected:
 
 private:
 };
-
-
-#endif // ID_H

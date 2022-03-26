@@ -1,11 +1,10 @@
 #pragma once
-#ifndef TOKEN_H
-#define TOKEN_H
 #include<string>
 #include"TokenType.h"
 
-
 using namespace std;
+
+
 class Token
 {
 public:
@@ -15,7 +14,7 @@ public:
         this->type = type;
     }
     Token() {}
-    //virtual ~Token();
+
     virtual string toString()
     {
         if ((type != ID) && (type != STR) && (type != NUM) && (type != CH))
@@ -24,5 +23,3 @@ public:
 protected:
 private:
 };
-
-#endif // TOKEN_H

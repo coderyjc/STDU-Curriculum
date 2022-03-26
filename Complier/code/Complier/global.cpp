@@ -1,53 +1,49 @@
+#include<string>
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #include<vector>
+
 #include "global.h"
 using namespace std;
 
 Lex* lex;
-SymTab* symtab = new SymTab();
-GenIR* ir = new GenIR();
-//InterInst *inst = new InterInst();
+
 char* filename;/**< 源代码文件 */
 char* targetFile;/**< 目标汇编代码文件 */
+
 char* lexFile;/**< 词法分析中间结果存储文件 */
 char* parseFile;/**< 语法分析树 存储文件 */
 char* intercodeFile;/**< 中间代码 存储文件 */
+
 FILE* file;/**< 目标汇编代码文件指针 */
 FILE* source;/**< 源文件指针为检查文件是否存在 */
+
 int errorNum = 0;
-vector<int> IOflag;
 int warnNum = 0;
-void highlight(char* text, TextColor _color)
+
+vector<int> IOflag;
+
+string getRawString(string str)
 {
-    if (_color == KEYWORDS) {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x02);
-        printf("%s", text);
-    }
-    else if (_color == PARAMETER) {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x08);
-        printf("%s", text);
-    }
-    else if (_color == EXPLANATION) {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0d);
-        printf("%s", text);
-    }
-    else if (_color == NORMAL) {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
-        printf("%s", text);
-    }
-    else if (_color == ERRORCOLOR)
+    int len = str.length();
+    string temp = "";
+    for (int i = 0; i < len; i++)
     {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0c);
-        printf("%s", text);
+        if (str[i] == '\n') temp += "\\n";
+        else if (str[i] == '\t') temp += "\\t";
+        else if (str[i] == '\0') temp += "\\0";
+        else if (str[i] == '\"') temp += "\\\"";
+        else if (str[i] == '\'') temp += "\\'";
+        else if (str[i] == '\a') temp += "\\a";
+        else if (str[i] == '\b') temp += "\\b";
+        else if (str[i] == '\v') temp += "\\v";
+        //else if(str[i]=='\?') temp+="\\?";
+        else temp += str[i];
     }
-    else if (_color == WARNINGCOLOR)
-    {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x03);
-        printf("%s", text);
-    }
+    return temp;
 }
+
 char* trim(char* str)
 {
     if (str == NULL || *str == '\0')
@@ -69,7 +65,8 @@ char* trim(char* str)
     memmove(str, lp, strlen(str) - llen + 1);
     return str;
 }
-bool startWith(char* source, char* start)
+
+bool startWith(char* source, const char* start)
 {
     int len = strlen(start);
     for (int i = 0; i < len; i++)
@@ -79,7 +76,8 @@ bool startWith(char* source, char* start)
     }
     return true;
 }
-bool deleteWith(char*& source, char* start, int len)
+
+bool deleteWith(char*& source, const char* start, int len)
 {
     int counter = 0;
     for (int i = 0; i < len; i++)
@@ -91,6 +89,7 @@ bool deleteWith(char*& source, char* start, int len)
         source++;
     return true;
 }
+
 char* getRawFileName(char* str)
 {
     if (str == NULL || *str == '\0')
@@ -105,29 +104,3 @@ char* getRawFileName(char* str)
     *rp = '\0';
     return str;
 }
-string getRawString(string str)
-{
-    int len = str.length();
-    string temp = "";
-    for (int i = 0; i < len; i++)
-    {
-        if (str[i] == '\n') temp += "\\n";
-        else if (str[i] == '\t') temp += "\\t";
-        else if (str[i] == '\0') temp += "\\0";
-        else if (str[i] == '\"') temp += "\\\"";
-        else if (str[i] == '\'') temp += "\\'";
-        else if (str[i] == '\a') temp += "\\a";
-        else if (str[i] == '\b') temp += "\\b";
-        else if (str[i] == '\v') temp += "\\v";
-        //else if(str[i]=='\?') temp+="\\?";
-        else temp += str[i];
-    }
-    return temp;
-}
-
-void trimVetor(vector<int>& temp)
-{
-
-}
-
-

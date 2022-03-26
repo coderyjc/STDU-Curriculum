@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{9a1602da-3f5f-4fb9-9b17-0abf550590d7}</ProjectGuid>
+    <ProjectGuid>{6c6ba2be-6f17-4bc6-9beb-5c68ad442563}</ProjectGuid>
     <RootNamespace>Complier</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -139,36 +139,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Fun.cpp" />
-    <ClCompile Include="GenIR.cpp" />
     <ClCompile Include="global.cpp" />
-    <ClCompile Include="InterInst.cpp" />
     <ClCompile Include="Lex.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Scanner.cpp" />
-    <ClCompile Include="SymTab.cpp" />
-    <ClCompile Include="Var.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Char.h" />
     <ClInclude Include="Error.h" />
-    <ClInclude Include="Fun.h" />
-    <ClInclude Include="GenIR.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="Id.h" />
-    <ClInclude Include="InterInst.h" />
     <ClInclude Include="Keywords.h" />
     <ClInclude Include="Lex.h" />
     <ClInclude Include="Num.h" />
-    <ClInclude Include="Operator.h" />
-    <ClInclude Include="Parser.h" />
     <ClInclude Include="Scanner.h" />
     <ClInclude Include="Str.h" />
-    <ClInclude Include="SymTab.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="TokenType.h" />
-    <ClInclude Include="Var.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

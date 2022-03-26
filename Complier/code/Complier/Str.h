@@ -1,10 +1,9 @@
 #pragma once
-#ifndef STR_H
-#define STR_H
+#include<string>
 
 #include"Token.h"
 #include"TokenType.h"
-#include<string>
+
 using namespace std;
 
 class Str : public Token
@@ -24,5 +23,3 @@ protected:
 
 private:
 };
-
-#endif // STR_H

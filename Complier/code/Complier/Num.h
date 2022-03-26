@@ -1,11 +1,9 @@
 #pragma once
-#ifndef NUM_H
-#define NUM_H
-
+#include<sstream>
+#include<string>
 #include"Token.h"
 #include"TokenType.h"
-#include<string>
-#include<sstream>
+
 using namespace std;
 
 class Num : public Token
@@ -27,5 +25,3 @@ protected:
 
 private:
 };
-
-#endif // NUM_H

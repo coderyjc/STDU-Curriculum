@@ -25,9 +25,6 @@ X_train, X_test, y_train, y_test = train_test_split(housing.data, housing.target
 # RBF 核函数拟合
 model = svm.SVR(kernel='rbf', C=180).fit(X_train, y_train)
 
-# 5次交叉验证
-# cv = ShuffleSplit(n_splits=3, test_size=0.3, random_state=0)
-# cross_val_score(clf, housing.data, housing.target, cv=cv)
 # 整数默认使用k-fold策略
 scores = cross_val_score(model, housing.data, housing.target, cv=5)
 

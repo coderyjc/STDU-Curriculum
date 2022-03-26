@@ -1,6 +1,4 @@
 #pragma once
-#ifndef TOKENTYPE_H_INCLUDED
-#define TOKENTYPE_H_INCLUDED
 #include<string>
 using namespace std;
 
@@ -33,4 +31,3 @@ enum _TokenType
     ID/*标识符*/,
     NUM, CH, STR//常量
 };
-#endif // TOKENTYPE_H_INCLUDED

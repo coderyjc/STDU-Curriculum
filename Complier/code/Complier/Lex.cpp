@@ -1,36 +1,244 @@
-#include "Lex.h"
-#include"Scanner.h"
+#define _CRT_SECURE_NO_WARNINGS
+
 #include<stdio.h>
 #include<string>
-#include"Keywords.h"
-#include"Token.h"
-#include"Id.h"
-#include"Num.h"
-#include"Error.h"
-#include"Str.h"
-#include"Char.h"
-#include <iostream>
+#include<iostream>
 #include<iomanip>
 #include<ostream>
 #include<fstream>
 #include<direct.h>
 #include<windows.h>
 #include<shlwapi.h>
+
+#include"Lex.h"
+#include"Scanner.h"
+#include"Keywords.h"
+#include"Token.h"
+#include"Id.h"
+#include"Num.h"
+#include"Str.h"
+#include"Char.h"
 #include"global.h"
+#include"Error.h"
+
 using namespace std;
+
+
+Lex::Lex() {}
+
+
 Lex::Lex(char* file)
 {
-    if (!(fp = fopen(file, "r+")))//打开文件
+    if (!(fp = fopen(file, "r")))//打开文件
     {
-        //cerr<<"No such file or dictionary!"<<endl;
+        cerr<<"File Open Error!"<<endl;
         return;
     }
     scanner = new Scanner();
-}
-Lex::Lex()
-{
 
 }
+
+
+int Lex::getColNum()
+{
+    if (ch == '\n' || ch == -1) return scanner->lastCol - charLen;
+    return scanner->getCol() - charLen;
+}
+
+
+int Lex::getLineNum()
+{
+    if (ch == '\n') return scanner->getLine() - 1;
+    return scanner->getLine();
+}
+
+
+
+
+/// <summary>
+/// 进行词法分析并将结果存放在 Lex->result 中
+/// </summary>
+void Lex::analysis()
+{
+    // 得到一个单词符号
+    Token* token = tokenize();
+    while (token->type != END)
+    {
+        LexData* newData = new LexData(token, lex->getLineNum(), lex->getColNum());
+        if (token->type != ERR)
+            result.push_back(newData);
+        token = lex->tokenize();
+    }
+}
+
+
+
+/// <summary>
+/// 将词法分析的结果输出到控制台或者保存到文件
+/// </summary>
+/// <param name="token"></param>
+/// <param name="outOpt"></param>
+void Lex::LexShow(Token* token, bool outOpt)
+{
+    Id* id = new Id("");
+    Char* ch = new Char(' ');
+    Num* num = new Num(0);
+    Str* str = new Str("");
+    streambuf* coutbackup = NULL;
+    // lexFile in global.h
+    ofstream fout(lexFile, ios::app);
+    if (outOpt == 1) // 标准输出重定向到文件
+        coutbackup = cout.rdbuf(fout.rdbuf());//用rdbuf()重定向
+
+    if (token->type == ID)
+    {
+        id = static_cast<Id*>(token);
+        cout << setw(8) << setiosflags(ios::left) << number;
+        cout << setw(8) << setiosflags(ios::left) << lex->getLineNum();
+        cout << setw(8) << setiosflags(ios::left) << lex->getColNum();
+        cout << setw(16) << setiosflags(ios::left) << "标识符";
+        cout << id->name << endl;
+    }
+    else if (token->type == NUM)
+    {
+        num = static_cast<Num*>(token);
+        cout << setw(8) << setiosflags(ios::left) << number;
+        cout << setw(8) << setiosflags(ios::left) << lex->getLineNum();
+        cout << setw(8) << setiosflags(ios::left) << lex->getColNum();
+        cout << setw(16) << setiosflags(ios::left) << "数字常量";
+        cout << num->val << endl;
+    }
+    else if (token->type == CH)
+    {
+        ch = static_cast<Char*>(token);
+        cout << setw(8) << setiosflags(ios::left) << number;
+        cout << setw(8) << setiosflags(ios::left) << lex->getLineNum();
+        cout << setw(8) << setiosflags(ios::left) << lex->getColNum();
+        cout << setw(16) << setiosflags(ios::left) << "字符常量";
+        cout << ch->ch << endl;
+    }
+    else if (token->type == STR)
+    {
+        str = static_cast<Str*>(token);
+        cout << setw(8) << setiosflags(ios::left) << number;
+        cout << setw(8) << setiosflags(ios::left) << lex->getLineNum();
+        cout << setw(8) << setiosflags(ios::left) << lex->getColNum();
+        cout << setw(16) << setiosflags(ios::left) << "字符串常量";
+        cout << getRawString(str->str) << endl;
+    }
+    else  if (token->type <= 58 && token->type >= 25)
+    {
+        cout << setw(8) << setiosflags(ios::left) << number;
+        cout << setw(8) << setiosflags(ios::left) << lex->getLineNum();
+        cout << setw(8) << setiosflags(ios::left) << lex->getColNum();
+        cout << setw(16) << setiosflags(ios::left) << "界符";
+        cout << TokenTypeArray[token->type] << endl;
+    }
+    else if (token->type != ERR)
+    {
+        cout << setw(8) << setiosflags(ios::left) << number;
+        cout << setw(8) << setiosflags(ios::left) << lex->getLineNum();
+        cout << setw(8) << setiosflags(ios::left) << lex->getColNum();
+        cout << setw(16) << setiosflags(ios::left) << "关键字";
+        cout << TokenTypeArray[token->type] << endl;
+    }
+    number++;
+    if (outOpt == 1)
+    {
+        cout.rdbuf(coutbackup);
+    }
+}
+
+
+void Lex::LexShow(bool outOpt)
+{
+    if (outOpt == true)
+    {
+        ofstream out;
+        out.open(lexFile);
+        out << "序号\t" << "行号\t" << "列号\t" << "符号类型\t" << "符号" << endl;
+    }
+    else cout << "序号\t" << "行号\t" << "列号\t" << "符号类型\t" << "符号" << endl;
+    for (int i = 0; i < result.size(); i++)
+    {
+        Token* token = result[i]->token;
+        int row = result[i]->row;
+        int col = result[i]->col;
+        LexShowData(token, row, col, outOpt);
+    }
+}
+
+
+void Lex::LexShowData(Token* token, int row, int col, bool outOpt)
+{
+    Id* id = new Id(""); // 标识符
+    Char* ch = new Char(' '); // 字符常量
+    Num* num = new Num(0); // 数字常量
+    Str* str = new Str(""); // 字符串常量
+    streambuf* coutbackup;
+    ofstream fout(lexFile, ios::app);
+    if (outOpt == 1)
+        coutbackup = cout.rdbuf(fout.rdbuf());//用rdbuf()重定向
+    if (token->type == ID)
+    {
+        id = static_cast<Id*>(token);
+        cout << setw(8) << setiosflags(ios::left) << number;
+        cout << setw(8) << setiosflags(ios::left) << row;
+        cout << setw(8) << setiosflags(ios::left) << col;
+        cout << setw(16) << setiosflags(ios::left) << "标识符";
+        cout << id->name << endl;
+    }
+    else if (token->type == NUM)
+    {
+        num = static_cast<Num*>(token);
+        cout << setw(8) << setiosflags(ios::left) << number;
+        cout << setw(8) << setiosflags(ios::left) << row;
+        cout << setw(8) << setiosflags(ios::left) << col;
+        cout << setw(16) << setiosflags(ios::left) << "数字常量";
+        cout << num->val << endl;
+    }
+    else if (token->type == CH)
+    {
+        ch = static_cast<Char*>(token);
+        cout << setw(8) << setiosflags(ios::left) << number;
+        cout << setw(8) << setiosflags(ios::left) << row;
+        cout << setw(8) << setiosflags(ios::left) << col;
+        cout << setw(16) << setiosflags(ios::left) << "字符常量";
+        cout << ch->ch << endl;
+    }
+    else if (token->type == STR)
+    {
+        str = static_cast<Str*>(token);
+        cout << setw(8) << setiosflags(ios::left) << number;
+        cout << setw(8) << setiosflags(ios::left) << row;
+        cout << setw(8) << setiosflags(ios::left) << col;
+        cout << setw(16) << setiosflags(ios::left) << "字符串常量";
+        cout << getRawString(str->str) << endl;
+    }
+    else  if (token->type <= 58 && token->type >= 25)
+    {
+        cout << setw(8) << setiosflags(ios::left) << number;
+        cout << setw(8) << setiosflags(ios::left) << row;
+        cout << setw(8) << setiosflags(ios::left) << col;
+        cout << setw(16) << setiosflags(ios::left) << "界符";
+        cout << TokenTypeArray[token->type] << endl;
+    }
+    else if (token->type != ERR)
+    {
+        cout << setw(8) << setiosflags(ios::left) << number;
+        cout << setw(8) << setiosflags(ios::left) << row;
+        cout << setw(8) << setiosflags(ios::left) << col;
+        cout << setw(16) << setiosflags(ios::left) << "关键字";
+        cout << TokenTypeArray[token->type] << endl;
+    }
+    number++;
+    if (outOpt == 1)
+    {
+        cout.rdbuf(cout.rdbuf(fout.rdbuf()));
+    }
+}
+
+
 bool Lex::scan(char need)
 {
     ch = scanner->scan(fp);
@@ -44,32 +252,91 @@ bool Lex::scan(char need)
     return true;
 }
 
-int Lex::getColNum()//列数
+
+char* Lex::getFileName(bool outOpt)
 {
-    if (ch == '\n' || ch == -1) return scanner->lastCol - charLen;
-    return scanner->getCol() - charLen;
-}
-int Lex::getLineNum()//行数
-{
-    if (ch == '\n') return scanner->getLine() - 1;
-    return scanner->getLine();
+    char* backup = (char*)malloc(100);
+    strcpy(backup, filename);
+    int flag = 2;/**< 文件路径标识，0代表绝对路径，1代表相对路径，2代表特殊相对路径只有文件名*/
+    filename = trim(filename);
+    if (startWith(filename, "C:\\") || startWith(filename, "D:\\") || startWith(filename, "E:\\") || startWith(filename, "F:\\"))
+        flag = 0;
+    else if (startWith(filename, ".\\") || startWith(filename, "..\\"))
+        flag = 1;
+    else flag = 2;
+    if (outOpt == false)/**< 输出文件名不包括后缀名 */
+    {
+        char* tokenPtr = strtok(filename, "\\");
+        char* pre = NULL;
+        while (tokenPtr != NULL)
+        {
+            pre = tokenPtr;
+            tokenPtr = strtok(NULL, "\\");
+        }
+        filename = backup;
+        return getRawFileName(pre);
+    }
+    else if (outOpt == true)/**< 绝对地址带后缀名 */
+    {
+        if (flag == 0) return filename;
+        else if (flag == 2)
+        {
+            char buffer[MAX_PATH];
+            _getcwd(buffer, MAX_PATH);
+            string strPath = buffer;
+            strPath = strPath + "\\" + filename;
+            filename = backup;
+            return (char*)strPath.c_str();
+        }
+        //else if (flag == 1)
+        //{
+        //    char buffer[MAX_PATH];
+        //    getcwd(buffer, MAX_PATH);
+        //    while (startWith(filename, ".\\") || startWith(filename, "..\\"))
+        //    {
+        //        if (startWith(filename, ".\\"))
+        //            deleteWith(filename, ".\\", 2);
+        //        else if (startWith(filename, "..\\")) {
+        //            deleteWith(filename, "..\\", 3);
+        //            // (_tcsrchr(buffer, _T('\\')))[1] = 0;
+        //            buffer[strlen(buffer) - 1] = '\0';
+        //        }
+        //    }
+        //    string strPath = buffer;
+        //    strPath = strPath + "\\" + filename;
+        //    filename = backup;
+        //    return (char*)strPath.c_str();
+        //}
+    }
 }
 
+
+
+
+/// <summary>
+/// 获取一个最小的语法单位
+/// </summary>
+/// <returns></returns>
 Token* Lex::tokenize()
 {
-    Token* sub;
+    Token* sub = NULL;
     charLen = 0;
 
-    if (ch == 0)
+    if (ch == 0) // 开始读取，初值为0
         ch = scanner->scan(fp);
-    if (ch == -1)
+    if (ch == -1) // 读到头了
     {
         sub = new Token(END);
         return sub;
     }
+    // 忽略 空格、换行、制表符
     while (ch == ' ' || ch == '\n' || ch == '\t')
         ch = scanner->scan(fp);
+
+    // 字符长度
     charLen++;
+
+    // 读到的是 标识符(Id) 还是 关键字(Keywords)
     if (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_')
     {
         string name = "";
@@ -91,6 +358,7 @@ Token* Lex::tokenize()
         return sub;
     }
 
+    // 数字
     else if (ch >= '0' && ch <= '9')
     {
         sub = NULL;
@@ -168,6 +436,8 @@ Token* Lex::tokenize()
 
         return sub;
     }
+
+    // 字符
     else if (ch == '\'')
     {
         char c;
@@ -221,6 +491,8 @@ Token* Lex::tokenize()
 
         return sub;
     }
+
+    // 字符串
     else if (ch == '"')
     {
         sub = NULL;
@@ -266,6 +538,8 @@ Token* Lex::tokenize()
 
         return sub;
     }
+
+    // 其他符号
     switch (ch)
     {
     case '+':
@@ -416,231 +690,5 @@ Token* Lex::tokenize()
     }
 
     return sub;
-}
-char* Lex::getFileName(bool outOpt)
-{
-    char* backup = (char*)malloc(100);
-    strcpy(backup, filename);
-    int flag = 2;/**< 文件路径标识，0代表绝对路径，1代表相对路径，2代表特殊相对路径只有文件名*/
-    filename = trim(filename);
-    if (startWith(filename, "C:\\") || startWith(filename, "D:\\") || startWith(filename, "E:\\") || startWith(filename, "F:\\"))
-        flag = 0;
-    else if (startWith(filename, ".\\") || startWith(filename, "..\\"))
-        flag = 1;
-    else flag = 2;
-    if (outOpt == false)/**< 输出文件名不包括后缀名 */
-    {
-        char* tokenPtr = strtok(filename, "\\");
-        char* pre;
-        while (tokenPtr != NULL)
-        {
-            pre = tokenPtr;
-            tokenPtr = strtok(NULL, "\\");
-        }
-        filename = backup;
-        return getRawFileName(pre);
-    }
-    else if (outOpt == true)/**< 绝对地址带后缀名 */
-    {
-        if (flag == 0) return filename;
-        else if (flag == 2)
-        {
-            //TCHAR szPath[MAX_PATH] = {0};
-            //if ( GetModuleFileName( NULL, szPath,MAX_PATH ) )
-            //{
-            //    (_tcsrchr(szPath,_T('\\')))[1] = 0;
-            // }
-            char buffer[MAX_PATH];
-            getcwd(buffer, MAX_PATH);
-            string strPath = buffer;
-            strPath = strPath + "\\" + filename;
-            filename = backup;
-            return (char*)strPath.c_str();
-        }
-        else if (flag == 1)
-        {
-            char buffer[MAX_PATH];
-            getcwd(buffer, MAX_PATH);
-            while (startWith(filename, ".\\") || startWith(filename, "..\\"))
-            {
-                if (startWith(filename, ".\\"))
-                    deleteWith(filename, ".\\", 2);
-                else if (startWith(filename, "..\\")) {
-                    deleteWith(filename, "..\\", 3);
-                    (_tcsrchr(buffer, _T('\\')))[1] = 0;
-                    buffer[strlen(buffer) - 1] = '\0';
-                }
-            }
-            string strPath = buffer;
-            strPath = strPath + "\\" + filename;
-            filename = backup;
-            return (char*)strPath.c_str();
-        }
-    }
-}
-
-void Lex::LexShow(Token* token, bool outOpt)
-{
-    Id* id = new Id("");
-    Char* ch = new Char(' ');
-    Num* num = new Num(0);
-    Str* str = new Str("");
-    streambuf* coutbackup;
-    ofstream fout(lexFile, ios::app);
-    if (outOpt == 1)
-        coutbackup = cout.rdbuf(fout.rdbuf());//用rdbuf()重定向
-    if (token->type == ID)
-    {
-        id = static_cast<Id*>(token);
-        cout << setw(8) << setiosflags(ios::left) << number;
-        cout << setw(8) << setiosflags(ios::left) << lex->getLineNum();
-        cout << setw(8) << setiosflags(ios::left) << lex->getColNum();
-        cout << setw(16) << setiosflags(ios::left) << "标识符";
-        cout << id->name << endl;
-    }
-    else if (token->type == NUM)
-    {
-        num = static_cast<Num*>(token);
-        cout << setw(8) << setiosflags(ios::left) << number;
-        cout << setw(8) << setiosflags(ios::left) << lex->getLineNum();
-        cout << setw(8) << setiosflags(ios::left) << lex->getColNum();
-        cout << setw(16) << setiosflags(ios::left) << "数字常量";
-        cout << num->val << endl;
-    }
-    else if (token->type == CH)
-    {
-        ch = static_cast<Char*>(token);
-        cout << setw(8) << setiosflags(ios::left) << number;
-        cout << setw(8) << setiosflags(ios::left) << lex->getLineNum();
-        cout << setw(8) << setiosflags(ios::left) << lex->getColNum();
-        cout << setw(16) << setiosflags(ios::left) << "字符常量";
-        cout << ch->ch << endl;
-    }
-    else if (token->type == STR)
-    {
-        str = static_cast<Str*>(token);
-        cout << setw(8) << setiosflags(ios::left) << number;
-        cout << setw(8) << setiosflags(ios::left) << lex->getLineNum();
-        cout << setw(8) << setiosflags(ios::left) << lex->getColNum();
-        cout << setw(16) << setiosflags(ios::left) << "字符串常量";
-        cout << getRawString(str->str) << endl;
-    }
-    else  if (token->type <= 58 && token->type >= 25)
-    {
-        cout << setw(8) << setiosflags(ios::left) << number;
-        cout << setw(8) << setiosflags(ios::left) << lex->getLineNum();
-        cout << setw(8) << setiosflags(ios::left) << lex->getColNum();
-        cout << setw(16) << setiosflags(ios::left) << "界符";
-        cout << TokenTypeArray[token->type] << endl;
-    }
-    else if (token->type != ERR)
-    {
-        cout << setw(8) << setiosflags(ios::left) << number;
-        cout << setw(8) << setiosflags(ios::left) << lex->getLineNum();
-        cout << setw(8) << setiosflags(ios::left) << lex->getColNum();
-        cout << setw(16) << setiosflags(ios::left) << "关键字";
-        cout << TokenTypeArray[token->type] << endl;
-    }
-    number++;
-    if (outOpt == 1)
-    {
-        cout.rdbuf(coutbackup);
-    }
-}
-void Lex::LexShowData(Token* token, int row, int col, bool outOpt)
-{
-    Id* id = new Id("");
-    Char* ch = new Char(' ');
-    Num* num = new Num(0);
-    Str* str = new Str("");
-    streambuf* coutbackup;
-    ofstream fout(lexFile, ios::app);
-    if (outOpt == 1)
-        coutbackup = cout.rdbuf(fout.rdbuf());//用rdbuf()重定向
-    if (token->type == ID)
-    {
-        id = static_cast<Id*>(token);
-        cout << setw(8) << setiosflags(ios::left) << number;
-        cout << setw(8) << setiosflags(ios::left) << row;
-        cout << setw(8) << setiosflags(ios::left) << col;
-        cout << setw(16) << setiosflags(ios::left) << "标识符";
-        cout << id->name << endl;
-    }
-    else if (token->type == NUM)
-    {
-        num = static_cast<Num*>(token);
-        cout << setw(8) << setiosflags(ios::left) << number;
-        cout << setw(8) << setiosflags(ios::left) << row;
-        cout << setw(8) << setiosflags(ios::left) << col;
-        cout << setw(16) << setiosflags(ios::left) << "数字常量";
-        cout << num->val << endl;
-    }
-    else if (token->type == CH)
-    {
-        ch = static_cast<Char*>(token);
-        cout << setw(8) << setiosflags(ios::left) << number;
-        cout << setw(8) << setiosflags(ios::left) << row;
-        cout << setw(8) << setiosflags(ios::left) << col;
-        cout << setw(16) << setiosflags(ios::left) << "字符常量";
-        cout << ch->ch << endl;
-    }
-    else if (token->type == STR)
-    {
-        str = static_cast<Str*>(token);
-        cout << setw(8) << setiosflags(ios::left) << number;
-        cout << setw(8) << setiosflags(ios::left) << row;
-        cout << setw(8) << setiosflags(ios::left) << col;
-        cout << setw(16) << setiosflags(ios::left) << "字符串常量";
-        cout << getRawString(str->str) << endl;
-    }
-    else  if (token->type <= 58 && token->type >= 25)
-    {
-        cout << setw(8) << setiosflags(ios::left) << number;
-        cout << setw(8) << setiosflags(ios::left) << row;
-        cout << setw(8) << setiosflags(ios::left) << col;
-        cout << setw(16) << setiosflags(ios::left) << "界符";
-        cout << TokenTypeArray[token->type] << endl;
-    }
-    else if (token->type != ERR)
-    {
-        cout << setw(8) << setiosflags(ios::left) << number;
-        cout << setw(8) << setiosflags(ios::left) << row;
-        cout << setw(8) << setiosflags(ios::left) << col;
-        cout << setw(16) << setiosflags(ios::left) << "关键字";
-        cout << TokenTypeArray[token->type] << endl;
-    }
-    number++;
-    if (outOpt == 1)
-    {
-        cout.rdbuf(coutbackup);
-    }
-}
-void Lex::LexShow(bool outOpt)
-{
-    if (outOpt == true)
-    {
-        ofstream out;
-        out.open(lexFile);
-        out << "序号\t" << "行号\t" << "列号\t" << "符号类型\t" << "符号" << endl;
-    }
-    else cout << "序号\t" << "行号\t" << "列号\t" << "符号类型\t" << "符号" << endl;
-    for (int i = 0; i < result.size(); i++)
-    {
-        Token* token = result[i]->token;
-        int row = result[i]->row;
-        int col = result[i]->col;
-        LexShowData(token, row, col, outOpt);
-    }
-}
-void Lex::analysis()
-{
-    Token* token = tokenize();
-    while (token->type != END)
-    {
-        LexData* newData = new LexData(token, lex->getLineNum(), lex->getColNum());
-        if (token->type != ERR)
-            result.push_back(newData);
-        token = lex->tokenize();
-    }
 }
 

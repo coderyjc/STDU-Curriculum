@@ -1,25 +1,14 @@
 #pragma once
-#ifndef KEYWORDS_H_INCLUDED
-#define KEYWORDS_H_INCLUDED
-#include<hash_map>
+#include<unordered_map>
 #include<string>
 
 #include "TokenType.h"
-
-using namespace __gnu_cxx;
 
 
 class Keywords
 {
 public:
-    struct str_hash
-    {
-        size_t operator()(const string& str) const
-        {
-            return __stl_hash_string(str.c_str());
-        }
-    };
-    hash_map<string, _TokenType, str_hash> keywords;
+    unordered_map<string, _TokenType> keywords;
     Keywords()
     {
         keywords["int"] = _INT;
@@ -53,5 +42,3 @@ public:
         return keywords.find(name) != keywords.end() ? keywords[name] : ID;
     }
 };
-
-#endif // KEYWORDS_H_INCLUDED
