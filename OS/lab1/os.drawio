@@ -4,7 +4,7 @@
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="10" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="3" target="5">
+                <mxCell id="10" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="3" target="5" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="400" y="230"/>
@@ -12,7 +12,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="11" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="3" target="6">
+                <mxCell id="11" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="3" target="6" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="400" y="230"/>
@@ -20,7 +20,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="12" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="3" target="7">
+                <mxCell id="12" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="3" target="7" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="405" y="230"/>
@@ -28,7 +28,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="13" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="3" target="8">
+                <mxCell id="13" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="3" target="8" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="405" y="230"/>
@@ -36,41 +36,62 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="3" value="操作系统" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="3" value="操作系统" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="360" y="170" width="90" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="5" value="进程管理" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="22" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="5" target="14">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="5" target="15">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="进程管理" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="90" y="270" width="90" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="6" value="设备管理" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="24" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="6" target="16">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="设备管理" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="250" y="270" width="90" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="7" value="文件管理" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="25" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="7" target="21">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="7" target="17">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="文件管理" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="490" y="270" width="90" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="8" value="存储管理" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="27" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="8" target="19">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="8" target="20">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="存储管理" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="670" y="270" width="90" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" value="进程同步" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="14" value="进程同步" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="90" y="350" width="20" height="110" as="geometry"/>
                 </mxCell>
-                <mxCell id="15" value="进程调度" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="15" value="进程调度" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="160" y="350" width="20" height="110" as="geometry"/>
                 </mxCell>
-                <mxCell id="16" value="银行家算法" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="16" value="银行家算法" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="285" y="350" width="20" height="110" as="geometry"/>
                 </mxCell>
-                <mxCell id="17" value="先来先服务算法" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="480" y="390" width="20" height="150" as="geometry"/>
+                <mxCell id="17" value="先来先服务算法" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="545" y="350" width="20" height="140" as="geometry"/>
                 </mxCell>
-                <mxCell id="19" value="扫描算法" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="530" y="390" width="20" height="110" as="geometry"/>
+                <mxCell id="19" value="扫描算法" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="680" y="350" width="20" height="140" as="geometry"/>
                 </mxCell>
-                <mxCell id="20" value="循环扫描算法" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="610" y="400" width="20" height="130" as="geometry"/>
+                <mxCell id="20" value="循环扫描算法" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="730" y="350" width="20" height="140" as="geometry"/>
                 </mxCell>
-                <mxCell id="21" value="最短寻道时间算法" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="440" y="400" width="20" height="140" as="geometry"/>
+                <mxCell id="21" value="最短寻道时间算法" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="505" y="350" width="20" height="140" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

@@ -8,7 +8,7 @@ using namespace std;
 #define ALGORITHM_LRU 2
 
 // 指令地址的个数为30
-int IC = 100;
+int IC = 50;
 // 页表项的个数
 int pageCount = 5;
 // 页表
@@ -260,7 +260,7 @@ void test() {
 int main() {
 
 	int choose = -1;
-	cout << "1.自动化测试(单次)\n2.手动测试\n3.自动化测试(多次)>";
+	cout << "1.自动化测试(单次)\n2.手动测试\n>";
 	cin >> choose;
 	if (1 == choose) {
 		init();
@@ -282,7 +282,7 @@ int main() {
 
 /*
 2
-20
+10
 5
 1024
 3

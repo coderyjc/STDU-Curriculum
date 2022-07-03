@@ -6,8 +6,6 @@
 
 using namespace std;
 
-// 循环扫描中
-
 // 磁道数量
 #define MAX 200
 // 请求数量
@@ -145,7 +143,7 @@ void result() {
         << "  FCFS\t" << findTime[0] << '\t' << findTime[0] / findCount[0] << endl
         << "  SSTF\t" << findTime[1] << '\t' << findTime[1] / findCount[1] << endl
         << "  SCAN\t" << findTime[2] << '\t' << findTime[2] / findCount[2] << endl
-        << "  SCAN\t" << findTime[3] << '\t' << findTime[3] / findCount[3] << endl;
+        << " CSCAN\t" << findTime[3] << '\t' << findTime[3] / findCount[3] << endl;
 }
 
 int main() {
