@@ -1,0 +1,84 @@
+
+/* 透明遮罩 */
+.personal-info,.time-line{
+     width: 80%;
+     height: 80%;
+     background-color: aliceblue;
+     opacity: 0.7;
+     margin: auto;
+     color: black;
+     text-align: center;
+}
+
+.segment-line{
+	height: 1px;
+	width: 80%;
+	background-color: #545356;
+	opacity: 0.5;
+	margin: 15px 10%;
+}
+
+/* 年份卡片 */
+.year-item{
+	border-radius: 20px;
+	width: 100%;
+}
+
+/* Time Line */
+.time-line-title{
+	margin-top: 10px;
+	height: 12%;
+}
+
+/* 左右内容区 */
+.time-line-content{
+	width: 46%;
+	height: 80%;
+	margin-left: 2%;
+}
+
+/* 右半部分内容区 */
+.time-line-content-right{
+	float: right;
+}
+
+/* 左半部分内容区 */
+.time-line-content-left{
+	float: left;
+}
+
+/* 2021年 字样 */
+.time-line-content .year-title{
+	font-size: 30px;
+	
+}
+
+/* li节点 */
+.year-item li{
+	width: 100%;
+	font-size: 22px;
+	margin: 10px auto;
+	border-radius: 5px;
+
+}
+
+.year-item li:hover{
+	background-color: #c4c7c8;
+}
+
+.year-item .month-item{
+	float: left;
+}
+
+/* 几月 */
+.month-item .month-title{
+	font-weight: 600;
+	display: inline-block;
+}
+
+/* 学了啥 */
+.month-item .month-learn{
+	margin-left: 10px;
+	display: inline-block;
+	font-size: 20px;
+}

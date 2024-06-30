@@ -1,0 +1,3 @@
+D:\IDE\CLion\CLion_2021.1.2_Protable\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\FileSystem.dir/objects.a
+D:\IDE\Devcpp\Dev-cpp5.4.0\Dev-Cpp\MinGW32\bin\ar.exe cr CMakeFiles\FileSystem.dir/objects.a @CMakeFiles\FileSystem.dir\objects1.rsp
+D:\IDE\Devcpp\Dev-cpp5.4.0\Dev-Cpp\MinGW32\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\FileSystem.dir/objects.a -Wl,--no-whole-archive -o FileSystem.exe -Wl,--out-implib,libFileSystem.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\FileSystem.dir\linklibs.rsp

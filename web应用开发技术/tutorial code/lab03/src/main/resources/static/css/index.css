@@ -1,0 +1,67 @@
+.layui-table-tool{
+    z-index: 1;
+}
+
+/*模态框*/
+.modal {
+    /* 默认隐藏 */
+    display: none;
+    /* 根据浏览器定位 */
+    position: fixed;
+    /* 放在顶部 */
+    z-index: 999;
+    left: 0;
+    top: 0;
+    /* 全宽 */
+    width: 100%;
+    /* 全高 */
+    height: 100%;
+    /* 允许滚动 */
+    overflow: auto;
+    /* 背景色 */
+    background-color: rgba(0,0,0,0.4);
+}
+
+/*模态框内容*/
+.modal-content {
+    /*采用flexbox布局*/
+    display: flex;
+    /*垂直排列*/
+    flex-direction: column;
+    position: relative;
+    background-color: #fefefe;
+    /*距顶部15% 水平居中*/
+    margin: 5% auto;
+    padding: 20px;
+    padding-right: 50px;
+    border: 1px solid #888;
+    width: 30%;
+    /*自定义动画，从模态框内容上到下出现*/
+    animation: topDown 0.4s;
+}
+
+@keyframes topDown {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+/*模态框头部*/
+.modal-header {
+    /*采用flexbox布局*/
+    display: flex;
+    /*水平布局*/
+    flex-direction: row;
+    /*内容垂直居中*/
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px auto;
+}
+
+.modal-body>p{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.modal-btn{
+    text-align: center;
+}

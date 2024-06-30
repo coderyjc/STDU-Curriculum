@@ -1,2 +1,0 @@
-R:\GITHUB\Curriculum\OS\lab5\lab5\x64\Debug\lab5.exe
-R:\GITHUB\Curriculum\OS\lab5\x64\Debug\lab5.exe

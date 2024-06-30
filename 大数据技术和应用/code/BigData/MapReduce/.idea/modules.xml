@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DevideTable/DevideTable.iml" filepath="$PROJECT_DIR$/DevideTable/DevideTable.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FlowCount/FlowCount.iml" filepath="$PROJECT_DIR$/FlowCount/FlowCount.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Join/Join.iml" filepath="$PROJECT_DIR$/Join/Join.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SortAndSerialize/SortAndSerialize.iml" filepath="$PROJECT_DIR$/SortAndSerialize/SortAndSerialize.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WordCount/WordCount.iml" filepath="$PROJECT_DIR$/WordCount/WordCount.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WordCountCombiner/WordCountCombiner.iml" filepath="$PROJECT_DIR$/WordCountCombiner/WordCountCombiner.iml" />
+    </modules>
+  </component>
+</project>
